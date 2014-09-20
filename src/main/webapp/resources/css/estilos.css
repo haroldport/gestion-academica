@@ -1,0 +1,219 @@
+/* Utilidades */
+.u-title{
+	border-bottom: 2px dashed #00DBFF;
+	color: #00CCFF;
+	font-size: 1.5em;
+	font-weight: normal;
+	padding-bottom: .5em;
+	text-align: center;
+}
+
+/* Main Menu */
+.MainMenu{
+	background: #1E1E1E;
+	height: 3.75em;
+	left: 0;
+	position: fixed;
+	right: 0;
+	text-align: center;
+	top: 0;
+}
+
+.MainMenu-list{
+	margin: 0;
+	padding: 0;
+}
+
+.MainMenu-item{
+	display: inline-block;
+}
+
+.MainMenu-link{
+	color: #00DBFF;
+	line-height: 3.75em;
+	margin-right: 1.8em;
+	text-decoration: none;
+}
+
+.MainMenu-link2{	
+	background: orange !important;
+	border-radius: 2em !important;
+	color: white !important;
+	font-size: 1em !important;
+	line-height: 3.75em !important;
+	margin-right: 1.8em !important;
+	padding: .4em .6em !important;
+	text-decoration: none !important;
+}
+
+.MainMenu-link2:hover{
+	color: gray !important;
+}
+
+.MainMenu-link:hover{
+	color: white;
+}
+
+/* Header */
+.Header{
+	background-image: url(#{resource['images/portada.jpg']});	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-top: 3.75em;
+	padding: 1.4em 0;
+	text-align: center;
+}
+
+.Header-imageContainer{
+	margin: 0;
+}
+
+.Header-image{
+	border: 5px solid gray;
+	border-radius: 50%;	
+	transition: 1s;
+	-webkit-transition: 1s;
+	-moz-transition: 1s;
+	width: 13em;
+}
+
+.Header-image:hover{
+	transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+}
+
+.Header-name,
+.Header-link{
+	color: white;
+}
+
+.Header-link{
+	font-size: 2.2em;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.Header-name{
+	font-size: 1.5em;
+	font-weight: 300;
+	margin: 0;
+}
+
+/* Profile */
+
+.Profile{
+	text-align: center;
+}
+
+.Profile-link{
+	background: orange;
+	border-radius: 2em;
+	color: white;
+	margin-right: .5em;
+	padding: .5em 1em;
+	text-decoration: none;
+}
+
+.Profile-service{
+	margin: 1em auto;
+	padding: 0;
+	width: 30em;
+}
+
+.Profile-serviceItem{
+	display: inline-block;
+	margin-bottom: 1em;
+	margin-right: 2em;
+}
+
+/* Curso */
+.Curso{
+	margin-top: 2em;
+	text-align: center;
+}
+
+.Curso-item{
+	display: inline-block;
+	margin-bottom: 1.8em;
+	margin-right: 1.8em;
+}
+
+.Curso-image{
+	width: 18em;
+}
+
+.Curso-imageContainer{
+	margin: 0;
+}
+
+.Curso-imageDescription{
+	color: #515151;
+	font-size: 1.1em;
+	font-style: italic;
+	margin-bottom: 1em;
+}
+
+
+/* Footer */
+.Footer{
+	background-image: url(#{resource['images/footer.jpg']});
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 2em 0;
+	text-align: center;
+}
+
+.Footer-description{
+	color: #000;
+}
+
+.Footer-form{
+	display: inline-block;
+	text-align: center;
+}
+
+.Footer-left{
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	width: 32em;
+}
+
+.Footer-title{
+	color: white;
+}
+
+.Footer-formInput,
+.Footer-textarea{
+	background: white !important;
+	border: 0.5px solid gray !important;
+	border-radius: 2em !important;
+	display: block !important;
+	margin: 0 auto 1em !important;
+	padding: .5em !important;
+}
+
+.Footer-textarea{
+	resize: none;
+}
+
+.Footer-button{
+	background: orange;
+	border: none;
+	border-radius: 1em;
+	color: white;
+	padding: .5em 1em;
+}
+
+.Login-dialogo{
+	font-size: 0.8em;
+}
+
+.Login-input{
+	border-radius: 2em;
+	margin-top: .5em !important;
+	margin-bottom: 1em !important;
+}

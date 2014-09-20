@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="es">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title">JRivera Consulting</ui:insert></title>
+		<h:outputStylesheet library="css" name="normalize.css" />
+		<h:outputStylesheet library="css" name="estilos.css" />
+	</h:head>
+
+	<h:body>
+		<div id="nosotros" class="Header">
+			<div class="MainMenu">
+				<h:form>
+					<ul class="MainMenu-list">
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="#nosotros">Nosotros</a></li>
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="#perfil">Perfil</a></li>
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="#cursos">Cursos</a></li>
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="#contacto">Contacto</a></li>
+						<li class="MainMenu-item"><p:commandLink
+								onclick="PF('dlg').show();"
+								styleClass="icon-login MainMenu-link2" value="Login" /></li>
+						<li class="MainMenu-item"><p:commandLink
+								onclick="PF('dlg1').show();"
+								styleClass="icon-login MainMenu-link2" value="Registro" /></li>
+					</ul>
+				</h:form>
+			</div>
+			<div class="Header-imageContainer">
+				<p:graphicImage styleClass="Header-image" library="images"
+					name="logo.jpg" />
+				<div class="Header-imageDescription">
+					<a class="Header-link" href="http://twitter.com/GeorgeRiveraF"
+						target="_blank">@GeorgeRiveraF</a>
+				</div>
+				<p class="Header-name">JRivera Consulting</p>
+			</div>
+		</div>
+		<div id="perfil" class="Profile">
+			<h2 class="Profile-title u-title">Perfil</h2>
+			<p class="Profile-description">
+				Hola! Si llegaste hasta aquí, puedes ver los <em>servicios</em> que
+				brindamos y contactarnos. <strong>JRivera Consulting -
+					Asesoría sin límites.</strong>
+			</p>
+			<a class="icon-twitter Profile-link"
+				href="http://twitter.com/GeorgeRiveraF" target="_blank">@GeorgeRiveraF</a>
+			<a class="icon-facebook Profile-link"
+				href="http://facebook.com/haroldportocarrero" target="_blank">JRivera
+				Consulting</a> <a class="icon-linkedin Profile-link"
+				href="https://www.linkedin.com/profile/view?id=248715191"
+				target="_blank">JRivera Consulting</a> <a
+				class="icon-skype Profile-link" href="#">jrivf24</a>
+			<ul class="Profile-service">
+				<li class="Profile-serviceItem"><span class="icon-link"></span>Consultoría</li>
+				<li class="Profile-serviceItem"><span class="icon-link"></span>Capacitación</li>
+				<li class="Profile-serviceItem"><span class="icon-link"></span>Asesoría</li>
+				<li class="Profile-serviceItem"><span class="icon-link"></span>Emulación
+					de procesos</li>
+				<li class="Profile-serviceItem"><span class="icon-link"></span>Preparación
+					de oferta técnica</li>
+			</ul>
+		</div>
+
+		<div id="cursos" class="Curso">
+			<h2 class="Curso-title u-title">Cursos</h2>
+			<p class="Profile-description">
+				Si quieres obtener información relevante acerca de Normativa,
+				procedimientos, y tips de creación de procesos de compras públicas,
+				<strong>regístrate a nuestra página!!!</strong>, es súper rápido y
+				no tiene costo alguno. Además si te matriculas en cualquiera <em>--sí
+					en cualquiera--</em> de nuestros cursos podrás tener acceso a una
+				plataforma de emulación de procesos.
+			</p>
+			<div class="Curso-item">
+				<div class="Curso-imageContainer">
+					<p:graphicImage styleClass="Curso-image" library="images"
+						name="oferta.jpg" />
+					<div class="Curso-imageDescription">Curso de manejo del
+						portal de Compras Públicas</div>
+					<a class="Profile-link" href="#">Preinscripción</a>
+				</div>
+			</div>
+			<div class="Curso-item">
+				<div class="Curso-imageContainer">
+					<p:graphicImage styleClass="Curso-image" library="images"
+						name="oferta.jpg" />
+					<div class="Curso-imageDescription">Curso de Oferta Técnica</div>
+					<a class="Profile-link" href="#">Preinscripción</a>
+				</div>
+			</div>
+			<div class="Curso-item">
+				<div class="Curso-imageContainer">
+					<p:graphicImage styleClass="Curso-image" library="images"
+						name="oferta.jpg" />
+					<div class="Curso-imageDescription">Curso de elaboración de
+						pliegos</div>
+					<a class="Profile-link" href="#">Preinscripción</a>
+				</div>
+			</div>
+		</div>
+
+		<div id="contacto" class="Footer">
+			<div class="Footer-left">
+				<h3 class="Footer-title">Contacto</h3>
+				<p class="Footer-description">Si tienes alguna consulta, duda o
+					sugerencia, por favor ponte en contacto con nosotros a través de
+					este formulario, o llámanos a los siguientes números: 046027996 -
+					0994919698 - 0990259972</p>
+			</div>
+			<form class="Footer-form">
+				<p:inputText id="nombre" size="25" styleClass="Footer-formInput" />
+				<p:watermark for="nombre" value="Nombre" />
+				<p:inputText id="email" size="25" styleClass="Footer-formInput" />
+				<p:watermark for="email" value="Email" />
+				<p:inputTextarea id="motivo" cols="25" styleClass="Footer-textarea" />
+				<p:watermark for="motivo" value="Motivo" />
+				<button class="Footer-button" type="submit">Contactar</button>
+			</form>
+		</div>
+
+		<p:dialog styleClass="Login-dialogo" id="dlgLogin" widgetVar="dlg"
+			header="¡Inicia sesión y empieza a aprender!" width="480"
+			resizable="false" showEffect="clip" hideEffect="clip">
+			<h:form id="formLogin">
+				<p class="Profile-description">Si no tienes un usuario aún,
+					regístrate!</p>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Usuario:" />
+					<p:inputText styleClass="Login-input" />
+					<h:outputLabel value="Password:" />
+					<p:password styleClass="Login-input" />
+					<p:columnGroup />
+					<p:commandButton value="Ingresar" styleClass="Footer-button" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog styleClass="Login-dialogo" id="dlgRegistro" widgetVar="dlg1"
+			header="¡Regístrate, te llevará poco tiempo!" width="480"
+			resizable="false" showEffect="clip" hideEffect="clip">
+			<h:form id="formRegistro">
+				<p class="Profile-description">Al registrarte, puedes acceder
+					inmediatamente a información de interés en lo que respecta a
+					procesos de contratación pública.</p>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Usuario:" />
+					<p:inputText styleClass="Login-input" />
+					<h:outputLabel value="Password:" />
+					<p:password styleClass="Login-input" />
+					<p:columnGroup />
+					<p:commandButton value="Ingresar" styleClass="Footer-button" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</h:body>
+</f:view>
+</html>
