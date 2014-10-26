@@ -17,22 +17,38 @@
 	<h:body>
 		<div id="nosotros" class="Header">
 			<div class="MainMenu">
-				<h:form>
+				<h:form id="formPrincipal">
 					<ul class="MainMenu-list">
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#nosotros">Nosotros</a></li>
+							href="#nosotros">Nosotros</a>
+						</li>
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#perfil">Perfil</a></li>
+							href="#perfil">Perfil</a>
+						</li>
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#cursos">Cursos</a></li>
+							href="#cursos">Cursos</a>
+						</li>
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#contacto">Contacto</a></li>
-						<li class="MainMenu-item"><p:commandLink
+							href="#contacto">Contacto</a>
+						</li>
+						<li class="MainMenu-item">
+							<p:commandLink rendered="#{indexBean.usuario.username == null}"
 								onclick="PF('dlg').show();"
-								styleClass="icon-login MainMenu-link2" value="Login" /></li>
-						<li class="MainMenu-item"><p:commandLink
+								styleClass="icon-login MainMenu-link2" value="Login" />
+							<p:commandLink rendered="#{indexBean.usuario.username != null}"
+								styleClass="MainMenu-user" action="#{indexBean.verPrincipal}"
+								value="Bienvenido #{indexBean.usuario.username}!" />
+							<p:outputPanel styleClass="MainMenu-panel" rendered="#{indexBean.usuario.username != null}">
+	                            <a class="MainMenu-user" href="#{facesContext.externalContext.requestContextPath}/logout">
+	                                Cerrar sesión
+	                            </a>
+                        	</p:outputPanel>
+						</li>
+						<li class="MainMenu-item">
+							<p:commandLink
 								onclick="PF('dlg1').show();"
-								styleClass="icon-login MainMenu-link2" value="Registro" /></li>
+								styleClass="icon-login MainMenu-link2" value="Registro" />
+						</li>
 					</ul>
 				</h:form>
 			</div>
@@ -130,18 +146,25 @@
 		</div>
 
 		<p:dialog styleClass="Login-dialogo" id="dlgLogin" widgetVar="dlg"
-			header="¡Inicia sesión y empieza a aprender!" width="480"
-			resizable="false" showEffect="clip" hideEffect="clip">
+			header="¡Inicia sesión y empieza a aprender con los mejores!"
+			width="480" resizable="false" showEffect="clip" hideEffect="clip">
 			<h:form id="formLogin">
 				<p class="Profile-description">Si no tienes un usuario aún,
 					regístrate!</p>
 				<h:panelGrid columns="2">
 					<h:outputLabel value="Usuario:" />
-					<p:inputText styleClass="Login-input" />
+					<p:inputText value="#{indexBean.username}" required="true"
+						requiredMessage="El usuario es requerido!"
+						styleClass="Login-input" />
 					<h:outputLabel value="Password:" />
-					<p:password styleClass="Login-input" />
+					<p:password styleClass="Login-input" feedback="true"
+						value="#{indexBean.password}" promptLabel="Ingrese su clave"
+						required="true" requiredMessage="La clave es requerido!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
 					<p:columnGroup />
-					<p:commandButton value="Ingresar" styleClass="Footer-button" />
+					<p:commandButton action="#{indexBean.login}" value="Ingresar"
+						styleClass="Footer-button" update=":formLogin, :formPrincipal" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

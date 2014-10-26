@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="es">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title">JRivera Consulting</ui:insert></title>
+		<h:outputStylesheet library="css" name="normalize.css" />
+		<h:outputStylesheet library="css" name="estilos.css" />
+	</h:head>
+
+	<h:body>
+		<p:idleMonitor onactive="sessionTimeOutDialog.show();"
+			timeout="#{session.maxInactiveInterval * 1000}" />
+		<p:dialog header="#{msgs['error.sessionTimeOut.header']}"
+			widgetVar="sessionTimeOutDialog" modal="true" closable="false"
+			width="400" visible="false">
+			<h:outputText value="#{msgs['error.sessionTimeOut.text']}" />
+			<input id="confirmBackToLogin" type="button"
+				value="#{msgs['error.sessionTimeOut.button']}"
+				onclick="window.location='#{facesContext.externalContext.requestContextPath}/faces/login.xhtml';" />
+		</p:dialog>
+		<div id="nosotros" class="HeaderT">
+			<div class="MainMenu">
+				<h:form id="formPrincipal">
+					<ul class="MainMenu-list">
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="index.xhtml#nosotros">Nosotros</a></li>
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="index.xhtml#perfil">Perfil</a></li>
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="index.xhtml#cursos">Cursos</a></li>
+						<li class="MainMenu-item"><a class="MainMenu-link"
+							href="index.xhtml#contacto">Contacto</a></li>
+						<li class="MainMenu-item"><p:commandLink
+								rendered="#{indexBean.usuario.username == null}"
+								onclick="PF('dlg').show();"
+								styleClass="icon-login MainMenu-link2" value="Login" /> <p:commandLink
+								rendered="#{indexBean.usuario.username != null}"
+								styleClass="MainMenu-user"
+								value="Bienvenido #{indexBean.usuario.username}!" /> <p:outputPanel
+								styleClass="MainMenu-panel"
+								rendered="#{indexBean.usuario.username != null}">
+								<a class="MainMenu-user"
+									href="#{facesContext.externalContext.requestContextPath}/logout">
+									Cerrar sesión </a>
+							</p:outputPanel></li>
+					</ul>
+				</h:form>
+			</div>
+			<p:ajaxStatus onstart="statusDialog.show();"
+				onsuccess="statusDialog.hide();" />
+			<p:dialog modal="true" widgetVar="statusDialog" header="Espere"
+				resizable="false" draggable="false" closable="false">
+				<p:graphicImage value="/resources/images/ajaxloadingbar.gif" />
+			</p:dialog>
+		</div>
+		<div id="contenido">
+			<h:form prependId="false" style="height: 30px;">
+				<!-- 				<div> -->
+				<!-- 					<p:menubar styleClass="styleMenu" autoDisplay="true" -->
+				<!-- 						model="#{loginBean.menu}" /> -->
+				<!-- 				</div> -->
+			</h:form>
+			<ui:insert name="contenido" />
+		</div>
+		<div class="footerT">
+			<div>			
+				<p>Powered by JRivera Consulting</p>			
+				<p>Todos los derechos reservados - 2014</p>
+			</div>
+			<p:graphicImage styleClass="Header-imageT" library="images" name="logo.jpg" />
+		</div>
+	</h:body>
+</f:view>
+</html>

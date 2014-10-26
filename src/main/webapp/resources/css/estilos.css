@@ -54,12 +54,34 @@
 	color: white;
 }
 
+.MainMenu-user{
+	color: white;
+	line-height: 3.75em;
+	margin-right: 1.8em;
+}
+
+.MainMenu-user:hover{
+	color: #00DBFF;
+}
+
+.MainMenu-panel{
+	display: inline-block;
+	margin: 0;
+	padding: 0;		
+}
+
 /* Header */
 .Header{
 	background-image: url(#{resource['images/portada.jpg']});	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	margin-top: 3.75em;
+	padding: 1.4em 0;
+	text-align: center;
+}
+
+.HeaderT{
 	margin-top: 3.75em;
 	padding: 1.4em 0;
 	text-align: center;
@@ -82,6 +104,15 @@
 	transform: rotate(360deg);
 	-moz-transform: rotate(360deg);
 	-webkit-transform: rotate(360deg);
+}
+
+.Header-imageT{
+	border-radius: 50%;
+	margin: 1em 2em;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 4em;
 }
 
 .Header-name,
@@ -216,4 +247,22 @@
 	border-radius: 2em;
 	margin-top: .5em !important;
 	margin-bottom: 1em !important;
+}
+
+.footerT{
+	background: #1E1E1E;
+	color: white;
+	height: 3.75em;
+	overflow: hidden;
+	padding: 0.5em 0 2em 0;
+	position: relative;
+	text-align: center;
+}
+
+.footerT p:first-child{
+	margin-bottom: 0;
+}
+
+.footerT p:last-child{
+	margin-top: 0;
 }
