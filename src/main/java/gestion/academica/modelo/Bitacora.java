@@ -1,7 +1,9 @@
 package gestion.academica.modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -32,6 +34,14 @@ public class Bitacora implements Serializable {
 
 	public Bitacora() {
 	}
+
+	public Bitacora(Date fecha, String observacion, Usuario usuario) {
+		this.fecha = fecha;
+		this.observacion = observacion;
+		this.usuario = usuario;
+	}
+
+
 
 	public Integer getIdBitacora() {
 		return this.idBitacora;

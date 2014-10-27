@@ -55,7 +55,7 @@ public class RolDao extends Generico<Rol> {
      */
     public Rol obtenerPorNemonico(String nemonico) {
         try {
-            Query query = this.em.createQuery("SELECT r FROM Rol r WHERE r.nemonico = :nemonico");
+            Query query = this.em.createQuery("SELECT r FROM Rol r WHERE r.nemonico = :nemonico AND r.estado.idEstado = 1");
             query.setParameter("nemonico", nemonico);
             return query.getResultList() != null && !query.getResultList().isEmpty() ? (Rol) query.getResultList().get(0) : null;
         } catch (Exception e) {

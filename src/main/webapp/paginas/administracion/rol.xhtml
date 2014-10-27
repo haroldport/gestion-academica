@@ -4,11 +4,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:pou="http://primefaces.org/ui">
-<ui:composition template="/plantilla/page-template-menu.xhtml">
+<ui:composition template="/templates/page-template-menu.xhtml">
 	<ui:define name="contenido">
 		<h:form id="formRol">
 			<p:growl id="messages" showDetail="false" life="5000" autoUpdate="true" />
-			<p:tabView id="tab">
+			<br /><br />
+			<p:tabView id="tab">				
 				<p:tab title="Administración de roles">
 					<center>
 						<p:outputPanel>
@@ -21,6 +22,14 @@
 										style="text-transform: uppercase" onchange="toUpperCase(this)" />
 									<h:outputText value=" *" style="color: red" />
 								</p:outputPanel>
+								
+								<h:outputLabel class="label" value="Descripción: " />
+								<p:outputPanel>
+									<p:inputText id="descripcion" styleClass="lblbtn" size="33"
+										value="#{rolBean.nuevoRol.descripcion}" required="false"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+									<h:outputText value=" " style="color: red" />
+								</p:outputPanel>
 
 								<h:outputLabel class="label" value="Nemónico: " />
 								<p:outputPanel>
@@ -29,16 +38,9 @@
 										requiredMessage="El campo Nemónico es requerido!"
 										style="text-transform: uppercase" onchange="toUpperCase(this)" />
 									<h:outputText value=" *" style="color: red" />
-								</p:outputPanel>
-
-								<h:outputLabel class="label" value="Descripción: " />
-								<p:outputPanel>
-									<p:inputText id="descripcion" styleClass="lblbtn" size="33"
-										value="#{rolBean.nuevoRol.descripcion}" required="false"
-										style="text-transform: uppercase" onchange="toUpperCase(this)" />
-									<h:outputText value=" " style="color: red" />
-								</p:outputPanel>
+								</p:outputPanel>								
 							</h:panelGrid>
+							<br />
 							<p:commandButton value="Editar"
 								action="#{rolBean.editarRol()}"
 								rendered="#{rolBean.editarRol}"
@@ -55,7 +57,7 @@
 						<div class="footerTabla">
 							<p:outputPanel id="panelTabla">
 								<p:dataTable value="#{rolBean.listaRoles}"
-									var="rol" rendered="#{rolBean.hayDatos}"
+									var="rol" rendered="#{rolBean.listaRoles.size() > 0}"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									paginatorPosition="bottom" rows="5" paginator="true"
 									rowsPerPageTemplate="5,10,15,20,25,30"
@@ -65,22 +67,15 @@
 										headerText="Nombre">
 										<h:outputText value="#{rol.nombre}" />
 									</p:column>
-
-									<p:column
-										headerText="Nemónico">
-										<h:outputText value="#{rol.nemonico}" />
-									</p:column>
 									
 									<p:column styleClass="wrap"
 										headerText="Descripción">
 										<h:outputText value="#{rol.descripcion}" />
 									</p:column>
-									
+
 									<p:column
-										headerText="Fecha de creación">
-										<h:outputText value="#{rol.fechaCreacion}">
-											<f:convertDateTime pattern="yyyy/MM/dd H:mm a" />
-										</h:outputText>
+										headerText="Nemónico">
+										<h:outputText value="#{rol.nemonico}" />
 									</p:column>
 
 									<p:column headerText="Editar" styleClass="classBtn">

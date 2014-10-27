@@ -1,9 +1,11 @@
 package gestion.academica.beans;
 
 import gestion.academica.enumerado.EstadoEnum;
+import gestion.academica.modelo.Bitacora;
 import gestion.academica.modelo.Estado;
 import gestion.academica.modelo.Rol;
 import gestion.academica.modelo.Usuario;
+import gestion.academica.servicio.BitacoraServicio;
 import gestion.academica.servicio.EstadoServicio;
 import gestion.academica.servicio.RolServicio;
 import gestion.academica.servicio.UsuarioServicio;
@@ -12,6 +14,7 @@ import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +35,8 @@ public class UsuarioBean extends Utilitario implements Serializable {
 	private EstadoServicio estadoServicio;
 	@EJB
 	private RolServicio rolServicio;
+	@EJB
+	private BitacoraServicio bitacoraServicio;
 	private List<Usuario> listaUsuarios;
 	private Usuario nuevoUsuario;
 	private boolean editarUsuario;
@@ -41,6 +46,7 @@ public class UsuarioBean extends Utilitario implements Serializable {
 	private Estado estadoInactivo;
 	private static final Logger LOGGER = Logger.getLogger(UsuarioBean.class
 			.getName());
+	private Bitacora bitacora;
 
 	@PostConstruct
 	public void iniciar() {
@@ -74,8 +80,11 @@ public class UsuarioBean extends Utilitario implements Serializable {
 
 	public String editarUsuario() {
 		try {
+			Date fechaActualizacion = new Date();
 			setEditarUsuario(false);
 			usuarioServicio.actualizar(nuevoUsuario);
+			bitacora = new Bitacora(fechaActualizacion, "Modificación de usuario: " + nuevoUsuario.getUsername(), this.getUsuario());
+            bitacoraServicio.crear(bitacora);
 			initValores();
 			this.ponerMensajeInfo("El usuario fue actualizado correctamente","");
 		} catch (Exception e) {
@@ -92,9 +101,12 @@ public class UsuarioBean extends Utilitario implements Serializable {
 
 	public void guardar() {
 		try {
+			Date fechaCreacion = new Date();
 			nuevoUsuario.setEstado(estadoActivo);
 			nuevoUsuario.setClave(Crypt.encryptMD5(nuevoUsuario.getClave()));
 			usuarioServicio.ingresar(nuevoUsuario);
+			bitacora = new Bitacora(fechaCreacion, "Creación de usuario: " + nuevoUsuario.getUsername(), this.getUsuario());
+            bitacoraServicio.crear(bitacora);
 			this.ponerMensajeInfo("El usuario fue creado correctamente", "");
 			initValores();
 		} catch (Exception e) {
@@ -104,8 +116,11 @@ public class UsuarioBean extends Utilitario implements Serializable {
 
 	public void eliminar() {
 		try {
+			Date fechaEliminacion = new Date();
 			eliminarUsuario.setEstado(estadoInactivo);
-			usuarioServicio.actualizar(eliminarUsuario);			
+			usuarioServicio.actualizar(eliminarUsuario);
+			bitacora = new Bitacora(fechaEliminacion, "Eliminación de usuario: " + eliminarUsuario.getUsername(), this.getUsuario());
+            bitacoraServicio.crear(bitacora);
 			obtenerlistaUsuarios();
 			eliminarUsuario = new Usuario();
 			this.ponerMensajeInfo("El usuario fue eliminado correctamente", "");
@@ -168,6 +183,14 @@ public class UsuarioBean extends Utilitario implements Serializable {
 
 	public void setEstadoInactivo(Estado estadoInactivo) {
 		this.estadoInactivo = estadoInactivo;
+	}
+
+	public Bitacora getBitacora() {
+		return bitacora;
+	}
+
+	public void setBitacora(Bitacora bitacora) {
+		this.bitacora = bitacora;
 	}
 
 }
