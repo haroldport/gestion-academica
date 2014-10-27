@@ -42,9 +42,6 @@
 		<url-pattern>*.faces</url-pattern>
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
-	<session-config>
-		<session-timeout>-1</session-timeout>
-	</session-config>
 	<listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener

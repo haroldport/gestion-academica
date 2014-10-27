@@ -35,6 +35,15 @@
 	text-decoration: none;
 }
 
+.MainMenu-title{
+	color: #00DBFF;
+	display: inline-block;
+	left: 0;
+	font-size: 0.7em;
+	margin: 0.2em 2em;
+	position: absolute;
+}
+
 .MainMenu-link2{	
 	background: orange !important;
 	border-radius: 2em !important;
@@ -265,4 +274,65 @@
 
 .footerT p:last-child{
 	margin-top: 0;
+}
+
+.styleMenu{
+	background: #E1E0E0;
+	border: 1px solid #e1e1e1;
+	border-radius: 10px;
+	font-size: 1em;
+	margin-top: -2.8em;
+}
+
+.contentModules{
+	border: none !important;
+	margin: 0 2em;
+	text-align: center;
+}
+
+.contentModulo{
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	width: 20em;
+}
+
+.btnModulo{
+	background: rgba(0,219,255,0.6) !important;
+	border: 2px solid #e1e1e1 !important;
+	border-radius: 20px;
+	font-weight: normal !important;
+	margin: 1em 0.2em 1em 0 !important;
+	padding: 3em !important;
+	width: 20em !important;
+}
+
+.datos{
+	margin-right: 2em;
+	padding: 4px;
+	width: 20em;
+	height: 145px;
+	background-color: rgba(255,255,255,0.8);
+	color: rgba(F255,255,255,0.8);
+	position: absolute;
+	cursor: pointer;
+	bottom: -108px;
+	left: 0px;
+	transition: 0.5s all ease-in-out;
+	-webkit-transition: 0.5s all ease-in-out;
+	-moz-transition: 0.5s all ease-in-out;
+}
+
+.datos:hover{
+	transform: translateY(-124px);
+	-webkit-transform: translateY(-124px);
+	-moz-transform: translateY(-124px);
+}
+
+.datos p:first-child{
+	margin-top: 0;
+}
+
+.datos p:last-child{
+	margin-top: 2em;
 }

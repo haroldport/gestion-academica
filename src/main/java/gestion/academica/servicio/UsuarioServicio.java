@@ -15,6 +15,14 @@ public class UsuarioServicio {
 	@EJB
 	private UsuarioDao usuarioDao;
 	
+	public void ingresar(Usuario usuario) throws Exception {
+        usuarioDao.create(usuario);
+    }
+	
+	public void actualizar(Usuario usuario) throws Exception {
+        usuarioDao.edit(usuario);
+    }
+	
 	/**
      * Obtener por username y clave
      * @param username

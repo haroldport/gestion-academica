@@ -36,7 +36,7 @@ public class Acceso implements Serializable {
 	private Acceso acceso;
 
 	//bi-directional many-to-one association to Acceso
-	@OneToMany(mappedBy="acceso")
+	@OneToMany(mappedBy="acceso", fetch = FetchType.EAGER)
 	private List<Acceso> accesos;
 
 	//bi-directional many-to-one association to Estado

@@ -1,11 +1,16 @@
 package gestion.academica.beans;
 
+import gestion.academica.modelo.Acceso;
+import gestion.academica.modelo.AccesoRol;
 import gestion.academica.modelo.Usuario;
+import gestion.academica.servicio.AccesoServicio;
 import gestion.academica.servicio.UsuarioServicio;
 import gestion.academica.utilitario.Crypt;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +22,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
+import org.primefaces.model.menu.Submenu;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,14 +45,22 @@ public class IndexBean implements Serializable {
 	
 	@EJB
 	private UsuarioServicio usuarioServicio;
+	@EJB
+	private AccesoServicio accesoServicio;
 	
 	private String username;
     private String password;
     private Usuario usuario;
+    private MenuModel menu;
+    private List<AccesoRol> listaAccesoRol;
+    private String claveAnterior;
+	private String claveActual;
+	private String claveActualRepetida;
     
     @PostConstruct
     public void init() {
         usuario = new Usuario();
+        listaAccesoRol = new ArrayList<>();
     }
     
 	public String login(){
@@ -72,12 +91,81 @@ public class IndexBean implements Serializable {
 	
 	public String verPrincipal() {
         try {
+        	listaAccesoRol = new ArrayList<>();
+        	this.listaAccesoRol.addAll(accesoServicio.obtenerAccesoPorRol(this.getUsuario().getRol(), "MODULO"));
         	 return "/principal.xhtml?faces-redirect=true";
         } catch (Exception e) {
         	e.printStackTrace();
         }
         return "";
     }
+	
+	public String navegar(AccesoRol accesoRol) {
+        List<AccesoRol> listaAccesoRolMenu = new ArrayList<>();
+        listaAccesoRolMenu.addAll(accesoServicio.obtenerAccesoPorRolModulo(usuario.getRol(), accesoRol.getAcceso()));
+        this.menu = new DefaultMenuModel();
+        for (AccesoRol menuDto : listaAccesoRolMenu) {
+            if (!menuDto.getAcceso().getTipo().equals("PAGINA")) {
+            	DefaultSubMenu submenu = new DefaultSubMenu();
+            	submenu.setLabel(menuDto.getAcceso().getEtiqueta());
+            	submenu.setId("manuId" + menuDto.getAcceso().getIdAcceso().intValue());
+            	submenu.setIcon("ui-icon-circle-plus");
+                cargarItems1(menuDto.getAcceso(), submenu, null);
+                menu.getElements().add(submenu);
+            }
+        }
+        System.out.println(accesoRol.getAcceso().getUrl());
+        return accesoRol.getAcceso().getUrl() + "?faces-redirect=true";
+    }
+
+    @SuppressWarnings("unchecked")
+	private DefaultMenuItem cargarItems1(Acceso acceso, Submenu menuPadre, DefaultMenuItem menuItem) {
+        for (Acceso menuDto : acceso.getAccesos()) {
+            if (menuDto.getAcceso() != null && menuDto.getEstado().getIdEstado() == 1) {
+                if (menuDto.getTipo().equals("PAGINA")) {
+                	DefaultMenuItem menuItem1 = new DefaultMenuItem();
+                    menuItem1.setValue(menuDto.getEtiqueta());
+                    menuItem1.setUrl(menuDto.getUrl());
+                    menuItem1.setId("manuId" + menuDto.getIdAcceso().intValue());
+                    menuItem1.setAjax(false);
+                    menuPadre.getElements().add(menuItem1);
+                } else {
+                	DefaultSubMenu submenuHijo = new DefaultSubMenu();
+                    submenuHijo.setLabel(menuDto.getEtiqueta());
+                    submenuHijo.setId("manuId" + menuDto.getIdAcceso().intValue());
+                    menuPadre.getElements().add(submenuHijo);
+                    DefaultMenuItem menues = cargarItems1(menuDto, submenuHijo, menuItem);
+                    if (menues != null) {
+                        submenuHijo.getElements().add(menues);
+                    }
+                }
+            }
+        }
+        return menuItem;
+    }
+    
+    public void cambiarClave() throws Exception{
+		RequestContext context = RequestContext.getCurrentInstance();
+		FacesMessage msg = null;
+		boolean clave = false;
+		if (Crypt.encryptMD5(claveAnterior).equals(this.usuario.getClave())) {			
+			if(claveActual.equals(claveActualRepetida)){
+				clave = true;
+				this.usuario.setClave(Crypt.encryptMD5(claveActual));
+				usuarioServicio.actualizar(this.usuario);
+				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Confirmación!! La clave fue cambiada éxitosamente", "");
+			}else{
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!! La nueva clave y la confirmación no coinciden",
+						"");
+			}			
+		} else {
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!! La clave anterior es incorrecta",
+					"");
+		}
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		context.addCallbackParam("clave", clave);
+	}
     
 	public String getUsername() {
 		return username;
@@ -101,6 +189,46 @@ public class IndexBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}    
+	}
+
+	public MenuModel getMenu() {
+		return menu;
+	}
+
+	public void setMenu(MenuModel menu) {
+		this.menu = menu;
+	}
+
+	public List<AccesoRol> getListaAccesoRol() {
+		return listaAccesoRol;
+	}
+
+	public void setListaAccesoRol(List<AccesoRol> listaAccesoRol) {
+		this.listaAccesoRol = listaAccesoRol;
+	}
+
+	public String getClaveAnterior() {
+		return claveAnterior;
+	}
+
+	public void setClaveAnterior(String claveAnterior) {
+		this.claveAnterior = claveAnterior;
+	}
+
+	public String getClaveActual() {
+		return claveActual;
+	}
+
+	public void setClaveActual(String claveActual) {
+		this.claveActual = claveActual;
+	}
+
+	public String getClaveActualRepetida() {
+		return claveActualRepetida;
+	}
+
+	public void setClaveActualRepetida(String claveActualRepetida) {
+		this.claveActualRepetida = claveActualRepetida;
+	}	
 
 }

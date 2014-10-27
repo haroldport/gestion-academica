@@ -43,7 +43,7 @@ public class UsuarioDao extends Generico<Usuario> {
      */
     public Usuario obtenerUsuarioPorUsernameYClave(String username, String clave) {
         try {
-            String sql = "SELECT u FROM Usuario u WHERE u.username = :username "
+            String sql = "SELECT u FROM Usuario u WHERE u.username = :username AND u.estado.idEstado = 1 "
             		+ "AND u.clave = :clave";
             Query query = getEntityManager().createQuery(sql);
             query.setParameter("username", username);
@@ -63,7 +63,7 @@ public class UsuarioDao extends Generico<Usuario> {
      */
     @SuppressWarnings("unchecked")
 	public List<Usuario> listarUsuarios() {
-        String sql = "SELECT u FROM Usuario u ORDER BY u.username";
+        String sql = "SELECT u FROM Usuario u WHERE u.estado.idEstado = 1 ORDER BY u.username";
         return this.getEntityManager().createQuery(sql).getResultList();
     }
 

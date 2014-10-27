@@ -20,135 +20,146 @@
 				<h:form id="formPrincipal">
 					<ul class="MainMenu-list">
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#nosotros">Nosotros</a>
-						</li>
+							href="#nosotros">Nosotros</a></li>
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#perfil">Perfil</a>
-						</li>
+							href="#perfil">Perfil</a></li>
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#cursos">Cursos</a>
-						</li>
+							href="#cursos">Cursos</a></li>
 						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="#contacto">Contacto</a>
-						</li>
-						<li class="MainMenu-item">
-							<p:commandLink rendered="#{indexBean.usuario.username == null}"
+							href="#contacto">Contacto</a></li>
+						<li class="MainMenu-item"><p:commandLink
+								rendered="#{indexBean.usuario.username == null}"
 								onclick="PF('dlg').show();"
-								styleClass="icon-login MainMenu-link2" value="Login" />
-							<p:commandLink rendered="#{indexBean.usuario.username != null}"
+								styleClass="icon-login MainMenu-link2" value="Login" /> <p:commandLink
+								rendered="#{indexBean.usuario.username != null}" id="user"
 								styleClass="MainMenu-user" action="#{indexBean.verPrincipal}"
-								value="Bienvenido #{indexBean.usuario.username}!" />
-							<p:outputPanel styleClass="MainMenu-panel" rendered="#{indexBean.usuario.username != null}">
-	                            <a class="MainMenu-user" href="#{facesContext.externalContext.requestContextPath}/logout">
-	                                Cerrar sesión
-	                            </a>
-                        	</p:outputPanel>
-						</li>
-						<li class="MainMenu-item">
-							<p:commandLink
+								value="Bienvenid@ #{indexBean.usuario.username}!" /> 
+								<p:contextMenu for="user">
+									<p:menuitem value="Cambiar clave"
+									update=":formPrincipal, :formClave" icon="ui-icon-transferthick-e-w"
+									onclick="PF('dlgClave').show();" />
+								</p:contextMenu>
+								<p:outputPanel
+								styleClass="MainMenu-panel"
+								rendered="#{indexBean.usuario.username != null}">
+								<a class="MainMenu-user"
+									href="#{facesContext.externalContext.requestContextPath}/logout">
+									Cerrar sesión </a>
+							</p:outputPanel></li>
+						<li class="MainMenu-item"><p:commandLink
 								onclick="PF('dlg1').show();"
-								styleClass="icon-login MainMenu-link2" value="Registro" />
-						</li>
+								styleClass="icon-login MainMenu-link2" value="Registro" /></li>
 					</ul>
 				</h:form>
 			</div>
 			<div class="Header-imageContainer">
-				<p:graphicImage styleClass="Header-image" library="images"
-					name="logo.jpg" />
-				<div class="Header-imageDescription">
-					<a class="Header-link" href="http://twitter.com/GeorgeRiveraF"
-						target="_blank">@GeorgeRiveraF</a>
-				</div>
-				<p class="Header-name">JRivera Consulting</p>
+				<h:form>
+					<p:graphicImage styleClass="Header-image" library="images"
+						name="logo.jpg" />
+					<div class="Header-imageDescription">
+						<a class="Header-link" href="http://twitter.com/GeorgeRiveraF"
+							target="_blank">@GeorgeRiveraF</a>
+					</div>
+					<p class="Header-name">JRivera Consulting</p>
+				</h:form>
 			</div>
 		</div>
 		<div id="perfil" class="Profile">
-			<h2 class="Profile-title u-title">Perfil</h2>
-			<p class="Profile-description">
-				Hola! Si llegaste hasta aquí, puedes ver los <em>servicios</em> que
-				brindamos y contactarnos. <strong>JRivera Consulting -
-					Asesoría sin límites.</strong>
-			</p>
-			<a class="icon-twitter Profile-link"
-				href="http://twitter.com/GeorgeRiveraF" target="_blank">@GeorgeRiveraF</a>
-			<a class="icon-facebook Profile-link"
-				href="http://facebook.com/haroldportocarrero" target="_blank">JRivera
-				Consulting</a> <a class="icon-linkedin Profile-link"
-				href="https://www.linkedin.com/profile/view?id=248715191"
-				target="_blank">JRivera Consulting</a> <a
-				class="icon-skype Profile-link" href="#">jrivf24</a>
-			<ul class="Profile-service">
-				<li class="Profile-serviceItem"><span class="icon-link"></span>Consultoría</li>
-				<li class="Profile-serviceItem"><span class="icon-link"></span>Capacitación</li>
-				<li class="Profile-serviceItem"><span class="icon-link"></span>Asesoría</li>
-				<li class="Profile-serviceItem"><span class="icon-link"></span>Emulación
-					de procesos</li>
-				<li class="Profile-serviceItem"><span class="icon-link"></span>Preparación
-					de oferta técnica</li>
-			</ul>
+			<h:form>
+				<h2 class="Profile-title u-title">Perfil</h2>
+				<p class="Profile-description">
+					Hola! Si llegaste hasta aquí, puedes ver los <em>servicios</em> que
+					brindamos y contactarnos. <strong>JRivera Consulting -
+						Asesoría sin límites.</strong>
+				</p>
+				<a class="icon-twitter Profile-link"
+					href="http://twitter.com/GeorgeRiveraF" target="_blank">@GeorgeRiveraF</a>
+				<a class="icon-facebook Profile-link"
+					href="http://facebook.com/haroldportocarrero" target="_blank">JRivera
+					Consulting</a>
+				<a class="icon-linkedin Profile-link"
+					href="https://www.linkedin.com/profile/view?id=248715191"
+					target="_blank">JRivera Consulting</a>
+				<a class="icon-skype Profile-link" href="#">jrivf24</a>
+				<ul class="Profile-service">
+					<li class="Profile-serviceItem"><span class="icon-link"></span>Consultoría</li>
+					<li class="Profile-serviceItem"><span class="icon-link"></span>Capacitación</li>
+					<li class="Profile-serviceItem"><span class="icon-link"></span>Asesoría</li>
+					<li class="Profile-serviceItem"><span class="icon-link"></span>Emulación
+						de procesos</li>
+					<li class="Profile-serviceItem"><span class="icon-link"></span>Preparación
+						de oferta técnica</li>
+				</ul>
+			</h:form>
 		</div>
 
 		<div id="cursos" class="Curso">
-			<h2 class="Curso-title u-title">Cursos</h2>
-			<p class="Profile-description">
-				Si quieres obtener información relevante acerca de Normativa,
-				procedimientos, y tips de creación de procesos de compras públicas,
-				<strong>regístrate a nuestra página!!!</strong>, es súper rápido y
-				no tiene costo alguno. Además si te matriculas en cualquiera <em>--sí
-					en cualquiera--</em> de nuestros cursos podrás tener acceso a una
-				plataforma de emulación de procesos.
-			</p>
-			<div class="Curso-item">
-				<div class="Curso-imageContainer">
-					<p:graphicImage styleClass="Curso-image" library="images"
-						name="oferta.jpg" />
-					<div class="Curso-imageDescription">Curso de manejo del
-						portal de Compras Públicas</div>
-					<a class="Profile-link" href="#">Preinscripción</a>
+			<h:form>
+				<h2 class="Curso-title u-title">Cursos</h2>
+				<p class="Profile-description">
+					Si quieres obtener información relevante acerca de Normativa,
+					procedimientos, y tips de creación de procesos de compras públicas,
+					<strong>regístrate a nuestra página!!!</strong>, es súper rápido y
+					no tiene costo alguno. Además si te matriculas en cualquiera <em>--sí
+						en cualquiera--</em> de nuestros cursos podrás tener acceso a una
+					plataforma de emulación de procesos.
+				</p>
+				<div class="Curso-item">
+					<div class="Curso-imageContainer">
+						<p:graphicImage styleClass="Curso-image" library="images"
+							name="oferta.jpg" />
+						<div class="Curso-imageDescription">Curso de manejo del
+							portal de Compras Públicas</div>
+						<a class="Profile-link" href="#">Preinscripción</a>
+					</div>
 				</div>
-			</div>
-			<div class="Curso-item">
-				<div class="Curso-imageContainer">
-					<p:graphicImage styleClass="Curso-image" library="images"
-						name="oferta.jpg" />
-					<div class="Curso-imageDescription">Curso de Oferta Técnica</div>
-					<a class="Profile-link" href="#">Preinscripción</a>
+				<div class="Curso-item">
+					<div class="Curso-imageContainer">
+						<p:graphicImage styleClass="Curso-image" library="images"
+							name="oferta.jpg" />
+						<div class="Curso-imageDescription">Curso de Oferta Técnica</div>
+						<a class="Profile-link" href="#">Preinscripción</a>
+					</div>
 				</div>
-			</div>
-			<div class="Curso-item">
-				<div class="Curso-imageContainer">
-					<p:graphicImage styleClass="Curso-image" library="images"
-						name="oferta.jpg" />
-					<div class="Curso-imageDescription">Curso de elaboración de
-						pliegos</div>
-					<a class="Profile-link" href="#">Preinscripción</a>
+				<div class="Curso-item">
+					<div class="Curso-imageContainer">
+						<p:graphicImage styleClass="Curso-image" library="images"
+							name="oferta.jpg" />
+						<div class="Curso-imageDescription">Curso de elaboración de
+							pliegos</div>
+						<a class="Profile-link" href="#">Preinscripción</a>
+					</div>
 				</div>
-			</div>
+			</h:form>
 		</div>
 
 		<div id="contacto" class="Footer">
-			<div class="Footer-left">
-				<h3 class="Footer-title">Contacto</h3>
-				<p class="Footer-description">Si tienes alguna consulta, duda o
-					sugerencia, por favor ponte en contacto con nosotros a través de
-					este formulario, o llámanos a los siguientes números: 046027996 -
-					0994919698 - 0990259972</p>
-			</div>
-			<form class="Footer-form">
-				<p:inputText id="nombre" size="25" styleClass="Footer-formInput" />
-				<p:watermark for="nombre" value="Nombre" />
-				<p:inputText id="email" size="25" styleClass="Footer-formInput" />
-				<p:watermark for="email" value="Email" />
-				<p:inputTextarea id="motivo" cols="25" styleClass="Footer-textarea" />
-				<p:watermark for="motivo" value="Motivo" />
-				<button class="Footer-button" type="submit">Contactar</button>
-			</form>
+			<h:form>
+				<div class="Footer-left">
+					<h3 class="Footer-title">Contacto</h3>
+					<p class="Footer-description">Si tienes alguna consulta, duda o
+						sugerencia, por favor ponte en contacto con nosotros a través de
+						este formulario, o llámanos a los siguientes números: 046027996 -
+						0994919698 - 0990259972</p>
+				</div>
+				<form class="Footer-form">
+					<p:inputText id="nombre" size="25" styleClass="Footer-formInput" />
+					<p:watermark for="nombre" value="Nombre" />
+					<p:inputText id="email" size="25" styleClass="Footer-formInput" />
+					<p:watermark for="email" value="Email" />
+					<p:inputTextarea id="motivo" cols="25" styleClass="Footer-textarea" />
+					<p:watermark for="motivo" value="Motivo" />
+					<button class="Footer-button" type="submit">Contactar</button>
+				</form>
+			</h:form>
 		</div>
 
 		<p:dialog styleClass="Login-dialogo" id="dlgLogin" widgetVar="dlg"
 			header="¡Inicia sesión y empieza a aprender con los mejores!"
 			width="480" resizable="false" showEffect="clip" hideEffect="clip">
 			<h:form id="formLogin">
+				<p:growl id="messages" showDetail="false" life="5000"
+					autoUpdate="true" />
 				<p class="Profile-description">Si no tienes un usuario aún,
 					regístrate!</p>
 				<h:panelGrid columns="2">
@@ -186,6 +197,44 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
+		
+		<p:dialog id="dlgPass" widgetVar="dlgClave" header="Cambio de clave"
+		width="600" resizable="false" showEffect="explode" hideEffect="bounce" position="center top">
+			<h:form id="formClave">
+				<p:growl id="growl" life="5000" autoUpdate="true" />
+				<h:panelGrid columns="2">
+					<h:outputText value="Clave anterior: " />
+					<p:password size="35" value="#{indexBean.claveAnterior}" feedback="true" promptLabel="Ingrese la clave anterior"
+							required="true" requiredMessage="La clave anterior es requerida!"
+							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+							strongLabel="Seguridad fuerte" />
+					<h:outputText value="Nueva clave: " />
+					<p:password size="35" value="#{indexBean.claveActual}" feedback="true" promptLabel="Ingrese la clave actual"
+							required="true" requiredMessage="La clave actual es requerida!"
+							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+							strongLabel="Seguridad fuerte" />
+					<h:outputText value="Confirmar nueva clave: " />
+					<p:password size="35" value="#{indexBean.claveActualRepetida}" feedback="true" promptLabel="Repita la clave actual"
+							required="true" requiredMessage="Repetir la clave actual es requerido!"
+							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+							strongLabel="Seguridad fuerte"/>
+					<p:columnGroup />
+					<p:commandButton value="Cambiar clave" action="#{indexBean.cambiarClave}"
+									 oncomplete="handleLoginRequest(xhr, status, args)" styleClass="btnClic" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		<script type="text/javascript">
+			function handleLoginRequest(xhr, status, args) {
+				if (args.validationFailed || !args.clave) {
+					dlgClave.jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					dlgClave.hide();
+				}
+			}
+		</script>
 
 	</h:body>
 </f:view>
