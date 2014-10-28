@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formCatalogoDetalle">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab">
+				<p:tab title="Administración de catálogos detalle">
+					<center>
+						<p:outputPanel>
+							<h:panelGrid columns="2">
+								<h:outputLabel class="label" value="Catálogos:" />
+								<p:outputPanel>
+									<p:selectOneMenu id="catalogo" style="width: 313px;"
+										value="#{catalogoDetalleBean.nuevoCatalogoDetalle.catalogo.idCatalogo}"
+										required="true"
+										requiredMessage="El campo Catalogo es requerido!">
+										<f:selectItem itemValue=""
+											itemLabel="-- Seleccione un Catálogo --" />
+										<f:selectItems value="#{catalogoDetalleBean.listaCatalogos}"
+											var="cat" itemValue="#{cat.idCatalogo}"
+											itemLabel="#{cat.nombre}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								
+								<h:outputLabel class="label" value="Nombre: " />
+								<p:outputPanel>
+									<p:inputText id="nombre" styleClass="lblbtn" size="28"
+										value="#{catalogoDetalleBean.nuevoCatalogoDetalle.nombre}"
+										required="true"
+										requiredMessage="El campo Nombre es requerido!"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Descripción: " />
+								<p:outputPanel>
+									<p:inputText id="descripcion" styleClass="lblbtn" size="28"
+										value="#{catalogoDetalleBean.nuevoCatalogoDetalle.descripcion}"
+										required="false" style="text-transform: uppercase"
+										onchange="toUpperCase(this)" />
+									<h:outputText value=" " style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Nemónico: " />
+								<p:outputPanel>
+									<p:inputText id="nemonico" styleClass="lblbtn" size="28"
+										value="#{catalogoDetalleBean.nuevoCatalogoDetalle.nemonico}"
+										required="true"
+										requiredMessage="El campo Nemónico es requerido!"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+							</h:panelGrid>
+							<br />
+							<p:commandButton value="Editar"
+								action="#{catalogoDetalleBean.editarCatalogoDetalle()}"
+								rendered="#{catalogoDetalleBean.editarCatalogoDetalle}"
+								update=":formCatalogoDetalle:tab" process="@all"
+								styleClass="btnClic" />
+							<p:commandButton value="Guardar"
+								action="#{catalogoDetalleBean.guardar()}"
+								update=":formCatalogoDetalle:tab" process="@all"
+								styleClass="btnClic"
+								rendered="#{!catalogoDetalleBean.editarCatalogoDetalle}" />
+							<p:commandButton value="Cancelar" process="@this"
+								action="#{catalogoDetalleBean.iniciar()}"
+								update=":formCatalogoDetalle:tab" styleClass="btnClic" />
+							<br />
+							<br />
+						</p:outputPanel>
+						<div class="footerTabla">
+							<p:outputPanel id="panelTabla">
+								<p:dataTable value="#{catalogoDetalleBean.listaCatalogoDetalle}"
+									var="catDet"
+									rendered="#{catalogoDetalleBean.listaCatalogoDetalle.size() > 0}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorPosition="bottom" rows="5" paginator="true"
+									rowsPerPageTemplate="5,10,15,20,25,30"
+									tableStyle="table-layout:auto;width:100%;">
+
+									<p:column styleClass="wrap" headerText="Catálogo">
+										<h:outputText value="#{catDet.catalogo.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Nombre">
+										<h:outputText value="#{catDet.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Descripción">
+										<h:outputText value="#{catDet.descripcion}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Nemónico">
+										<h:outputText value="#{catDet.nemonico}" />
+									</p:column>
+
+									<p:column headerText="Editar" styleClass="classBtn">
+										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
+											update=":formCatalogoDetalle" process="@this"
+											action="#{catalogoDetalleBean.editarCatalogoDetalle(catDet)}" />
+										<p:tooltip for="cbEditar" value="Editar #{catDet.nombre}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+
+									<p:column headerText="Eliminar" styleClass="classBtn">
+										<p:commandButton id="cbEliminar" icon="ui-icon-trash"
+											update=":formCatalogoDetalle" process="@this"
+											actionListener="#{catalogoDetalleBean.seleccionarCatalogoDetalle(catDet)}"
+											oncomplete="dlgEliminar.show()" />
+										<p:tooltip for="cbEliminar" value="Eliminar #{catDet.nombre}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+						</div>
+					</center>
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
+				message="Desea eliminar el catálogo detalle: #{catalogoDetalleBean.eliminarCatalogoDetalle.nombre}?"
+				header="Eliminar #{catalogoDetalleBean.eliminarCatalogoDetalle.nombre}"
+				severity="alert" widgetVar="dlgEliminar">
+				<p:commandButton value="Si" update=":formCatalogoDetalle"
+					oncomplete="dlgEliminar.hide()" process="@this"
+					actionListener="#{catalogoDetalleBean.eliminar()}" />
+				<p:commandButton value="No" update=":formCatalogoDetalle"
+					onclick="dlgEliminar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
