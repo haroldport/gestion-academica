@@ -66,5 +66,23 @@ public class UsuarioDao extends Generico<Usuario> {
         String sql = "SELECT u FROM Usuario u WHERE u.estado.idEstado = 1 ORDER BY u.username";
         return this.getEntityManager().createQuery(sql).getResultList();
     }
+    
+    /**
+     * Obtener por username
+     * @param username
+     * @return
+     */
+    public Usuario obtenerUsuarioPorUsername(String username) {
+        try {
+            String sql = "SELECT u FROM Usuario u WHERE u.username = :username AND u.estado.idEstado = 1 ";
+            Query query = getEntityManager().createQuery(sql);
+            query.setParameter("username", username);
+            Usuario usuario = query.getResultList() != null && !query.getResultList().isEmpty() ? (Usuario) query.getResultList().get(0) : null;
+            return usuario;
+        } catch (Exception e) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
 
 }

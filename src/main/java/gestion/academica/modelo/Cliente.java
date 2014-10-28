@@ -52,6 +52,11 @@ public class Cliente implements Serializable {
 	//bi-directional many-to-one association to Preinscripcion
 	@OneToMany(mappedBy="cliente")
 	private List<Preinscripcion> preinscripcions;
+	
+	//bi-directional many-to-one association to Usuario
+	@ManyToOne
+	@JoinColumn(name="id_usuario")
+	private Usuario usuario;
 
 	public Cliente() {
 	}
@@ -126,6 +131,14 @@ public class Cliente implements Serializable {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public List<Llamada> getLlamadas() {

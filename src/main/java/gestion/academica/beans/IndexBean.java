@@ -2,14 +2,17 @@ package gestion.academica.beans;
 
 import gestion.academica.modelo.Acceso;
 import gestion.academica.modelo.AccesoRol;
+import gestion.academica.modelo.Bitacora;
 import gestion.academica.modelo.Usuario;
 import gestion.academica.servicio.AccesoServicio;
+import gestion.academica.servicio.BitacoraServicio;
 import gestion.academica.servicio.UsuarioServicio;
 import gestion.academica.utilitario.Crypt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
@@ -47,6 +51,8 @@ public class IndexBean implements Serializable {
 	private UsuarioServicio usuarioServicio;
 	@EJB
 	private AccesoServicio accesoServicio;
+	@EJB
+	private BitacoraServicio bitacoraServicio;
 	
 	private String username;
     private String password;
@@ -56,10 +62,16 @@ public class IndexBean implements Serializable {
     private String claveAnterior;
 	private String claveActual;
 	private String claveActualRepetida;
+	private Bitacora bitacora;
+	private Usuario usuarioRegistro;
+	
+	@ManagedProperty(value = "#{clienteBean}")
+    private ClienteBean clienteBean;
     
     @PostConstruct
     public void init() {
         usuario = new Usuario();
+        usuarioRegistro = usuarioServicio.obtenerUsuarioPorUsername("usuario_registro");
         listaAccesoRol = new ArrayList<>();
     }
     
@@ -167,6 +179,26 @@ public class IndexBean implements Serializable {
 		context.addCallbackParam("clave", clave);
 	}
     
+    public void registrar(){
+    	RequestContext context = RequestContext.getCurrentInstance();
+    	FacesMessage msg = null;
+    	boolean registro = false;
+    	Date fechaCreacion = new Date();
+    	try{
+    		String nombreCliente = clienteBean.getNuevoCliente().getNombres();
+    		clienteBean.guardar();
+        	bitacora = new Bitacora(fechaCreacion, "Creación de cliente: " + nombreCliente, usuarioRegistro);
+            bitacoraServicio.crear(bitacora);
+            registro = true;
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+    				"Confirmación!! Registro realizado con éxito", "");
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	FacesContext.getCurrentInstance().addMessage(null, msg);
+    	context.addCallbackParam("registro", registro);
+    }
+    
 	public String getUsername() {
 		return username;
 	}
@@ -229,6 +261,30 @@ public class IndexBean implements Serializable {
 
 	public void setClaveActualRepetida(String claveActualRepetida) {
 		this.claveActualRepetida = claveActualRepetida;
-	}	
+	}
+
+	public ClienteBean getClienteBean() {
+		return clienteBean;
+	}
+
+	public void setClienteBean(ClienteBean clienteBean) {
+		this.clienteBean = clienteBean;
+	}
+
+	public Bitacora getBitacora() {
+		return bitacora;
+	}
+
+	public void setBitacora(Bitacora bitacora) {
+		this.bitacora = bitacora;
+	}
+
+	public Usuario getUsuarioRegistro() {
+		return usuarioRegistro;
+	}
+
+	public void setUsuarioRegistro(Usuario usuarioRegistro) {
+		this.usuarioRegistro = usuarioRegistro;
+	}
 
 }

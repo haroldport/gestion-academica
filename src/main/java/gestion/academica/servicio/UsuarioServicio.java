@@ -41,5 +41,14 @@ public class UsuarioServicio {
 	public List<Usuario> listarUsuarios() {
     	return usuarioDao.listarUsuarios();
     }
+	
+	/**
+     * Obtener por username
+     * @param username
+     * @return
+     */
+    public Usuario obtenerUsuarioPorUsername(String username) {
+    	return usuarioDao.obtenerUsuarioPorUsername(username);
+    }
 
 }

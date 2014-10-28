@@ -33,6 +33,10 @@ public class Usuario implements Serializable {
 	//bi-directional many-to-one association to Estudiante
 	@OneToMany(mappedBy="usuario")
 	private List<Estudiante> estudiantes;
+	
+	//bi-directional many-to-one association to Cliente
+	@OneToMany(mappedBy="usuario")
+	private List<Cliente> clientes;
 
 	//bi-directional many-to-one association to Estado
 	@ManyToOne
@@ -113,6 +117,14 @@ public class Usuario implements Serializable {
 		estudiante.setUsuario(null);
 
 		return estudiante;
+	}
+
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
 	}
 
 	public Estado getEstado() {

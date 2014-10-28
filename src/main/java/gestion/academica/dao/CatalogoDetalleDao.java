@@ -45,7 +45,8 @@ public class CatalogoDetalleDao extends Generico<CatalogoDetalle> {
 	public List<CatalogoDetalle> obtenerPorCatalogoNemonico(String nemonico) {
         try {
             String sql = "SELECT c FROM CatalogoDetalle c WHERE c.estado.idEstado = 1 "
-            		+ "AND c.catalogo.nemonico = :nemonico";
+            		+ "AND c.catalogo.nemonico = :nemonico "
+            		+ "ORDER BY c.idCatalogoDetalle";
             Query query = getEntityManager().createQuery(sql);
             query.setParameter("nemonico", nemonico);
             List<CatalogoDetalle> catalogosDetalle = query.getResultList() != null && !query.getResultList().isEmpty() ? (List<CatalogoDetalle>) query.getResultList() : null;
