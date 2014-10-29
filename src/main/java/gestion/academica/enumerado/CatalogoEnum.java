@@ -7,6 +7,10 @@ public enum CatalogoEnum {
      */
     TIPO_DOCUMENTO("TIPDO"),
     /**
+     * Tipo de persona.
+     */
+    TIPO_PERSONA("TIPPE"),
+    /**
      * Tipo de proceso.
      */
     TIPO_PROCESO("TIPPR");
