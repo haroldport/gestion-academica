@@ -57,8 +57,8 @@
 					<p:graphicImage styleClass="Header-image" library="images"
 						name="logo.jpg" />
 					<div class="Header-imageDescription">
-						<a class="Header-link" href="http://twitter.com/GeorgeRiveraF"
-							target="_blank">@GeorgeRiveraF</a>
+						<a class="Header-link" href="https://twitter.com/JRiveraConsult"
+							target="_blank">@JRiveraConsult</a>
 					</div>
 					<p class="Header-name">JRivera Consulting</p>
 				</h:form>
@@ -73,9 +73,9 @@
 						Asesoría sin límites.</strong>
 				</p>
 				<a class="icon-twitter Profile-link"
-					href="http://twitter.com/GeorgeRiveraF" target="_blank">@GeorgeRiveraF</a>
+					href="https://twitter.com/JRiveraConsult" target="_blank">@JRiveraConsult</a>
 				<a class="icon-facebook Profile-link"
-					href="http://facebook.com/haroldportocarrero" target="_blank">JRivera
+					href="https://www.facebook.com/jriveraconsulting" target="_blank">JRivera
 					Consulting</a>
 				<a class="icon-linkedin Profile-link"
 					href="https://www.linkedin.com/profile/view?id=248715191"
@@ -196,6 +196,19 @@
 							requiredMessage="El campo Tipo de documento es requerido!">
 							<f:selectItem itemValue="" itemLabel="-- Seleccione un Tipo --" />
 							<f:selectItems value="#{indexBean.clienteBean.tiposDocumento}"
+								var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
+								itemLabel="#{tipo.nombre}" />
+						</p:selectOneMenu>
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Tipo de persona:" />
+					<p:outputPanel>
+						<p:selectOneMenu id="tipoPersona" style="width: 220px;"
+							value="#{indexBean.clienteBean.nuevoCliente.tipoPersona.idCatalogoDetalle}"
+							required="true"
+							requiredMessage="El campo Tipo de persona es requerido!">
+							<f:selectItem itemValue="" itemLabel="-- Seleccione un Tipo --" />
+							<f:selectItems value="#{indexBean.clienteBean.tiposPersona}"
 								var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
 								itemLabel="#{tipo.nombre}" />
 						</p:selectOneMenu>

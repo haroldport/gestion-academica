@@ -39,6 +39,10 @@ public class CatalogoDetalle implements Serializable {
 	//bi-directional many-to-one association to Cliente
 	@OneToMany(mappedBy="catalogoDetalle")
 	private List<Cliente> clientes;
+	
+	//bi-directional many-to-one association to Cliente
+	@OneToMany(mappedBy="tipoPersona")
+	private List<Cliente> clientesTipoPersona;
 
 	//bi-directional many-to-one association to Instructor
 	@OneToMany(mappedBy="catalogoDetalle")
@@ -105,6 +109,15 @@ public class CatalogoDetalle implements Serializable {
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+	
+
+	public List<Cliente> getClientesTipoPersona() {
+		return clientesTipoPersona;
+	}
+
+	public void setClientesTipoPersona(List<Cliente> clientesTipoPersona) {
+		this.clientesTipoPersona = clientesTipoPersona;
 	}
 
 	public Cliente addCliente(Cliente cliente) {

@@ -39,6 +39,11 @@ public class Cliente implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_tipo_documento")
 	private CatalogoDetalle catalogoDetalle;
+	
+	//bi-directional many-to-one association to CatalogoDetalle
+	@ManyToOne
+	@JoinColumn(name="id_tipo_persona")
+	private CatalogoDetalle tipoPersona;
 
 	//bi-directional many-to-one association to Estado
 	@ManyToOne
@@ -123,6 +128,14 @@ public class Cliente implements Serializable {
 
 	public void setCatalogoDetalle(CatalogoDetalle catalogoDetalle) {
 		this.catalogoDetalle = catalogoDetalle;
+	}
+
+	public CatalogoDetalle getTipoPersona() {
+		return tipoPersona;
+	}
+
+	public void setTipoPersona(CatalogoDetalle tipoPersona) {
+		this.tipoPersona = tipoPersona;
 	}
 
 	public Estado getEstado() {
