@@ -44,6 +44,11 @@ public class Cliente implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_tipo_persona")
 	private CatalogoDetalle tipoPersona;
+	
+	//bi-directional many-to-one association to CatalogoDetalle
+	@ManyToOne
+	@JoinColumn(name="id_ciudad")
+	private CatalogoDetalle ciudad;
 
 	//bi-directional many-to-one association to Estado
 	@ManyToOne
@@ -136,6 +141,14 @@ public class Cliente implements Serializable {
 
 	public void setTipoPersona(CatalogoDetalle tipoPersona) {
 		this.tipoPersona = tipoPersona;
+	}
+
+	public CatalogoDetalle getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(CatalogoDetalle ciudad) {
+		this.ciudad = ciudad;
 	}
 
 	public Estado getEstado() {

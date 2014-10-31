@@ -187,28 +187,28 @@
 				<p class="Profile-description">Al registrarte, puedes acceder
 					inmediatamente a información de interés en lo que respecta a
 					procesos de contratación pública.</p>
-				<h:panelGrid columns="2">
-					<h:outputLabel value="Tipo de documento:" />
-					<p:outputPanel>
-						<p:selectOneMenu id="tipo" style="width: 220px;"
-							value="#{indexBean.clienteBean.nuevoCliente.catalogoDetalle.idCatalogoDetalle}"
-							required="true"
-							requiredMessage="El campo Tipo de documento es requerido!">
-							<f:selectItem itemValue="" itemLabel="-- Seleccione un Tipo --" />
-							<f:selectItems value="#{indexBean.clienteBean.tiposDocumento}"
-								var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
-								itemLabel="#{tipo.nombre}" />
-						</p:selectOneMenu>
-						<h:outputText value=" *" style="color: red" />
-					</p:outputPanel>
+				<h:panelGrid columns="2">					
 					<h:outputLabel value="Tipo de persona:" />
 					<p:outputPanel>
 						<p:selectOneMenu id="tipoPersona" style="width: 220px;"
 							value="#{indexBean.clienteBean.nuevoCliente.tipoPersona.idCatalogoDetalle}"
 							required="true"
 							requiredMessage="El campo Tipo de persona es requerido!">
-							<f:selectItem itemValue="" itemLabel="-- Seleccione un Tipo --" />
+							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
 							<f:selectItems value="#{indexBean.clienteBean.tiposPersona}"
+								var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
+								itemLabel="#{tipo.nombre}" />
+						</p:selectOneMenu>
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Tipo de documento:" />
+					<p:outputPanel>
+						<p:selectOneMenu id="tipo" style="width: 220px;"
+							value="#{indexBean.clienteBean.nuevoCliente.catalogoDetalle.idCatalogoDetalle}"
+							required="true"
+							requiredMessage="El campo Tipo de documento es requerido!">
+							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+							<f:selectItems value="#{indexBean.clienteBean.tiposDocumento}"
 								var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
 								itemLabel="#{tipo.nombre}" />
 						</p:selectOneMenu>
@@ -229,6 +229,19 @@
 							value="#{indexBean.clienteBean.nuevoCliente.nombres}"
 							required="true" requiredMessage="El campo Nombres es requerido!"
 							style="text-transform: uppercase" onchange="toUpperCase(this)" />
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Ciudad:" />
+					<p:outputPanel>
+						<p:selectOneMenu id="ciudad" style="width: 220px;"
+							value="#{indexBean.clienteBean.nuevoCliente.ciudad.idCatalogoDetalle}"
+							required="true"
+							requiredMessage="El campo Ciudad es requerido!">
+							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+							<f:selectItems value="#{indexBean.clienteBean.ciudades}"
+								var="ciudad" itemValue="#{ciudad.idCatalogoDetalle}"
+								itemLabel="#{ciudad.nombre}" />
+						</p:selectOneMenu>
 						<h:outputText value=" *" style="color: red" />
 					</p:outputPanel>
 					<h:outputLabel value="Dirección: " />
@@ -270,7 +283,7 @@
 					</p:outputPanel>
 					<h:outputLabel value="Password:" />
 					<p:outputPanel>
-						<p:password styleClass="Login-input" feedback="true"
+						<p:password styleClass="Login-input" feedback="true" size="24"
 							value="#{indexBean.clienteBean.nuevoCliente.usuario.clave}" promptLabel="Ingrese su clave"
 							required="true" requiredMessage="La clave es requerida!"
 							weakLabel="Seguridad baja" goodLabel="Seguridad buena"

@@ -48,6 +48,7 @@ public class ClienteBean implements Serializable {
 	private Bitacora bitacora;
 	private List<CatalogoDetalle> tiposDocumento;
 	private List<CatalogoDetalle> tiposPersona;
+	private List<CatalogoDetalle> ciudades;
 	private static final Logger LOGGER = Logger.getLogger(ClienteBean.class.getName());
 	private Rol rolCliente;
 	
@@ -58,6 +59,7 @@ public class ClienteBean implements Serializable {
 			rolCliente = rolServicio.obtenerPorNemonico("RCLI");
 			tiposDocumento = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_DOCUMENTO.getNemonico());
 			tiposPersona = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_PERSONA.getNemonico());
+			ciudades = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.CIUDAD.getNemonico());
 			estadoActivo = estadoServicio.buscarPorNemonico(EstadoEnum.ACTIVO.getNemonico());
 			estadoInactivo = estadoServicio.buscarPorNemonico(EstadoEnum.INACTIVO.getNemonico());
 		} catch (Exception ex) {
@@ -70,6 +72,7 @@ public class ClienteBean implements Serializable {
 		nuevoCliente.setUsuario(new Usuario());
 		nuevoCliente.setCatalogoDetalle(new CatalogoDetalle());
 		nuevoCliente.setTipoPersona(new CatalogoDetalle());
+		nuevoCliente.setCiudad(new CatalogoDetalle());
 	}
 	
 	public void guardar() {
@@ -141,6 +144,14 @@ public class ClienteBean implements Serializable {
 
 	public void setTiposPersona(List<CatalogoDetalle> tiposPersona) {
 		this.tiposPersona = tiposPersona;
+	}
+
+	public List<CatalogoDetalle> getCiudades() {
+		return ciudades;
+	}
+
+	public void setCiudades(List<CatalogoDetalle> ciudades) {
+		this.ciudades = ciudades;
 	}
 
 }

@@ -11,6 +11,10 @@ public enum CatalogoEnum {
      */
     TIPO_PERSONA("TIPPE"),
     /**
+     * Ciudades.
+     */
+    CIUDAD("CIUDA"),
+    /**
      * Tipo de proceso.
      */
     TIPO_PROCESO("TIPPR");
