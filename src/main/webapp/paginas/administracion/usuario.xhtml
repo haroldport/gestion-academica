@@ -9,14 +9,14 @@
 		<h:form id="formUsuario">
 			<p:growl id="messages" showDetail="false" life="5000" autoUpdate="true" />
 			<br /><br />
-			<p:tabView id="tab">
+			<p:tabView id="tab" style="font-size: 14px">
 				<p:tab title="Administración de usuarios">
 					<center>
 						<p:outputPanel>
 							<h:panelGrid columns="2" cellpadding="20" cellspacing="20">
 								<h:outputLabel class="label" value="Roles:" />
 								<p:outputPanel>
-									<p:selectOneMenu id="rol" style="width: 316px;"
+									<p:selectOneMenu id="rol" style="width: 255px;"
 										value="#{usuarioBean.nuevoUsuario.rol.idRol}"
 										required="true"
 										requiredMessage="El campo Rol es requerido!">

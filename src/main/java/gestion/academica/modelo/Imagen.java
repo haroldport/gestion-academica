@@ -34,6 +34,9 @@ public class Imagen implements Serializable {
 	//bi-directional many-to-one association to InformacionCurso
 	@OneToMany(mappedBy="imagen")
 	private List<InformacionCurso> informacionCursos;
+	
+	@Transient
+    private String fileNameExtension;
 
 	public Imagen() {
 	}
@@ -85,6 +88,15 @@ public class Imagen implements Serializable {
 	public void setInformacionCursos(List<InformacionCurso> informacionCursos) {
 		this.informacionCursos = informacionCursos;
 	}
+	
+	public String getFileNameExtension() {
+        fileNameExtension = nombre + extension;
+        return fileNameExtension;
+    }
+
+    public void setFileNameExtension(String fileNameExtension) {
+        this.fileNameExtension = fileNameExtension;
+    }
 
 	public InformacionCurso addInformacionCurso(InformacionCurso informacionCurso) {
 		getInformacionCursos().add(informacionCurso);

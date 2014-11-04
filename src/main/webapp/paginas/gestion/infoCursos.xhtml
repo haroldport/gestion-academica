@@ -1,0 +1,174 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formInfoCursos">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab" style="font-size: 14px">
+				<p:tab title="Información general de los cursos de capacitación">
+					<p:panel styleClass="b-crear-producto">
+						<h3>Ingrese la información del curso</h3>
+						<div style="display: table; width: 100%; margin-bottom: 20px">
+							<div
+								style="display: table-cell; width: 402px; height: 490px; vertical-align: top; padding-right: 1em">
+								<div class="cont-imagen">
+									<h:graphicImage styleClass="imagen" id="imagen"
+										rendered="#{infoCursosBean.nuevaInfoCurso.imagen.idImagen == null}"
+										library="images" name="sel-imagen.png" />
+									<h:graphicImage id="image" styleClass="imagen"
+										rendered="#{infoCursosBean.nuevaInfoCurso.imagen.idImagen > 0}"
+										url="/image?id=#{infoCursosBean.nuevaInfoCurso.imagen.idImagen}"
+										width="400" height="400" />
+								</div>
+								<p:outputPanel id="fileImg">
+									<p:fileUpload
+										fileUploadListener="#{infoCursosBean.mostrarImagen}"
+										mode="advanced"
+										sizeLimit="200000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+										auto="true" update=":formInfoCursos:tab:imagen"
+										invalidSizeMessage="El tamaño máximo de archivo permitido es 200 Kb!"
+										invalidFileMessage="Sólo se permiten cargar imágenes!" />
+								</p:outputPanel>
+							</div>
+
+							<div style="display: table-cell; vertical-align: top">
+								<br /> <br />
+								<h:panelGrid columns="2">
+									<h:outputLabel class="label" value="Nombre: " />
+									<p:outputPanel>
+										<p:inputText id="nombre" styleClass="lblbtn" size="33"
+											value="#{catalogoBean.nuevoCatalogo.nombre}" required="true"
+											requiredMessage="El campo Nombre es requerido!"
+											style="text-transform: uppercase"
+											onchange="toUpperCase(this)" />
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+									<br />
+									<p:columnGroup />
+									<br />
+									<p:columnGroup />
+
+									<h:outputLabel class="label" value="Objetivo: " />
+									<p:outputPanel>
+										<p:inputText id="objetivo" styleClass="lblbtn" size="33"
+											value="#{catalogoBean.nuevoCatalogo.descripcion}"
+											required="false" style="text-transform: uppercase"
+											onchange="toUpperCase(this)" />
+										<h:outputText value=" " style="color: red" />
+									</p:outputPanel>
+									<br />
+									<p:columnGroup />
+									<br />
+									<p:columnGroup />
+
+									<h:outputLabel class="label" value="No. horas: " />
+									<p:outputPanel>
+										<p:inputText id="horas" styleClass="lblbtn" size="33"
+											value="#{catalogoBean.nuevoCatalogo.nemonico}"
+											required="true"
+											requiredMessage="El campo Nemónico es requerido!"
+											style="text-transform: uppercase"
+											onchange="toUpperCase(this)" />
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+									<br />
+									<p:columnGroup />
+									<br />
+									<p:columnGroup />
+
+									<h:outputLabel class="label" value="Costo: " />
+									<p:outputPanel>
+										<p:inputText id="costo" styleClass="lblbtn" size="33"
+											value="#{catalogoBean.nuevoCatalogo.nemonico}"
+											required="true"
+											requiredMessage="El campo Nemónico es requerido!"
+											style="text-transform: uppercase"
+											onchange="toUpperCase(this)" />
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+								</h:panelGrid>
+								<br /> <br /> <br />
+								<p:spacer width="100" height="0" />
+								<p:commandButton value="Editar"
+									action="#{catalogoBean.editarCatalogo()}"
+									rendered="#{catalogoBean.editarCatalogo}"
+									update=":formInfoCursos:tab" process="@all"
+									styleClass="btnClic" />
+								<p:commandButton value="Guardar"
+									action="#{catalogoBean.guardar()}" update=":formInfoCursos:tab"
+									process="@all" styleClass="btnClic"
+									rendered="#{!catalogoBean.editarCatalogo}" />
+								<p:commandButton value="Cancelar" process="@this"
+									action="#{catalogoBean.iniciar()}" update=":formInfoCursos:tab"
+									styleClass="btnClic" />
+							</div>
+						</div>
+
+					</p:panel>
+					<div class="footerTabla">
+						<p:outputPanel id="panelTabla">
+							<p:dataTable value="#{catalogoBean.listaCatalogos}"
+								var="catalogo"
+								rendered="#{catalogoBean.listaCatalogos.size() > 0}"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								paginatorPosition="bottom" rows="5" paginator="true"
+								rowsPerPageTemplate="5,10,15,20,25,30"
+								tableStyle="table-layout:auto;width:100%;">
+
+								<p:column styleClass="wrap" headerText="Nombre">
+									<h:outputText value="#{catalogo.nombre}" />
+								</p:column>
+
+								<p:column styleClass="wrap" headerText="Descripción">
+									<h:outputText value="#{catalogo.descripcion}" />
+								</p:column>
+
+								<p:column styleClass="wrap" headerText="Nemónico">
+									<h:outputText value="#{catalogo.nemonico}" />
+								</p:column>
+
+								<p:column headerText="Editar" styleClass="classBtn">
+									<p:commandButton id="cbEditar" icon="ui-icon-pencil"
+										update=":formInfoCursos" process="@this"
+										action="#{catalogoBean.editarCatalogo(catalogo)}" />
+									<p:tooltip for="cbEditar" value="Editar #{catalogo.nombre}"
+										showEffect="fade" hideEffect="fade" />
+								</p:column>
+
+								<p:column headerText="Eliminar" styleClass="classBtn">
+									<p:commandButton id="cbEliminar" icon="ui-icon-trash"
+										update=":formInfoCursos" process="@this"
+										actionListener="#{catalogoBean.seleccionarCatalogo(catalogo)}"
+										oncomplete="dlgEliminar.show()" />
+									<p:tooltip for="cbEliminar" value="Eliminar #{catalogo.nombre}"
+										showEffect="fade" hideEffect="fade" />
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</div>
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
+				message="Desea eliminar el catálogo: #{catalogoBean.eliminarCatalogo.nombre}?"
+				header="Eliminar #{catalogoBean.eliminarCatalogo.nombre}"
+				severity="alert" widgetVar="dlgEliminar">
+				<p:commandButton value="Si" update=":formInfoCursos"
+					oncomplete="dlgEliminar.hide()" process="@this"
+					actionListener="#{catalogoBean.eliminar()}" />
+				<p:commandButton value="No" update=":formInfoCursos"
+					onclick="dlgEliminar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

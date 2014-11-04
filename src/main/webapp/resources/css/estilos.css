@@ -348,3 +348,19 @@
 .datos p:last-child{
 	margin-top: 2em;
 }
+
+.b-crear-producto .cont-imagen {
+  height: 402px;
+  line-height: 400px;
+  margin-bottom: 10px;
+  border: 1px dashed #000000;
+  text-align: center; }
+.b-crear-producto .imagen {
+  max-width: 400px;
+  max-height: 400px;
+  vertical-align: middle; }
+.b-crear-producto .etiqueta {
+  height: 25px;
+  line-height: 25px; }
+.b-crear-producto .ui-message-error {
+  margin: 0px 0px 10px 0px; }
