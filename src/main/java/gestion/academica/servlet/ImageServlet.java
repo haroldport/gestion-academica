@@ -32,8 +32,7 @@ public class ImageServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String id = (String) request.getParameter("id");
-            System.out.println("------------- " + id);
-            Imagen imagen = fileServicio.obtenerFile(new Long(id));
+            Imagen imagen = fileServicio.obtenerFile(Integer.parseInt(id));
             if (imagen != null) {
                 ServletOutputStream out;
                 try (InputStream inputStream = new ByteArrayInputStream(imagen.getArchivo())) {

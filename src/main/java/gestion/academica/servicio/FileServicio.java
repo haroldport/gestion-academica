@@ -24,7 +24,11 @@ public class FileServicio {
         getEntityManager().persist(file);
     }
     
-    public Imagen obtenerFile(Long id){
-        return (Imagen)getEntityManager().createQuery("SELECT i FROM Imagen i where f.idImagen = :id").setParameter("id", id).getSingleResult();
+    public void eliminarFile(Imagen file){
+    	getEntityManager().remove(file);
+    }
+    
+    public Imagen obtenerFile(Integer id){
+        return (Imagen)getEntityManager().createQuery("SELECT i FROM Imagen i where i.idImagen = :id").setParameter("id", id).getSingleResult();
     }
 }
