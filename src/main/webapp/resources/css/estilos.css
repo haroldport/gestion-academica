@@ -364,3 +364,9 @@
   line-height: 25px; }
 .b-crear-producto .ui-message-error {
   margin: 0px 0px 10px 0px; }
+ 
+ .label {
+    font-weight: bold !important;
+    float: right !important;
+    color: #000000 !important;    
+}
