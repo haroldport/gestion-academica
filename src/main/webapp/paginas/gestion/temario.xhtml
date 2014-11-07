@@ -1,0 +1,124 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formTemario">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab" style="font-size: 14px">
+				<p:tab title="Administración de temas">
+					<center>
+						<p:outputPanel>
+							<h:panelGrid columns="2">
+								<h:outputLabel class="label" value="Información de curso:" />
+								<p:outputPanel>
+									<p:selectOneMenu id="info" style="width: 350px;"
+										value="#{temaCursoBean.nuevoTemaCurso.informacionCurso.idInformacionCurso}"
+										required="true"
+										requiredMessage="El campo Información de curso es requerido!">
+										<f:selectItem itemValue=""
+											itemLabel="-- Seleccione el curso --" />
+										<f:selectItems value="#{temaCursoBean.listaInformacionCurso}"
+											var="curso" itemValue="#{curso.idInformacionCurso}"
+											itemLabel="#{curso.nombre}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Tema padre:" />
+								<p:outputPanel>
+									<p:selectOneMenu id="tema" style="width: 350px;"
+										value="#{temaCursoBean.temaCursoPadre.idTemaCurso}">
+										<f:selectItem itemValue=""
+											itemLabel="-- Seleccione el padre --" />
+										<f:selectItems value="#{temaCursoBean.listaTemasCurso}"
+											var="padre" itemValue="#{padre.idTemaCurso}"
+											itemLabel="#{padre.descripcion}" />
+									</p:selectOneMenu>
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Descripción: " />
+								<p:outputPanel>
+									<p:inputText id="desc" styleClass="lblbtn" size="40"
+										value="#{temaCursoBean.nuevoTemaCurso.descripcion}"
+										required="true"
+										requiredMessage="El campo Descripción es requerido!"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+							</h:panelGrid>
+							<br />
+							<p:commandButton value="Editar"
+								action="#{temaCursoBean.editarTemaCurso()}"
+								rendered="#{temaCursoBean.editarTemaCurso}"
+								update=":formTemario:tab" process="@all" styleClass="btnClic" />
+							<p:commandButton value="Guardar"
+								action="#{temaCursoBean.guardar()}" update=":formTemario:tab"
+								process="@all" styleClass="btnClic"
+								rendered="#{!temaCursoBean.editarTemaCurso}" />
+							<p:commandButton value="Cancelar" process="@this"
+								action="#{temaCursoBean.iniciar()}" update=":formTemario:tab"
+								styleClass="btnClic" />
+							<br />
+							<br />
+						</p:outputPanel>
+						<div class="footerTabla">
+							<p:outputPanel id="panelTabla">
+								<p:treeTable
+									value="#{temaCursoBean.rootTemaCurso}" var="tema"
+									style="text-align: left; height: 300px;"
+									rendered="#{temaCursoBean.rootTemaCurso.childCount > 0}">
+									
+									<p:column styleClass="wrap" headerText="Tema">
+										<h:outputText value="#{tema.descripcion}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Curso">
+										<h:outputText value="#{tema.informacionCurso.nombre}" />
+									</p:column>								
+
+									<p:column headerText="Editar" styleClass="classBtn">
+										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
+											update=":formTemario" process="@this"
+											action="#{temaCursoBean.editarTemaCurso(tema)}" />
+										<p:tooltip for="cbEditar" value="Editar #{tema.descripcion}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+
+									<p:column headerText="Eliminar" styleClass="classBtn">
+										<p:commandButton id="cbEliminar" icon="ui-icon-trash"
+											update=":formTemario" process="@this"
+											actionListener="#{temaCursoBean.seleccionarTemaCurso(tema)}"
+											oncomplete="dlgEliminar.show()" />
+										<p:tooltip for="cbEliminar"
+											value="Eliminar #{tema.descripcion}" showEffect="fade"
+											hideEffect="fade" />
+									</p:column>
+								</p:treeTable>
+							</p:outputPanel>
+						</div>
+					</center>
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
+				message="Desea eliminar el tema: #{temaCursoBean.eliminarTemaCurso.descripcion}?"
+				header="Eliminar #{temaCursoBean.eliminarTemaCurso.descripcion}"
+				severity="alert" widgetVar="dlgEliminar">
+				<p:commandButton value="Si" update=":formTemario"
+					oncomplete="dlgEliminar.hide()" process="@this"
+					actionListener="#{temaCursoBean.eliminar()}" />
+				<p:commandButton value="No" update=":formTemario"
+					onclick="dlgEliminar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

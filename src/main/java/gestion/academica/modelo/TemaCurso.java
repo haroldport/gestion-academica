@@ -38,7 +38,7 @@ public class TemaCurso implements Serializable {
 	private TemaCurso temaCurso;
 
 	//bi-directional many-to-one association to TemaCurso
-	@OneToMany(mappedBy="temaCurso")
+	@OneToMany(mappedBy="temaCurso", fetch=FetchType.EAGER)
 	private List<TemaCurso> temaCursos;
 
 	public TemaCurso() {
