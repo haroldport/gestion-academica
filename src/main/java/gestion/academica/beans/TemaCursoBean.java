@@ -75,7 +75,7 @@ public class TemaCursoBean extends Utilitario implements Serializable {
 		nuevoTemaCurso.setInformacionCurso(new InformacionCurso());
 		nuevoTemaCurso.setTemaCurso(new TemaCurso());
 		temaCursoPadre = new TemaCurso();
-		listaTemasCurso = temaCursoServicio.listarTemasCurso();
+		listaTemasCurso = temaCursoServicio.listarTemasCursoPadres();
 		llenarArbolTemas();
 	}
 	
@@ -83,7 +83,6 @@ public class TemaCursoBean extends Utilitario implements Serializable {
         try {
             setRootTemaCurso(new DefaultTreeNode("root", null));
             cargarArbolEstOrg(listaTemasCurso, getRootTemaCurso());
-            System.out.println("rootEstOrg ; " + getRootTemaCurso().getChildCount());
         } catch (Exception e) {
         	LOGGER.log(Level.SEVERE, null, e);
         }
@@ -92,10 +91,12 @@ public class TemaCursoBean extends Utilitario implements Serializable {
     private void cargarArbolEstOrg(List<TemaCurso> listaTemas, TreeNode nodoPadre) {
         try {
             for (TemaCurso tema : listaTemas) {
-                TreeNode node = new DefaultTreeNode(tema, nodoPadre);
-                if (!tema.getTemaCursos().isEmpty()) {
-                    cargarArbolEstOrg(tema.getTemaCursos(), node);
-                }
+            	if(tema.getEstado().getNemonico().equals(EstadoEnum.ACTIVO.getNemonico())){
+            		TreeNode node = new DefaultTreeNode(tema, nodoPadre);
+            		if (!tema.getTemaCursos().isEmpty()) {
+                        cargarArbolEstOrg(tema.getTemaCursos(), node);
+                    }
+            	}
             }
         } catch (Exception e) {
         	LOGGER.log(Level.SEVERE, null, e);
@@ -111,6 +112,11 @@ public class TemaCursoBean extends Utilitario implements Serializable {
 		try {
 			Date fechaActualizacion = new Date();
 			setEditarTemaCurso(false);
+			if(temaCursoPadre != null && temaCursoPadre.getIdTemaCurso() != null){
+				nuevoTemaCurso.setTemaCurso(temaCursoPadre);
+			}else{
+				nuevoTemaCurso.setTemaCurso(null);
+			}
 			nuevoTemaCurso.setDescripcion(nuevoTemaCurso.getDescripcion().toUpperCase());
 			temaCursoServicio.editar(nuevoTemaCurso);
 			bitacora = new Bitacora(fechaActualizacion, "Modificación de tema: " + nuevoTemaCurso.getDescripcion(), this.getUsuario());
@@ -126,6 +132,12 @@ public class TemaCursoBean extends Utilitario implements Serializable {
 	public String editarTemaCurso(TemaCurso temaCurso) {
 		setEditarTemaCurso(true);
 		setNuevoTemaCurso(temaCurso);
+		if (temaCurso.getTemaCurso() != null) {
+            temaCursoPadre = temaCurso.getTemaCurso();
+        } else {
+        	temaCursoPadre = null;
+        }
+        seleccionarTemaPadre(temaCursoPadre);
 		return "";
 	}
 
@@ -163,6 +175,10 @@ public class TemaCursoBean extends Utilitario implements Serializable {
 			LOGGER.log(Level.SEVERE, null, e);
 		}
 	}
+	
+	public void seleccionarTemaPadre(TemaCurso temaCurso) {
+        temaCursoPadre = temaCurso;
+    }
 	
 	public TreeNode getRootTemaCurso() {
 		return rootTemaCurso;

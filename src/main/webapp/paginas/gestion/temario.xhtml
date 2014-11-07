@@ -32,15 +32,16 @@
 								</p:outputPanel>
 
 								<h:outputLabel class="label" value="Tema padre:" />
-								<p:outputPanel>
-									<p:selectOneMenu id="tema" style="width: 350px;"
-										value="#{temaCursoBean.temaCursoPadre.idTemaCurso}">
-										<f:selectItem itemValue=""
-											itemLabel="-- Seleccione el padre --" />
-										<f:selectItems value="#{temaCursoBean.listaTemasCurso}"
-											var="padre" itemValue="#{padre.idTemaCurso}"
-											itemLabel="#{padre.descripcion}" />
-									</p:selectOneMenu>
+								<p:outputPanel id="temaPadre">
+									<p:inputText styleClass="lblbtn" id="tema"
+										disabled="true" size="36"
+										value="#{temaCursoBean.temaCursoPadre.descripcion}" />
+									<p:commandButton id="btnCatalogo" icon="ui-icon-folder-open"
+										process="@this" oncomplete="dlgTema.show()"
+										update=":formTemario:tab:temaPadre, :formTemaPadre"
+										styleClass="btnSele" />
+									<p:tooltip for="btnCatalogo" value="Seleccionar Padre"
+										showEffect="fade" hideEffect="fade" />
 								</p:outputPanel>
 
 								<h:outputLabel class="label" value="Descripción: " />
@@ -70,18 +71,17 @@
 						</p:outputPanel>
 						<div class="footerTabla">
 							<p:outputPanel id="panelTabla">
-								<p:treeTable
-									value="#{temaCursoBean.rootTemaCurso}" var="tema"
-									style="text-align: left; height: 300px;"
+								<p:treeTable value="#{temaCursoBean.rootTemaCurso}" var="tema"
+									style="text-align: left;"
 									rendered="#{temaCursoBean.rootTemaCurso.childCount > 0}">
-									
+
 									<p:column styleClass="wrap" headerText="Tema">
 										<h:outputText value="#{tema.descripcion}" />
 									</p:column>
 
 									<p:column styleClass="wrap" headerText="Curso">
 										<h:outputText value="#{tema.informacionCurso.nombre}" />
-									</p:column>								
+									</p:column>
 
 									<p:column headerText="Editar" styleClass="classBtn">
 										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
@@ -119,6 +119,38 @@
 					onclick="dlgEliminar.hide()" type="button" process="@this" />
 			</p:confirmDialog>
 		</h:form>
+
+		<p:dialog header="Seleccionar tema padre" widgetVar="dlgTema" style="font-size: 14px;"
+			modal="true" showEffect="puff" hideEffect="fold" resizable="false">
+			<h:form id="formTemaPadre">
+				<p:panel>
+					<p:treeTable value="#{temaCursoBean.rootTemaCurso}" var="tema"
+						style="text-align: left; height: 300px;overflow: scroll;"
+						rendered="#{temaCursoBean.rootTemaCurso.childCount > 0}">
+						<p:column styleClass="wrap" headerText="Tema">
+							<h:outputText value="#{tema.descripcion}" />
+						</p:column>
+
+						<p:column styleClass="wrap" headerText="Curso">
+							<h:outputText value="#{tema.informacionCurso.nombre}" />
+						</p:column>
+
+						<p:column styleClass="classBtn" headerText="Seleccionar">
+							<p:commandButton id="btnSeleccionar" icon="ui-icon-pin-w"
+								update=":formTemario:tab:temaPadre" oncomplete="dlgTema.hide()"
+								action="#{temaCursoBean.seleccionarTemaPadre(tema)}">
+							</p:commandButton>
+							<p:tooltip for="btnSeleccionar" value="Seleccione el tema padre"
+								showEffect="fade" hideEffect="fade" />
+						</p:column>
+					</p:treeTable>
+				</p:panel>
+				<div align="center">
+					<p:commandButton value="Cancelar" onclick="dlgTema.hide()"
+						update=":formTemario:tab:temaPadre" styleClass="btnClic" />
+				</div>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

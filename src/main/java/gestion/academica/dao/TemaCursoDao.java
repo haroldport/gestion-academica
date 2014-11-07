@@ -24,11 +24,11 @@ public class TemaCursoDao extends Generico<TemaCurso> {
     }
     
     /**
-     * Listar todos los temas
+     * Listar todos los temas padres
      * @return
      */
     @SuppressWarnings("unchecked")
-	public List<TemaCurso> listarTemasCurso() {
+	public List<TemaCurso> listarTemasCursoPadres() {
         String sql = "SELECT t FROM TemaCurso t WHERE t.estado.idEstado = 1 AND t.temaCurso is null ORDER BY t.idTemaCurso";
         return this.getEntityManager().createQuery(sql).getResultList();
     }
