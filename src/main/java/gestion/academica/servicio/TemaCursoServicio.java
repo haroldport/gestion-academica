@@ -42,8 +42,8 @@ public class TemaCursoServicio {
      * Listar todos los temas
      * @return
      */
-	public List<TemaCurso> listarTemasCurso() {
-    	return temaCursoDao.listarTemasCurso();
+	public List<TemaCurso> listarTemasCursoPadres() {
+    	return temaCursoDao.listarTemasCursoPadres();
     }
 
 }
