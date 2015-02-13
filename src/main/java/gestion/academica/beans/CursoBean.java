@@ -18,6 +18,7 @@ import gestion.academica.servicio.SitioCursoServicio;
 import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,6 +86,61 @@ public class CursoBean extends Utilitario implements Serializable {
 		nuevoCurso.setInstructor(new Instructor());
 		nuevoCurso.setSitioCurso(new SitioCurso());
 		listaCursos = cursoServicio.listarCursos();
+	}
+	
+	public String seleccionarCurso(Curso curso) {
+		setEliminarCurso(curso);
+		return "";
+	}
+
+	public String editarCurso() {
+		try {
+			Date fechaActualizacion = new Date();
+			setEditarCurso(false);
+			cursoServicio.editar(nuevoCurso);
+			bitacora = new Bitacora(fechaActualizacion, "Modificación de curso: " + nuevoCurso.getInformacionCurso().getNombre(), this.getUsuario());
+            bitacoraServicio.crear(bitacora);
+			initValores();
+			this.ponerMensajeInfo("El curso fue actualizado correctamente","");
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, null, e);
+		}
+		return "";
+	}
+
+	public String editarCurso(Curso curso) {
+		setEditarCurso(true);
+		setNuevoCurso(curso);
+		return "";
+	}
+
+	public void guardar() {
+		try {
+			Date fechaCreacion = new Date();
+			nuevoCurso.setEstado(estadoActivo);
+			cursoServicio.crear(nuevoCurso);
+			bitacora = new Bitacora(fechaCreacion, "Creación de curso: " + nuevoCurso.getInformacionCurso().getNombre(), this.getUsuario());
+            bitacoraServicio.crear(bitacora);
+			this.ponerMensajeInfo("El curso fue creado correctamente", "");
+			initValores();
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, null, e);
+		}
+	}
+
+	public void eliminar() {
+		try {
+			Date fechaEliminacion = new Date();
+			eliminarCurso.setEstado(estadoInactivo);
+			cursoServicio.editar(eliminarCurso);
+			bitacora = new Bitacora(fechaEliminacion, "Eliminación de sitio: " + nuevoCurso.getInformacionCurso().getNombre(), this.getUsuario());
+            bitacoraServicio.crear(bitacora);
+			initValores();
+			eliminarCurso = new Curso();
+			this.ponerMensajeInfo("El curso fue eliminado correctamente", "");
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, null, e);
+		}
 	}
 	
 	public Curso getNuevoCurso() {

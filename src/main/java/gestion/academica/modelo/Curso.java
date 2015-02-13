@@ -25,11 +25,11 @@ public class Curso implements Serializable {
 
 	private Integer cupo;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_fin")
 	private Date fechaFin;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_inicio")
 	private Date fechaInicio;
 

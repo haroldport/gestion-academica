@@ -65,7 +65,7 @@
 										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
 										<f:selectItems value="#{cursoBean.sitios}" var="sitio"
 											itemValue="#{sitio.idSitioCurso}"
-											itemLabel="#{sitio.ciudad.nombre} - #{sitio.direccion}" />
+											itemLabel="#{sitio.nombre} - (#{sitio.ciudad.nombre} - #{sitio.direccion})" />
 									</p:selectOneMenu>
 									<h:outputText value=" *" style="color: red" />
 								</p:outputPanel>
@@ -101,58 +101,74 @@
 							</h:panelGrid>
 							<br />
 							<p:commandButton value="Editar"
-								action="#{sitioCursoBean.editarSitioCurso()}"
-								rendered="#{sitioCursoBean.editarSitioCurso}"
+								action="#{cursoBean.editarCurso()}"
+								rendered="#{cursoBean.editarCurso}"
 								update=":formCurso:tab" process="@all" styleClass="btnClic" />
 							<p:commandButton value="Guardar"
-								action="#{sitioCursoBean.guardar()}" update=":formCurso:tab"
+								action="#{cursoBean.guardar()}" update=":formCurso:tab"
 								process="@all" styleClass="btnClic"
-								rendered="#{!sitioCursoBean.editarSitioCurso}" />
+								rendered="#{!cursoBean.editarCurso}" />
 							<p:commandButton value="Cancelar" process="@this"
-								action="#{sitioCursoBean.iniciar()}" update=":formCurso:tab"
+								action="#{cursoBean.iniciar()}" update=":formCurso:tab"
 								styleClass="btnClic" />
 							<br />
 							<br />
 						</p:outputPanel>
 						<div class="footerTabla">
 							<p:outputPanel id="panelTabla">
-								<p:dataTable value="#{sitioCursoBean.listadoSitios}" var="sitio"
-									rendered="#{sitioCursoBean.listadoSitios.size() > 0}"
+								<p:dataTable value="#{cursoBean.listaCursos}" var="curso"
+									rendered="#{cursoBean.listaCursos.size() > 0}"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									paginatorPosition="bottom" rows="5" paginator="true"
 									rowsPerPageTemplate="5,10,15,20,25,30"
 									tableStyle="table-layout:auto;width:100%;">
 
-									<p:column styleClass="wrap" headerText="Ciudad">
-										<h:outputText value="#{sitio.ciudad.nombre}" />
-									</p:column>
-
 									<p:column styleClass="wrap" headerText="Nombre">
-										<h:outputText value="#{sitio.nombre}" />
+										<h:outputText value="#{curso.informacionCurso.nombre}" />
 									</p:column>
 
-									<p:column styleClass="wrap" headerText="Dirección">
-										<h:outputText value="#{sitio.direccion}" />
+									<p:column styleClass="wrap" headerText="Instructor">
+										<h:outputText value="#{curso.instructor.nombres}" />
 									</p:column>
 
-									<p:column styleClass="wrap" headerText="Teléfono">
-										<h:outputText value="#{sitio.telefono}" />
+									<p:column styleClass="wrap" headerText="Horario">
+										<h:outputText value="#{curso.horario.dias} (#{curso.horario.horas})" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Sitio">
+										<h:outputText value="#{curso.sitioCurso.nombre} (#{curso.sitioCurso.ciudad.nombre} - #{curso.sitioCurso.direccion})" />
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Fecha inicio curso">
+										<h:outputText value="#{curso.fechaInicio}">
+											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Fecha fin curso">
+										<h:outputText value="#{curso.fechaFin}">
+											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Cupo">
+										<h:outputText value="#{curso.cupo}" />
 									</p:column>
 
 									<p:column headerText="Editar" styleClass="classBtn">
 										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
 											update=":formCurso" process="@this"
-											action="#{sitioCursoBean.editarSitioCurso(sitio)}" />
-										<p:tooltip for="cbEditar" value="Editar #{sitio.nombre}"
+											action="#{cursoBean.editarCurso(curso)}" />
+										<p:tooltip for="cbEditar" value="Editar #{curso.informacionCurso.nombre}"
 											showEffect="fade" hideEffect="fade" />
 									</p:column>
 
 									<p:column headerText="Eliminar" styleClass="classBtn">
 										<p:commandButton id="cbEliminar" icon="ui-icon-trash"
 											update=":formCurso" process="@this"
-											actionListener="#{sitioCursoBean.seleccionarSitioCurso(sitio)}"
+											actionListener="#{cursoBean.seleccionarCurso(curso)}"
 											oncomplete="dlgEliminar.show()" />
-										<p:tooltip for="cbEliminar" value="Eliminar #{sitio.nombre}"
+										<p:tooltip for="cbEliminar" value="Eliminar #{curso.informacionCurso.nombre}"
 											showEffect="fade" hideEffect="fade" />
 									</p:column>
 								</p:dataTable>
@@ -164,12 +180,12 @@
 			<br />
 
 			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
-				message="Desea eliminar el sitio: #{sitioCursoBean.eliminarSitioCurso.nombre}?"
-				header="Eliminar #{sitioCursoBean.eliminarSitioCurso.nombre}"
+				message="Desea eliminar el curso: #{cursoBean.eliminarCurso.informacionCurso.nombre}?"
+				header="Eliminar #{cursoBean.eliminarCurso.informacionCurso.nombre}"
 				severity="alert" widgetVar="dlgEliminar">
 				<p:commandButton value="Si" update=":formCurso"
 					oncomplete="dlgEliminar.hide()" process="@this"
-					actionListener="#{sitioCursoBean.eliminar()}" />
+					actionListener="#{cursoBean.eliminar()}" />
 				<p:commandButton value="No" update=":formCurso"
 					onclick="dlgEliminar.hide()" type="button" process="@this" />
 			</p:confirmDialog>
