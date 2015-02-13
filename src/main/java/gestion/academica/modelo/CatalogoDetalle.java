@@ -4,20 +4,19 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the catalogo_detalle database table.
  * 
  */
 @Entity
-@Table(name="catalogo_detalle", schema = "gestion")
-@NamedQuery(name="CatalogoDetalle.findAll", query="SELECT c FROM CatalogoDetalle c")
+@Table(name = "catalogo_detalle", schema = "gestion")
+@NamedQuery(name = "CatalogoDetalle.findAll", query = "SELECT c FROM CatalogoDetalle c")
 public class CatalogoDetalle implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_catalogo_detalle")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_catalogo_detalle")
 	private Integer idCatalogoDetalle;
 
 	private String descripcion;
@@ -26,35 +25,39 @@ public class CatalogoDetalle implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Catalogo
+	// bi-directional many-to-one association to Catalogo
 	@ManyToOne
-	@JoinColumn(name="id_catalogo")
+	@JoinColumn(name = "id_catalogo")
 	private Catalogo catalogo;
 
-	//bi-directional many-to-one association to Estado
+	// bi-directional many-to-one association to Estado
 	@ManyToOne
-	@JoinColumn(name="id_estado")
+	@JoinColumn(name = "id_estado")
 	private Estado estado;
 
-	//bi-directional many-to-one association to Cliente
-	@OneToMany(mappedBy="catalogoDetalle")
+	// bi-directional many-to-one association to Cliente
+	@OneToMany(mappedBy = "catalogoDetalle")
 	private List<Cliente> clientes;
-	
-	//bi-directional many-to-one association to Cliente
-	@OneToMany(mappedBy="tipoPersona")
+
+	// bi-directional many-to-one association to Cliente
+	@OneToMany(mappedBy = "tipoPersona")
 	private List<Cliente> clientesTipoPersona;
-	
-	//bi-directional many-to-one association to Cliente
-	@OneToMany(mappedBy="ciudad")
+
+	// bi-directional many-to-one association to Cliente
+	@OneToMany(mappedBy = "ciudad")
 	private List<Cliente> clientesCiudad;
 
-	//bi-directional many-to-one association to Instructor
-	@OneToMany(mappedBy="catalogoDetalle")
+	// bi-directional many-to-one association to Instructor
+	@OneToMany(mappedBy = "catalogoDetalle")
 	private List<Instructor> instructors;
 
-	//bi-directional many-to-one association to Proceso
-	@OneToMany(mappedBy="catalogoDetalle")
+	// bi-directional many-to-one association to Proceso
+	@OneToMany(mappedBy = "catalogoDetalle")
 	private List<Proceso> procesos;
+
+	// bi-directional many-to-one association to SitioCurso
+	@OneToMany(mappedBy = "ciudad")
+	private List<SitioCurso> sitioCursoCiudad;
 
 	public CatalogoDetalle() {
 	}
@@ -114,7 +117,6 @@ public class CatalogoDetalle implements Serializable {
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
-	
 
 	public List<Cliente> getClientesTipoPersona() {
 		return clientesTipoPersona;
@@ -122,7 +124,7 @@ public class CatalogoDetalle implements Serializable {
 
 	public void setClientesTipoPersona(List<Cliente> clientesTipoPersona) {
 		this.clientesTipoPersona = clientesTipoPersona;
-	}	
+	}
 
 	public List<Cliente> getClientesCiudad() {
 		return clientesCiudad;
@@ -130,6 +132,14 @@ public class CatalogoDetalle implements Serializable {
 
 	public void setClientesCiudad(List<Cliente> clientesCiudad) {
 		this.clientesCiudad = clientesCiudad;
+	}
+	
+	public List<SitioCurso> getSitioCursoCiudad() {
+		return sitioCursoCiudad;
+	}
+
+	public void setSitioCursoCiudad(List<SitioCurso> sitioCursoCiudad) {
+		this.sitioCursoCiudad = sitioCursoCiudad;
 	}
 
 	public Cliente addCliente(Cliente cliente) {

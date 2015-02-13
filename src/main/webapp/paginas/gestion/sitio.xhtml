@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formSitio">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab" style="font-size: 14px">
+				<p:tab title="Administración de sitios donde se dictarán los cursos">
+					<center>
+						<p:outputPanel>
+							<h:panelGrid columns="2">
+								<h:outputLabel class="label" value="Ciudad:" />
+								<p:outputPanel>
+									<p:selectOneMenu id="ciudad" style="width: 251px;"
+										value="#{sitioCursoBean.nuevoSitioCurso.ciudad.idCatalogoDetalle}"
+										required="true"
+										requiredMessage="El campo Ciudad es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{indexBean.clienteBean.ciudades}"
+											var="ciudad" itemValue="#{ciudad.idCatalogoDetalle}"
+											itemLabel="#{ciudad.nombre}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								
+								<h:outputLabel class="label" value="Nombre: " />
+								<p:outputPanel>
+									<p:inputText id="nombre" styleClass="lblbtn" size="28"
+										value="#{sitioCursoBean.nuevoSitioCurso.nombre}"
+										required="true"
+										requiredMessage="El campo Nombre es requerido!"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Dirección: " />
+								<p:outputPanel>
+									<p:inputText id="direccion" styleClass="lblbtn" size="28"
+										value="#{sitioCursoBean.nuevoSitioCurso.direccion}"
+										required="true"
+										requiredMessage="El campo Dirección es requerido!"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Teléfono: " />
+								<p:outputPanel>
+									<p:inputText id="telefono" size="28"
+										value="#{sitioCursoBean.nuevoSitioCurso.telefono}"
+										required="true"
+										requiredMessage="El campo Teléfono es requerido!" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+							</h:panelGrid>
+							<br />
+							<p:commandButton value="Editar"
+								action="#{sitioCursoBean.editarSitioCurso()}"
+								rendered="#{sitioCursoBean.editarSitioCurso}"
+								update=":formSitio:tab" process="@all" styleClass="btnClic" />
+							<p:commandButton value="Guardar"
+								action="#{sitioCursoBean.guardar()}" update=":formSitio:tab"
+								process="@all" styleClass="btnClic"
+								rendered="#{!sitioCursoBean.editarSitioCurso}" />
+							<p:commandButton value="Cancelar" process="@this"
+								action="#{sitioCursoBean.iniciar()}" update=":formSitio:tab"
+								styleClass="btnClic" />
+							<br />
+							<br />
+						</p:outputPanel>
+						<div class="footerTabla">
+							<p:outputPanel id="panelTabla">
+								<p:dataTable value="#{sitioCursoBean.listadoSitios}" var="sitio"
+									rendered="#{sitioCursoBean.listadoSitios.size() > 0}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorPosition="bottom" rows="5" paginator="true"
+									rowsPerPageTemplate="5,10,15,20,25,30"
+									tableStyle="table-layout:auto;width:100%;">
+									
+									<p:column styleClass="wrap" headerText="Ciudad">
+										<h:outputText value="#{sitio.ciudad.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Nombre">
+										<h:outputText value="#{sitio.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Dirección">
+										<h:outputText value="#{sitio.direccion}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Teléfono">
+										<h:outputText value="#{sitio.telefono}" />
+									</p:column>
+
+									<p:column headerText="Editar" styleClass="classBtn">
+										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
+											update=":formSitio" process="@this"
+											action="#{sitioCursoBean.editarSitioCurso(sitio)}" />
+										<p:tooltip for="cbEditar" value="Editar #{sitio.nombre}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+
+									<p:column headerText="Eliminar" styleClass="classBtn">
+										<p:commandButton id="cbEliminar" icon="ui-icon-trash"
+											update=":formSitio" process="@this"
+											actionListener="#{sitioCursoBean.seleccionarSitioCurso(sitio)}"
+											oncomplete="dlgEliminar.show()" />
+										<p:tooltip for="cbEliminar" value="Eliminar #{sitio.nombre}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+						</div>
+					</center>
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
+				message="Desea eliminar el sitio: #{sitioCursoBean.eliminarSitioCurso.nombre}?"
+				header="Eliminar #{sitioCursoBean.eliminarSitioCurso.nombre}"
+				severity="alert" widgetVar="dlgEliminar">
+				<p:commandButton value="Si" update=":formSitio"
+					oncomplete="dlgEliminar.hide()" process="@this"
+					actionListener="#{sitioCursoBean.eliminar()}" />
+				<p:commandButton value="No" update=":formSitio"
+					onclick="dlgEliminar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
