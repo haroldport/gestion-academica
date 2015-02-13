@@ -30,8 +30,13 @@
 			<div class="MainMenu">
 				<h:form id="formPrincipal">
 					<ul class="MainMenu-list">
-						<li class="MainMenu-title"><h1>Sistema de Gestión
-								Académica</h1></li>
+						<li class="MainMenu-title">
+							<h1>
+								<p:commandLink id="page" style="color: #00DBFF !important; font-size: 0.9em !important; text-decoration: none"
+									action="#{indexBean.inicio}"
+									value="Sistema de Gestión Académica" />
+							</h1>
+						</li>
 						<li class="MainMenu-item"><p:commandLink
 								rendered="#{indexBean.usuario.username == null}"
 								onclick="PF('dlg').show();"

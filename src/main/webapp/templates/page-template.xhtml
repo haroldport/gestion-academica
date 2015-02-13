@@ -29,28 +29,26 @@
 			<div class="MainMenu">
 				<h:form id="formPrincipal">
 					<ul class="MainMenu-list">
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#nosotros">Nosotros</a></li>
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#perfil">Perfil</a></li>
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#cursos">Cursos</a></li>
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#contacto">Contacto</a></li>
+						<li class="MainMenu-title">
+							<h1>
+								<p:commandLink id="page" style="color: #00DBFF !important; font-size: 0.9em !important; text-decoration: none"
+									action="#{indexBean.inicio}"
+									value="Sistema de Gestión Académica" />
+							</h1>
+						</li>
 						<li class="MainMenu-item"><p:commandLink
 								rendered="#{indexBean.usuario.username == null}"
 								onclick="PF('dlg').show();"
 								styleClass="icon-login MainMenu-link2" value="Login" /> <p:commandLink
 								rendered="#{indexBean.usuario.username != null}" id="user"
 								styleClass="MainMenu-user" action="#{indexBean.verPrincipal}"
-								value="Bienvenid@ #{indexBean.usuario.username}!" /> 
-								<p:contextMenu for="user">
-									<p:menuitem value="Cambiar clave"
-									update=":formPrincipal, :formClave" icon="ui-icon-transferthick-e-w"
+								value="Bienvenid@ #{indexBean.usuario.username}!" /> <p:contextMenu
+								for="user">
+								<p:menuitem value="Cambiar clave"
+									update=":formPrincipal, :formClave"
+									icon="ui-icon-transferthick-e-w"
 									onclick="PF('dlgClave').show();" />
-								</p:contextMenu>
-								<p:outputPanel
-								styleClass="MainMenu-panel"
+							</p:contextMenu> <p:outputPanel styleClass="MainMenu-panel"
 								rendered="#{indexBean.usuario.username != null}">
 								<a class="MainMenu-user"
 									href="#{facesContext.externalContext.requestContextPath}/logout">
@@ -70,35 +68,43 @@
 			<ui:insert name="contenido" />
 		</div>
 		<div class="footerT">
-			<div>			
-				<p>Powered by JRivera Consulting</p>			
+			<div>
+				<p>Powered by JRivera Consulting</p>
 				<p>Todos los derechos reservados - 2014</p>
 			</div>
-			<p:graphicImage styleClass="Header-imageT" library="images" name="logo.jpg" />
+			<p:graphicImage styleClass="Header-imageT" library="images"
+				name="logo.jpg" />
 		</div>
 		<p:dialog id="dlgPass" widgetVar="dlgClave" header="Cambio de clave"
-		width="600" resizable="false" showEffect="explode" hideEffect="bounce" position="center top">
+			width="600" resizable="false" showEffect="explode"
+			hideEffect="bounce" position="center top">
 			<h:form id="formClave">
 				<p:growl id="growl" life="5000" autoUpdate="true" />
 				<h:panelGrid columns="2">
 					<h:outputText value="Clave anterior: " />
-					<p:password size="35" value="#{indexBean.claveAnterior}" feedback="true" promptLabel="Ingrese la clave anterior"
-							required="true" requiredMessage="La clave anterior es requerida!"
-							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
-							strongLabel="Seguridad fuerte" />
+					<p:password size="35" value="#{indexBean.claveAnterior}"
+						feedback="true" promptLabel="Ingrese la clave anterior"
+						required="true" requiredMessage="La clave anterior es requerida!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
 					<h:outputText value="Nueva clave: " />
-					<p:password size="35" value="#{indexBean.claveActual}" feedback="true" promptLabel="Ingrese la clave actual"
-							required="true" requiredMessage="La clave actual es requerida!"
-							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
-							strongLabel="Seguridad fuerte" />
+					<p:password size="35" value="#{indexBean.claveActual}"
+						feedback="true" promptLabel="Ingrese la clave actual"
+						required="true" requiredMessage="La clave actual es requerida!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
 					<h:outputText value="Confirmar nueva clave: " />
-					<p:password size="35" value="#{indexBean.claveActualRepetida}" feedback="true" promptLabel="Repita la clave actual"
-							required="true" requiredMessage="Repetir la clave actual es requerido!"
-							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
-							strongLabel="Seguridad fuerte"/>
+					<p:password size="35" value="#{indexBean.claveActualRepetida}"
+						feedback="true" promptLabel="Repita la clave actual"
+						required="true"
+						requiredMessage="Repetir la clave actual es requerido!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
 					<p:columnGroup />
-					<p:commandButton value="Cambiar clave" action="#{indexBean.cambiarClave}"
-									 oncomplete="handleLoginRequest(xhr, status, args)" styleClass="btnClic" />
+					<p:commandButton value="Cambiar clave"
+						action="#{indexBean.cambiarClave}"
+						oncomplete="handleLoginRequest(xhr, status, args)"
+						styleClass="btnClic" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

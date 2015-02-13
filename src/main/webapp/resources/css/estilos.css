@@ -36,12 +36,12 @@
 }
 
 .MainMenu-title{
-	color: #00DBFF;
-	display: inline-block;
-	left: 0;
-	font-size: 0.7em;
-	margin: 0.2em 2em;
-	position: absolute;
+	color: #00DBFF !important;
+	display: inline-block !important;
+	left: 0 !important;
+	font-size: 0.7em !important;
+	margin: 0.5em 2em 0.2em !important;
+	position: absolute !important;
 }
 
 .MainMenu-link2{	
@@ -148,12 +148,12 @@
 }
 
 .Profile-link{
-	background: orange;
-	border-radius: 2em;
-	color: white;
-	margin-right: .5em;
-	padding: .5em 1em;
-	text-decoration: none;
+	background: orange !important;
+	border-radius: 2em !important;
+	color: white !important;
+	margin-right: .5em !important;
+	padding: .5em 1em !important;
+	text-decoration: none !important;
 }
 
 .Profile-service{
@@ -181,7 +181,9 @@
 }
 
 .Curso-image{
-	width: 18em;
+	border: 1px solid black;
+	height: 18em;
+	width: 18em;	
 }
 
 .Curso-imageContainer{
@@ -369,4 +371,10 @@
     font-weight: bold !important;
     float: right !important;
     color: #000000 !important;    
+}
+
+.curso-panel>.ui-datagrid-content {
+   border: none;
+   font-size: 16px !important;
+   margin-bottom: 0.5em;
 }
