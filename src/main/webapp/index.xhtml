@@ -111,11 +111,12 @@
 						<p:outputPanel rendered="#{indexBean.dentroDeRango(curso.fechaFin)}">
 							<div class="Curso-imageContainer">
 								<p:graphicImage id="image" styleClass="Curso-image"
-									rendered="#{curso.informacionCurso.imagen.idImagen > 1}"
+									rendered="#{curso.informacionCurso.imagen.idImagen > 0}"
 									url="/image?id=#{curso.informacionCurso.imagen.idImagen}" />
 							</div>
 							<div class="Curso-imageDescription">#{curso.informacionCurso.nombre}</div>
 							<p:commandLink id="linkCurso" style="font-size: 1em"
+								action="#{indexBean.masInfoCurso(curso)}"
 								styleClass="Profile-link" process="@this :formCurso"
 								update=":formCurso" value="Más información" />
 						</p:outputPanel>

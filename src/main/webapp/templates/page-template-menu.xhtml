@@ -21,9 +21,9 @@
 		<p:dialog header="#{msgs['error.sessionTimeOut.header']}"
 			widgetVar="sessionTimeOutDialog" modal="true" closable="false"
 			width="400" visible="false">
-			<h:outputText value="#{msgs['error.sessionTimeOut.text']}" />
-			<input id="confirmBackToLogin" type="button"
-				value="#{msgs['error.sessionTimeOut.button']}"
+			<h:outputText value="Sesión caducada" style="font-size: 0.8em" />
+			<input id="confirmBackToLogin" type="button" style="font-size: 0.8em"
+				value="Su sesión ha caducado, por favor vuelve a ingresar al sistema"
 				onclick="window.location='#{facesContext.externalContext.requestContextPath}/faces/index.xhtml';" />
 		</p:dialog>
 		<div id="nosotros" class="HeaderT">

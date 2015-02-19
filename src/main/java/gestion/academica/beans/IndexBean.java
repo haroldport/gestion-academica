@@ -4,6 +4,7 @@ import gestion.academica.modelo.Acceso;
 import gestion.academica.modelo.AccesoRol;
 import gestion.academica.modelo.Bitacora;
 import gestion.academica.modelo.Curso;
+import gestion.academica.modelo.Preinscripcion;
 import gestion.academica.modelo.Usuario;
 import gestion.academica.servicio.AccesoServicio;
 import gestion.academica.servicio.BitacoraServicio;
@@ -69,6 +70,8 @@ public class IndexBean implements Serializable {
 	private Bitacora bitacora;
 	private Usuario usuarioRegistro;
 	private List<Curso> listaCursos;
+	private Curso cursoSeleccionado;
+	private Preinscripcion preinscripcion;
 	
 	@ManagedProperty(value = "#{clienteBean}")
     private ClienteBean clienteBean;
@@ -217,6 +220,17 @@ public class IndexBean implements Serializable {
         return false;
     }
     
+    public String masInfoCurso(Curso curso) {
+    	cursoSeleccionado = new Curso();
+    	setCursoSeleccionado(curso);
+        return "/faces/paginas/gestion/masInfoCurso.xhtml?faces-redirect=true";
+    }
+    
+    public void confirmarPreinscripcion(){
+    	preinscripcion = new Preinscripcion();
+    	preinscripcion.setNumeroParticipantes(1);
+    }
+    
 	public String getUsername() {
 		return username;
 	}
@@ -313,4 +327,19 @@ public class IndexBean implements Serializable {
 		this.listaCursos = listaCursos;
 	}
 
+	public Curso getCursoSeleccionado() {
+		return cursoSeleccionado;
+	}
+
+	public void setCursoSeleccionado(Curso cursoSeleccionado) {
+		this.cursoSeleccionado = cursoSeleccionado;
+	}
+
+	public Preinscripcion getPreinscripcion() {
+		return preinscripcion;
+	}
+
+	public void setPreinscripcion(Preinscripcion preinscripcion) {
+		this.preinscripcion = preinscripcion;
+	}
 }
