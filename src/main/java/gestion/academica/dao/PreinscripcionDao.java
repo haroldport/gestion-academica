@@ -4,6 +4,7 @@ import gestion.academica.modelo.Cliente;
 import gestion.academica.modelo.Curso;
 import gestion.academica.modelo.Preinscripcion;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +47,16 @@ public class PreinscripcionDao extends Generico<Preinscripcion> {
             Logger.getLogger(PreinscripcionDao.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
+    }
+    
+    /**
+     * Listar preinscripciones
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	public List<Preinscripcion> listarPreinscripciones() {
+        String sql = "SELECT p FROM Preinscripcion p WHERE p.estado.idEstado = 1 ORDER BY p.idPreinscripcion";
+        return this.getEntityManager().createQuery(sql).getResultList();
     }
 
 }

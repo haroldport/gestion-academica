@@ -1,5 +1,7 @@
 package gestion.academica.servicio;
 
+import java.util.List;
+
 import gestion.academica.dao.PreinscripcionDao;
 import gestion.academica.modelo.Cliente;
 import gestion.academica.modelo.Curso;
@@ -34,6 +36,15 @@ public class PreinscripcionServicio {
      */
     public Preinscripcion obtenerPorClienteYCurso(Cliente cliente, Curso curso) {
     	return preinscripcionDao.obtenerPorClienteYCurso(cliente, curso);
+    }
+    
+
+    /**
+     * Listar preinscripciones
+     * @return
+     */
+	public List<Preinscripcion> listarPreinscripciones() {
+    	return preinscripcionDao.listarPreinscripciones();
     }
 
 }

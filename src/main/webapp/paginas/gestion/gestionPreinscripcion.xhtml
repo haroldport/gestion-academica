@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formPreinscripcion">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab" style="font-size: 14px">
+				<p:tab title="Administración de preinscripciones">
+					<center>
+						<div class="footerTabla">
+							<p:outputPanel id="panelTabla">
+								<p:dataTable value="#{preinscripcionBean.listaPreinscripciones}"
+									var="preinscripcion"
+									rendered="#{preinscripcionBean.listaPreinscripciones.size() > 0}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorPosition="bottom" rows="10" paginator="true"
+									rowsPerPageTemplate="10,15,20,25,30"
+									tableStyle="table-layout:auto;width:100%;">
+
+									<p:column styleClass="wrap" headerText="Curso">
+										<h:outputText
+											value="#{preinscripcion.curso.informacionCurso.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Cliente">
+										<h:outputText
+											value="#{preinscripcion.cliente.numeroDocumento} - #{preinscripcion.cliente.nombres}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="No. participantes">
+										<h:outputText value="#{preinscripcion.numeroParticipantes}" />
+									</p:column>
+
+									<p:column headerText="Gestión de llamadas"
+										styleClass="classBtn">
+										<center>
+											<p:commandButton id="cbEditar" icon="ui-icon-person"
+												update=":formPreinscripcion, :formLlamada" process="@this"
+												onclick="PF('dlgLlamada').show();"
+												action="#{preinscripcionBean.seleccionarPreinscripcion(preinscripcion)}" />
+											<p:tooltip for="cbEditar" value="Registrar gestión Cliente"
+												showEffect="fade" hideEffect="fade" />
+										</center>
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+						</div>
+					</center>
+				</p:tab>
+			</p:tabView>
+			<br />
+		</h:form>
+		<p:dialog id="dlgGestion" widgetVar="dlgLlamada"
+			style="font-size: 0.8em" header="Registro de gestión del Cliente"
+			width="800" resizable="false" showEffect="explode"
+			hideEffect="bounce" position="center top">
+			<center>
+				<h:form id="formLlamada">
+					<p:growl id="growl" life="5000" autoUpdate="true" />
+					<h:panelGrid columns="3">
+						<h:outputText styleClass="label" value="Cliente:" />
+						<p:spacer width="15" height="40" />
+						<h:outputText
+							value="#{preinscripcionBean.preinscripcionSeleccionada.cliente.nombres}" />
+						<h:outputText styleClass="label" value="Curso:" />
+						<p:spacer width="15" height="40" />
+						<h:outputText
+							value="#{preinscripcionBean.preinscripcionSeleccionada.curso.informacionCurso.nombre}" />
+						<h:outputText styleClass="label" value="Gestión realizada:" />
+						<p:spacer width="15" height="40" />
+						<p:outputPanel>
+							<p:inputTextarea id="observacion" cols="26" rows="6"
+								value="#{preinscripcionBean.nuevaLlamada.observaciones}"
+								required="true"
+								requiredMessage="El campo Gestión realizada es requerido!" />
+							<h:outputText value=" *" style="color: red" />
+						</p:outputPanel>
+						<h:outputLabel styleClass="label" value="Fecha próxima gestión:" />
+						<p:spacer width="15" height="40" />
+						<p:calendar id="fechaProx" size="22"
+							value="#{preinscripcionBean.nuevaLlamada.fechaLlamadaProxima}"
+							navigator="true" pattern="yyyy-MM-dd" showOn="button" />
+						<p:columnGroup />
+						<p:spacer width="15" height="40" />
+						<p:commandButton value="Guardar gestión"
+							action="#{preinscripcionBean.guardarGestion}"
+							oncomplete="handleLoginRequest(xhr, status, args)"
+							styleClass="btnClic" />
+					</h:panelGrid>
+					<br />
+					<br />
+					<p:dataTable value="#{preinscripcionBean.listaLlamadas}"
+						var="llamada"
+						rendered="#{preinscripcionBean.listaLlamadas.size() > 0}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="5" paginator="true"
+						rowsPerPageTemplate="5,10,15,20,25,30"
+						tableStyle="table-layout:auto;width:100%;">
+						<p:column styleClass="wrap" headerText="Fecha">
+							<h:outputText value="#{llamada.fecha}">
+								<f:convertDateTime pattern="yyyy-MM-dd" />
+							</h:outputText>
+						</p:column>
+
+						<p:column styleClass="wrap" headerText="Gestión realizada">
+							<h:outputText value="#{llamada.observaciones}" />
+						</p:column>
+
+						<p:column styleClass="wrap" headerText="Fecha Próximo Llamada">
+							<h:outputText value="#{llamada.fechaLlamadaProxima}">
+								<f:convertDateTime pattern="yyyy-MM-dd" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</center>
+		</p:dialog>
+
+		<script type="text/javascript">
+			function handleLoginRequest(xhr, status, args) {
+				if (args.validationFailed || !args.gestion) {
+					dlgLlamada.jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					dlgLlamada.hide();
+				}
+			}	
+		</script>
+	</ui:define>
+</ui:composition>
+</html>

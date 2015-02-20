@@ -65,6 +65,9 @@ public class Curso implements Serializable {
 	//bi-directional many-to-one association to Preinscripcion
 	@OneToMany(mappedBy="curso")
 	private List<Preinscripcion> preinscripcions;
+	
+	@OneToMany(mappedBy="curso")
+	private List<Llamada> llamadas;
 
 	public Curso() {
 	}
@@ -169,6 +172,14 @@ public class Curso implements Serializable {
 
 	public void setPreinscripcions(List<Preinscripcion> preinscripcions) {
 		this.preinscripcions = preinscripcions;
+	}	
+
+	public List<Llamada> getLlamadas() {
+		return llamadas;
+	}
+
+	public void setLlamadas(List<Llamada> llamadas) {
+		this.llamadas = llamadas;
 	}
 
 	public Preinscripcion addPreinscripcion(Preinscripcion preinscripcion) {
