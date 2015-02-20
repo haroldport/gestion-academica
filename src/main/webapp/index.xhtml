@@ -47,7 +47,7 @@
 									Cerrar sesión </a>
 							</p:outputPanel></li>
 						<li class="MainMenu-item"><p:commandLink
-								onclick="PF('dlg1').show();"
+								onclick="PF('dlg1').show();" rendered="#{indexBean.usuario.username == null}"
 								styleClass="icon-login MainMenu-link2" value="Registro" /></li>
 					</ul>
 				</h:form>

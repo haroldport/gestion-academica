@@ -154,4 +154,12 @@ public class ClienteBean implements Serializable {
 		this.ciudades = ciudades;
 	}
 
+	public ClienteServicio getClienteServicio() {
+		return clienteServicio;
+	}
+
+	public void setClienteServicio(ClienteServicio clienteServicio) {
+		this.clienteServicio = clienteServicio;
+	}	
+
 }

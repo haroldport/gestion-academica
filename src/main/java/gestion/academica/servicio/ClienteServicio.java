@@ -3,6 +3,7 @@ package gestion.academica.servicio;
 import gestion.academica.dao.ClienteDao;
 import gestion.academica.dao.UsuarioDao;
 import gestion.academica.modelo.Cliente;
+import gestion.academica.modelo.Usuario;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -41,5 +42,14 @@ public class ClienteServicio {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+     * Obtener por usuario
+     * @param usuario
+     * @return
+     */
+    public Cliente obtenerPorUsuario(Usuario usuario) {
+    	return clienteDao.obtenerPorUsuario(usuario);
+    }
 
 }

@@ -3,12 +3,14 @@ package gestion.academica.beans;
 import gestion.academica.modelo.Acceso;
 import gestion.academica.modelo.AccesoRol;
 import gestion.academica.modelo.Bitacora;
+import gestion.academica.modelo.Cliente;
 import gestion.academica.modelo.Curso;
 import gestion.academica.modelo.Preinscripcion;
 import gestion.academica.modelo.Usuario;
 import gestion.academica.servicio.AccesoServicio;
 import gestion.academica.servicio.BitacoraServicio;
 import gestion.academica.servicio.CursoServicio;
+import gestion.academica.servicio.PreinscripcionServicio;
 import gestion.academica.servicio.UsuarioServicio;
 import gestion.academica.utilitario.Crypt;
 
@@ -58,6 +60,8 @@ public class IndexBean implements Serializable {
 	private BitacoraServicio bitacoraServicio;
 	@EJB
 	private CursoServicio cursoServicio;
+	@EJB
+	private PreinscripcionServicio preinscripcionServicio;
 	
 	private String username;
     private String password;
@@ -77,7 +81,7 @@ public class IndexBean implements Serializable {
     private ClienteBean clienteBean;
     
     @PostConstruct
-    public void init() {
+    public void init() throws Exception {
         usuario = new Usuario();
         usuarioRegistro = usuarioServicio.obtenerUsuarioPorUsername("usuario_registro");
         listaAccesoRol = new ArrayList<>();
@@ -86,7 +90,6 @@ public class IndexBean implements Serializable {
     
 	@SuppressWarnings("unused")
 	public String login(){
-    	System.out.println("Ingreso Login");
         FacesMessage msg;
         try {
             WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext());
@@ -222,13 +225,42 @@ public class IndexBean implements Serializable {
     
     public String masInfoCurso(Curso curso) {
     	cursoSeleccionado = new Curso();
+    	preinscripcion = new Preinscripcion();
     	setCursoSeleccionado(curso);
+    	if(getUsuario().getIdUsuario() != null){
+    		Cliente cliente = clienteBean.getClienteServicio().obtenerPorUsuario(getUsuario());
+        	Preinscripcion preinscripcionTmp = preinscripcionServicio.obtenerPorClienteYCurso(cliente, cursoSeleccionado);
+        	if(preinscripcionTmp != null){
+        		setPreinscripcion(preinscripcionTmp);
+        	}
+    	}    	
         return "/faces/paginas/gestion/masInfoCurso.xhtml?faces-redirect=true";
     }
     
     public void confirmarPreinscripcion(){
     	preinscripcion = new Preinscripcion();
     	preinscripcion.setNumeroParticipantes(1);
+    }
+    
+    public void preinscribirCliente(){
+    	FacesMessage msg = null;
+    	Date fechaCreacion = new Date();
+    	Cliente cliente = clienteBean.getClienteServicio().obtenerPorUsuario(getUsuario());
+    	Preinscripcion preinscripcionTmp = preinscripcionServicio.obtenerPorClienteYCurso(cliente, cursoSeleccionado);
+    	if(preinscripcionTmp == null){
+    		preinscripcion.setCliente(cliente);
+    		preinscripcion.setCurso(cursoSeleccionado);
+    		preinscripcion.setEstado(clienteBean.getEstadoActivo());
+    		preinscripcion.setObservacion("Preinscripción en el curso: " + cursoSeleccionado.getInformacionCurso().getNombre());
+    		preinscripcionServicio.crear(preinscripcion);
+    		bitacora = new Bitacora(fechaCreacion, "Preinscripción a curso: " + cursoSeleccionado.getInformacionCurso().getNombre()
+    				 + " - Cliente: " + cliente.getNombres(), getUsuario());
+            bitacoraServicio.crear(bitacora);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Te preinscribiste correctamente en el curso!!!","");
+    	}else{
+    		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ya estás preinscrito en este curso","");
+    	}
+    	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
 	public String getUsername() {
@@ -342,4 +374,5 @@ public class IndexBean implements Serializable {
 	public void setPreinscripcion(Preinscripcion preinscripcion) {
 		this.preinscripcion = preinscripcion;
 	}
+	
 }

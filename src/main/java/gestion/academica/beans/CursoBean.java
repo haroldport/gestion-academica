@@ -133,7 +133,7 @@ public class CursoBean extends Utilitario implements Serializable {
 			Date fechaEliminacion = new Date();
 			eliminarCurso.setEstado(estadoInactivo);
 			cursoServicio.editar(eliminarCurso);
-			bitacora = new Bitacora(fechaEliminacion, "Eliminación de sitio: " + nuevoCurso.getInformacionCurso().getNombre(), this.getUsuario());
+			bitacora = new Bitacora(fechaEliminacion, "Eliminación de sitio: " + eliminarCurso.getInformacionCurso().getNombre(), this.getUsuario());
             bitacoraServicio.crear(bitacora);
 			initValores();
 			eliminarCurso = new Curso();

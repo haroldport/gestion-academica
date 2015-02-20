@@ -265,6 +265,15 @@
 					dlgClave.hide();
 				}
 			}
+			function verificarRegistro(xhr, status, args) {
+				if (args.validationFailed || !args.registro) {
+					dlg1.jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					dlg1.hide();
+				}
+			}	
 		</script>
 	</h:body>
 </f:view>

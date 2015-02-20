@@ -43,6 +43,16 @@ public class Preinscripcion implements Serializable {
 	public Preinscripcion() {
 	}
 
+	public Preinscripcion(String observacion, Cliente cliente, Curso curso,
+			Estado estado) {
+		this.observacion = observacion;
+		this.cliente = cliente;
+		this.curso = curso;
+		this.estado = estado;
+	}
+
+
+
 	public Integer getIdPreinscripcion() {
 		return this.idPreinscripcion;
 	}

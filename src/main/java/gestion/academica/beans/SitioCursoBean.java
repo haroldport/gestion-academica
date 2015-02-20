@@ -63,8 +63,8 @@ public class SitioCursoBean extends Utilitario implements Serializable {
 		listadoSitios = sitioCursoServicio.listarSitios();
 	}
 	
-	public String seleccionarSitioCurso(SitioCurso SitioCurso) {
-		setEliminarSitioCurso(SitioCurso);
+	public String seleccionarSitioCurso(SitioCurso sitioCurso) {
+		setEliminarSitioCurso(sitioCurso);
 		return "";
 	}
 
