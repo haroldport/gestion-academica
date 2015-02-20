@@ -3,7 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<field name="informacionCurso" class="java.lang.Object"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<field name="nombreCurso" class="java.lang.String"/>
+	<field name="objetivoCurso" class="java.lang.String"/>
+	<field name="temas" class="java.lang.Object"/>
 	<title>
 		<band height="90" splitType="Stretch">
 			<staticText>
@@ -22,7 +25,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="104" y="29" width="448" height="20" uuid="7db90380-8981-473d-a40f-3fe4b274b952"/>
-				<textFieldExpression><![CDATA[$F{informacionCurso}.nombre]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombreCurso}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="49" width="94" height="20" uuid="8adae604-206b-46eb-abdf-dc7b26dda958"/>
@@ -33,15 +36,20 @@
 			</staticText>
 			<textField>
 				<reportElement x="104" y="49" width="448" height="40" uuid="8987caab-f45c-4be2-910c-d141d070f0c3"/>
-				<textFieldExpression><![CDATA[$F{informacionCurso}.objetivo]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{objetivoCurso}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
-	<columnHeader>
-		<band height="61" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="41" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="6e4be2fa-0bdf-410e-8348-96da59e657b2">
+					<printWhenExpression><![CDATA[$F{temas}.size() > 0]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{temas})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/detalleTemas.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<pageFooter>
 		<band height="20" splitType="Stretch">

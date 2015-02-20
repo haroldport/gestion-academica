@@ -1,11 +1,8 @@
 package gestion.academica.beans;
 
-import gestion.academica.modelo.Curso;
 import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,13 +24,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class ReporteBean extends Utilitario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
-	public void verTemario(Curso cursoSeleccionado) throws Exception {
-		List<Object> listaCursos = new ArrayList<>();
-		listaCursos.add(cursoSeleccionado);
-        Map<String, Object> pars = new HashMap<>();
-        imprimirPDF(listaCursos, "temario", pars);
-    }	
 	
 	@SuppressWarnings("static-access")
 	public void imprimirPDF(List<Object> listaReporte, String nombreArchivo, Map<String, Object> pars) {

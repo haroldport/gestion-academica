@@ -51,6 +51,9 @@ public class ClienteBean implements Serializable {
 	private List<CatalogoDetalle> ciudades;
 	private static final Logger LOGGER = Logger.getLogger(ClienteBean.class.getName());
 	private Rol rolCliente;
+	private List<Cliente> listadoClientes;
+	private boolean editarCliente;
+	private Cliente eliminarCliente;
 	
 	@PostConstruct
 	public void iniciar() {
@@ -73,10 +76,15 @@ public class ClienteBean implements Serializable {
 		nuevoCliente.setCatalogoDetalle(new CatalogoDetalle());
 		nuevoCliente.setTipoPersona(new CatalogoDetalle());
 		nuevoCliente.setCiudad(new CatalogoDetalle());
+		listadoClientes = clienteServicio.obtenerClientes();
 	}
 	
 	public void guardar() {
 		try {
+			if(nuevoCliente.getUsuario().getUsername() == null){
+				nuevoCliente.getUsuario().setUsername(nuevoCliente.getNombres().split(" ")[0].toLowerCase());
+				nuevoCliente.getUsuario().setClave(nuevoCliente.getUsuario().getUsername());
+			}
 			nuevoCliente.setEstado(estadoActivo);
 			nuevoCliente.setNombres(nuevoCliente.getNombres().toUpperCase());
 			nuevoCliente.setDireccion(nuevoCliente.getDireccion().toUpperCase());
@@ -85,6 +93,41 @@ public class ClienteBean implements Serializable {
 			nuevoCliente.getUsuario().setEstado(estadoActivo);
 			clienteServicio.crear(nuevoCliente);
 			initValores();
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, null, e);
+		}
+	}
+	
+	public String seleccionarCliente(Cliente cliente) {
+		setEliminarCliente(cliente);
+		return "";
+	}
+
+	public String editarCliente() {
+		try {
+			setEditarCliente(false);
+			nuevoCliente.setNombres(nuevoCliente.getNombres().toUpperCase());
+			nuevoCliente.setDireccion(nuevoCliente.getDireccion().toUpperCase());
+			clienteServicio.editar(nuevoCliente);
+			initValores();
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, null, e);
+		}
+		return "";
+	}
+
+	public String editarCliente(Cliente cliente) {
+		setEditarCliente(true);
+		setNuevoCliente(cliente);
+		return "";
+	}
+	
+	public void eliminar() {
+		try {
+			eliminarCliente.setEstado(estadoInactivo);
+			clienteServicio.editar(eliminarCliente);
+			initValores();
+			eliminarCliente = new Cliente();
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, null, e);
 		}
@@ -160,6 +203,30 @@ public class ClienteBean implements Serializable {
 
 	public void setClienteServicio(ClienteServicio clienteServicio) {
 		this.clienteServicio = clienteServicio;
-	}	
+	}
 
+	public List<Cliente> getListadoClientes() {
+		return listadoClientes;
+	}
+
+	public void setListadoClientes(List<Cliente> listadoClientes) {
+		this.listadoClientes = listadoClientes;
+	}
+
+	public boolean isEditarCliente() {
+		return editarCliente;
+	}
+
+	public void setEditarCliente(boolean editarCliente) {
+		this.editarCliente = editarCliente;
+	}
+
+	public Cliente getEliminarCliente() {
+		return eliminarCliente;
+	}
+
+	public void setEliminarCliente(Cliente eliminarCliente) {
+		this.eliminarCliente = eliminarCliente;
+	}
+	
 }

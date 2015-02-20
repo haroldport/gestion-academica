@@ -3,6 +3,7 @@ package gestion.academica.dao;
 import gestion.academica.modelo.Cliente;
 import gestion.academica.modelo.Usuario;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +40,23 @@ public class ClienteDao extends Generico<Cliente> {
             query.setParameter("usuario", usuario);
             Cliente cliente = query.getResultList() != null && !query.getResultList().isEmpty() ? (Cliente) query.getResultList().get(0) : null;
             return cliente;
+        } catch (Exception e) {
+            Logger.getLogger(PreinscripcionDao.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
+    /**
+     * Obtener clientes activos
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	public List<Cliente> obtenerClientes() {
+        try {
+            String sql = "SELECT c FROM Cliente c WHERE c.estado.idEstado = 1 ";
+            Query query = getEntityManager().createQuery(sql);
+            List<Cliente> clientes = query.getResultList() != null && !query.getResultList().isEmpty() ? (List<Cliente>) query.getResultList() : null;
+            return clientes;
         } catch (Exception e) {
             Logger.getLogger(PreinscripcionDao.class.getName()).log(Level.SEVERE, null, e);
             return null;

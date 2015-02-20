@@ -106,10 +106,11 @@
 					<br />
 					<br />
 					<center>
-						<h:commandLink id="linkTemario" style="font-size: 0.8em" target="_blank"
-							action="#{reporteBean.verTemario(indexBean.cursoSeleccionado)}"
+						<p:commandLink id="linkTemario" style="font-size: 0.8em"
+							action="#{temaCursoBean.llenarArbolPorCurso(indexBean.cursoSeleccionado.informacionCurso)}"
+							onclick="PF('dlgTema').show();"
 							styleClass="Profile-link" process="@this :formMasInfo"
-							update=":formMasInfo" value="Ver Temario" ajax="false" />
+							update=":formTemario" value="Ver Temario" />
 						<p:commandLink id="linkPreinscripcion" style="font-size: 0.8em"
 							action="#{indexBean.confirmarPreinscripcion}"
 							onclick="PF('dlgPre').show();"
@@ -162,6 +163,21 @@
 							update=":formPreinscripcion, :formMasInfo" />
 					</h:panelGrid>
 				</center>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog header="Temario del Curso" widgetVar="dlgTema" style="font-size: 14px;"
+			modal="true" showEffect="puff" hideEffect="fold" resizable="false">
+			<h:form id="formTemario">
+				<p:panel>
+					<p:treeTable value="#{temaCursoBean.rootTemaCurso}" var="tema"
+						style="text-align: left; height: 300px;overflow: scroll;"						
+						rendered="#{temaCursoBean.rootTemaCurso.childCount > 0}">
+						<p:column styleClass="wrap" headerText="Tema">
+							<h:outputText value="#{tema.descripcion}" />
+						</p:column>
+					</p:treeTable>
+				</p:panel>
 			</h:form>
 		</p:dialog>
 	</ui:define>

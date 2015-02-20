@@ -3,6 +3,7 @@ package gestion.academica.servicio;
 import java.util.List;
 
 import gestion.academica.dao.TemaCursoDao;
+import gestion.academica.modelo.InformacionCurso;
 import gestion.academica.modelo.TemaCurso;
 
 import javax.ejb.EJB;
@@ -44,6 +45,15 @@ public class TemaCursoServicio {
      */
 	public List<TemaCurso> listarTemasCursoPadres() {
     	return temaCursoDao.listarTemasCursoPadres();
+    }
+	
+	/**
+     * Listar temas padres en base a un curso
+     * @param informacionCurso
+     * @return
+     */
+	public List<TemaCurso> listarTemasPadresPorCurso(InformacionCurso informacionCurso) {
+    	return temaCursoDao.listarTemasPadresPorCurso(informacionCurso);
     }
 
 }
