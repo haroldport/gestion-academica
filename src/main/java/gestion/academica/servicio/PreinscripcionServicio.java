@@ -29,6 +29,18 @@ public class PreinscripcionServicio {
 	}
 	
 	/**
+	 * Editar una preinscripcion
+	 * @param preinscripcion
+	 */
+	public void editar(Preinscripcion preinscripcion){
+		try {
+			preinscripcionDao.edit(preinscripcion);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
      * Obtener por cliente y curso
      * @param cliente
      * @param curso

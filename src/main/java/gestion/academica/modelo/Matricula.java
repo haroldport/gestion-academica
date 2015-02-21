@@ -44,6 +44,13 @@ public class Matricula implements Serializable {
 	public Matricula() {
 	}
 
+	public Matricula(Date fechaMatricula, Curso curso, Estado estado) {
+		super();
+		this.fechaMatricula = fechaMatricula;
+		this.curso = curso;
+		this.estado = estado;
+	}
+	
 	public Integer getIdMatricula() {
 		return this.idMatricula;
 	}

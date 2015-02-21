@@ -41,11 +41,24 @@
 									<p:column headerText="Gestión de llamadas"
 										styleClass="classBtn">
 										<center>
-											<p:commandButton id="cbEditar" icon="ui-icon-person"
+											<p:commandButton id="cbGestion" icon="ui-icon-wrench"
 												update=":formPreinscripcion, :formLlamada" process="@this"
 												onclick="PF('dlgLlamada').show();"
 												action="#{preinscripcionBean.seleccionarPreinscripcion(preinscripcion)}" />
-											<p:tooltip for="cbEditar" value="Registrar gestión Cliente"
+											<p:tooltip for="cbGestion" value="Registrar gestión Cliente"
+												showEffect="fade" hideEffect="fade" />
+										</center>
+									</p:column>
+									
+									<p:column headerText="Matricula"
+										styleClass="classBtn">
+										<center>
+											<p:commandButton id="cbMatricula" icon="ui-icon-person"
+												disabled="#{preinscripcion.matriculado or preinscripcion.numeroParticipantes > 1}"
+												update=":formPreinscripcion" process="@this"
+												oncomplete="dlgMatricular.show()"
+												action="#{preinscripcionBean.seleccionarPreinscripcion(preinscripcion)}" />
+											<p:tooltip for="cbMatricula" value="Matricular cliente en el curso"
 												showEffect="fade" hideEffect="fade" />
 										</center>
 									</p:column>
@@ -56,6 +69,17 @@
 				</p:tab>
 			</p:tabView>
 			<br />
+			<p:confirmDialog id="cdMatricular" styleClass="cajaEspecial"
+				message="Confirmar matricula del cliente: #{preinscripcionBean.preinscripcionSeleccionada.cliente.nombres} en el curso 
+				#{preinscripcionBean.preinscripcionSeleccionada.curso.informacionCurso.nombre}?"
+				header="Matricular estudiante"
+				severity="alert" widgetVar="dlgMatricular">
+				<p:commandButton value="Si" update=":formPreinscripcion"
+					oncomplete="dlgMatricular.hide()" process="@this"
+					actionListener="#{preinscripcionBean.matricularCliente}" />
+				<p:commandButton value="No" update=":formPreinscripcion"
+					onclick="dlgMatricular.hide()" type="button" process="@this" />
+			</p:confirmDialog>
 		</h:form>
 		<p:dialog id="dlgGestion" widgetVar="dlgLlamada"
 			style="font-size: 0.8em" header="Registro de gestión del Cliente"

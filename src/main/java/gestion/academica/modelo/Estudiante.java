@@ -49,6 +49,16 @@ public class Estudiante implements Serializable {
 
 	public Estudiante() {
 	}
+	
+	public Estudiante(String email, String nombres, String numeroDocumento,
+			Estado estado, Usuario usuario) {
+		super();
+		this.email = email;
+		this.nombres = nombres;
+		this.numeroDocumento = numeroDocumento;
+		this.estado = estado;
+		this.usuario = usuario;
+	}
 
 	public Integer getIdEstudiante() {
 		return this.idEstudiante;
