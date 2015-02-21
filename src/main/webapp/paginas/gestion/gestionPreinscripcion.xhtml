@@ -90,8 +90,9 @@
 						<p:columnGroup />
 						<p:spacer width="15" height="40" />
 						<p:commandButton value="Guardar gestión"
+							update=":formPreinscripcion, :formLlamada"
 							action="#{preinscripcionBean.guardarGestion}"
-							oncomplete="handleLoginRequest(xhr, status, args)"
+							oncomplete="validarGestion(xhr, status, args)"
 							styleClass="btnClic" />
 					</h:panelGrid>
 					<br />
@@ -124,7 +125,7 @@
 		</p:dialog>
 
 		<script type="text/javascript">
-			function handleLoginRequest(xhr, status, args) {
+			function validarGestion(xhr, status, args) {
 				if (args.validationFailed || !args.gestion) {
 					dlgLlamada.jq.effect("shake", {
 						times : 5

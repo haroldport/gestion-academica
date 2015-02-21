@@ -18,8 +18,10 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
@@ -63,8 +65,8 @@ public class PreinscripcionBean extends Utilitario implements Serializable {
 	
 	public void guardarGestion() throws Exception{
 		Date fechaLlamada = new Date();
-		String mensaje;
 		RequestContext context = RequestContext.getCurrentInstance();
+		FacesMessage msg = null;
 		boolean gestion = false;
 		if(nuevaLlamada.getObservaciones() != null){
 			gestion = true;
@@ -73,11 +75,12 @@ public class PreinscripcionBean extends Utilitario implements Serializable {
 			nuevaLlamada.setFecha(fechaLlamada);
 			nuevaLlamada.setEstado(estadoActivo);
 			llamadaServicio.crear(nuevaLlamada);
-			mensaje = "La gestión se guardó correctamente!!!";
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"La gestión se guardó correctamente!!!", "");
 		}else{
-			mensaje = "El campo Gestión realizada no puede estar vacío";
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "El campo Gestión realizada no puede estar vacío","");
 		}
-		ponerMensajeInfo(mensaje, "");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 		context.addCallbackParam("gestion", gestion);
 	}
 
