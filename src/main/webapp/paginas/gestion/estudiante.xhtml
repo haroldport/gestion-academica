@@ -1,0 +1,161 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formEstudiante">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab" style="font-size: 14px">
+				<p:tab title="Administración de matriculas">
+					<center>
+						<h:panelGrid columns="2">
+							<p:outputPanel>
+								<h:panelGrid columns="2">
+									<h:outputLabel class="label" value="Tipo de documento:" />
+									<p:outputPanel>
+										<p:selectOneMenu id="tipo" style="width: 255px;"
+											value="#{instructorBean.nuevoInstructor.catalogoDetalle.idCatalogoDetalle}"
+											required="true"
+											requiredMessage="El campo Tipo de documento es requerido!">
+											<f:selectItem itemValue=""
+												itemLabel="-- Seleccione un Tipo --" />
+											<f:selectItems value="#{instructorBean.tiposDocumento}"
+												var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
+												itemLabel="#{tipo.nombre}" />
+										</p:selectOneMenu>
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+
+									<h:outputLabel class="label" value="No. Documento: " />
+									<p:outputPanel>
+										<p:inputText id="num" size="28"
+											value="#{instructorBean.nuevoInstructor.numeroDocumento}"
+											required="true"
+											requiredMessage="El campo No. Documento es requerido!"
+											onkeypress="return aceptarNumeros(event);" maxlength="15" />
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+
+									<h:outputLabel class="label" value="Nombres: " />
+									<p:outputPanel>
+										<p:inputText id="nombre" styleClass="lblbtn" size="28"
+											value="#{instructorBean.nuevoInstructor.nombres}"
+											required="true"
+											requiredMessage="El campo Nombres es requerido!"
+											style="text-transform: uppercase"
+											onchange="toUpperCase(this)" />
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+
+									<h:outputLabel class="label" value="Teléfono: " />
+									<p:outputPanel>
+										<p:inputText id="telefono" size="28"
+											value="#{instructorBean.nuevoInstructor.telefono}"
+											required="true"
+											requiredMessage="El campo Teléfono es requerido!" />
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+
+									<h:outputLabel class="label" value="Email: " />
+									<p:outputPanel>
+										<p:inputText id="email" size="28"
+											value="#{instructorBean.nuevoInstructor.email}"
+											required="true" validatorMessage="Ingrese un correo válido"
+											requiredMessage="El campo Email es requerido!">
+											<f:validateRegex
+												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+										</p:inputText>
+										<h:outputText value=" *" style="color: red" />
+									</p:outputPanel>
+								</h:panelGrid>
+								<br />
+								<p:commandButton value="Editar"
+									action="#{instructorBean.editarInstructor()}"
+									rendered="#{instructorBean.editarInstructor}"
+									update=":formEstudiante:tab" process="@all" styleClass="btnClic" />
+								<p:commandButton value="Guardar"
+									action="#{instructorBean.guardar()}"
+									update=":formEstudiante:tab" process="@all" styleClass="btnClic"
+									rendered="#{!instructorBean.editarInstructor}" />
+								<p:commandButton value="Cancelar" process="@this"
+									action="#{instructorBean.iniciar()}"
+									update=":formEstudiante:tab" styleClass="btnClic" />
+								<br />
+								<br />
+							</p:outputPanel>
+						</h:panelGrid>
+						<div class="footerTabla">
+							<p:outputPanel id="panelTabla">
+								<p:dataTable value="#{instructorBean.listaInstructores}"
+									var="instructor"
+									rendered="#{instructorBean.listaInstructores.size() > 0}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorPosition="bottom" rows="5" paginator="true"
+									rowsPerPageTemplate="5,10,15,20,25,30"
+									tableStyle="table-layout:auto;width:100%;">
+
+									<p:column styleClass="wrap" headerText="Tipo de documento">
+										<h:outputText value="#{instructor.catalogoDetalle.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="No. de documento">
+										<h:outputText value="#{instructor.numeroDocumento}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Nombres">
+										<h:outputText value="#{instructor.nombres}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Teléfono">
+										<h:outputText value="#{instructor.telefono}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Email">
+										<h:outputText value="#{instructor.email}" />
+									</p:column>
+
+									<p:column headerText="Editar" styleClass="classBtn">
+										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
+											update=":formEstudiante" process="@this"
+											action="#{instructorBean.editarInstructor(instructor)}" />
+										<p:tooltip for="cbEditar" value="Editar #{instructor.nombres}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+
+									<p:column headerText="Eliminar" styleClass="classBtn">
+										<p:commandButton id="cbEliminar" icon="ui-icon-trash"
+											update=":formEstudiante" process="@this"
+											actionListener="#{instructorBean.seleccionarInstructor(instructor)}"
+											oncomplete="dlgEliminar.show()" />
+										<p:tooltip for="cbEliminar"
+											value="Eliminar #{instructor.nombres}" showEffect="fade"
+											hideEffect="fade" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+						</div>
+					</center>
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
+				message="Desea eliminar el instructor: #{instructorBean.eliminarInstructor.nombres}?"
+				header="Eliminar #{instructorBean.eliminarInstructor.nombres}"
+				severity="alert" widgetVar="dlgEliminar">
+				<p:commandButton value="Si" update=":formEstudiante"
+					oncomplete="dlgEliminar.hide()" process="@this"
+					actionListener="#{instructorBean.eliminar()}" />
+				<p:commandButton value="No" update=":formEstudiante"
+					onclick="dlgEliminar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

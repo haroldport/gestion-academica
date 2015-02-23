@@ -1,5 +1,7 @@
 package gestion.academica.servicio;
 
+import java.util.List;
+
 import gestion.academica.dao.EstudianteDao;
 import gestion.academica.modelo.Estudiante;
 
@@ -35,5 +37,13 @@ public class EstudianteServicio {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+     * Listar los estudiantes
+     * @return
+     */
+	public List<Estudiante> listarEstudiantes() {
+    	return estudianteDao.listarEstudiantes();
+    }
 
 }

@@ -1,5 +1,7 @@
 package gestion.academica.dao;
 
+import java.util.List;
+
 import gestion.academica.modelo.Estudiante;
 
 import javax.ejb.Stateless;
@@ -19,6 +21,16 @@ public class EstudianteDao extends Generico<Estudiante> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    /**
+     * Listar los estudiantes
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	public List<Estudiante> listarEstudiantes() {
+        String sql = "SELECT e FROM Estudiante e WHERE e.estado.idEstado = 1 ORDER BY e.idEstudiante";
+        return this.getEntityManager().createQuery(sql).getResultList();
     }
 
 }
