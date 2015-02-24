@@ -45,5 +45,14 @@ public class CursoServicio {
 	public List<Curso> listarCursos() {
     	return cursoDao.listarCursos();
     }
+	
+	/**
+     * Buscar por id
+     * @param idCurso
+     * @return
+     */
+    public Curso buscarPorId(Integer idCurso) {
+    	return cursoDao.buscarPorId(idCurso);
+    }
 
 }

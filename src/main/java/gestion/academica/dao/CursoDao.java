@@ -32,5 +32,15 @@ public class CursoDao extends Generico<Curso> {
         String sql = "SELECT c FROM Curso c WHERE c.estado.idEstado = 1 ORDER BY c.idCurso";
         return this.getEntityManager().createQuery(sql).getResultList();
     }
+    
+    /**
+     * Buscar por id
+     * @param idCurso
+     * @return
+     */
+    public Curso buscarPorId(Integer idCurso) {
+        String sql = "SELECT c FROM Curso c WHERE c.estado.idEstado = 1 AND c.idCurso = :idCurso";
+        return (Curso) this.getEntityManager().createQuery(sql).setParameter("idCurso", idCurso).getResultList().get(0);
+    }
 
 }

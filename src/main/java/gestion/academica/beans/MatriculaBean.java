@@ -11,6 +11,7 @@ import gestion.academica.modelo.Usuario;
 import gestion.academica.servicio.BitacoraServicio;
 import gestion.academica.servicio.CursoServicio;
 import gestion.academica.servicio.EstadoServicio;
+import gestion.academica.servicio.EstudianteServicio;
 import gestion.academica.servicio.MatriculaServicio;
 import gestion.academica.servicio.RolServicio;
 import gestion.academica.utilitario.Crypt;
@@ -45,6 +46,8 @@ private static final long serialVersionUID = 1L;
 	private RolServicio rolServicio;
 	@EJB
 	private CursoServicio cursoServicio;
+	@EJB
+	private EstudianteServicio estudianteServicio;
 	
 	private Matricula nuevaMatricula;
 	private Matricula eliminarMatricula;
@@ -80,6 +83,13 @@ private static final long serialVersionUID = 1L;
 		listaMatriculas = matriculaServicio.listarMatriculas();
 	}
 	
+	public void verificarEstudianteExiste(){
+		Estudiante estudiante = estudianteServicio.buscarPorNumeroDocumento(nuevaMatricula.getEstudiante().getNumeroDocumento());
+		if(estudiante != null){
+			nuevaMatricula.setEstudiante(estudiante);
+		}
+	}
+	
 	public String seleccionarMatricula(Matricula Matricula) {
 		setEliminarMatricula(Matricula);
 		return "";
@@ -110,16 +120,27 @@ private static final long serialVersionUID = 1L;
 	public void guardar() {
 		try {
 			Date fechaCreacion = new Date();
-			nuevaMatricula.setEstado(estadoActivo);
-			nuevaMatricula.getEstudiante().setNombres(nuevaMatricula.getEstudiante().getNombres().toUpperCase());
-			nuevaMatricula.getEstudiante().getUsuario().setUsername(nuevaMatricula.getEstudiante().getNumeroDocumento());
-			nuevaMatricula.getEstudiante().getUsuario().setClave(Crypt.encryptMD5(nuevaMatricula.getEstudiante().getNumeroDocumento()));
-			nuevaMatricula.getEstudiante().getUsuario().setEstado(estadoActivo);
-			matriculaServicio.crearEstudianteYMatricula(nuevaMatricula.getEstudiante(), nuevaMatricula, rolMatriculado);
-			bitacora = new Bitacora(fechaCreacion, "Creación de Matricula: " + nuevaMatricula.getIdMatricula(), this.getUsuario());
-            bitacoraServicio.crear(bitacora);
-			this.ponerMensajeInfo("La Matricula fue creada correctamente", "");
-			initValores();
+			Curso curso = cursoServicio.buscarPorId(nuevaMatricula.getCurso().getIdCurso());
+			nuevaMatricula.setCurso(curso);
+			Matricula matricula = matriculaServicio.buscarPorEstudianteYCurso(nuevaMatricula.getEstudiante(), nuevaMatricula.getCurso());
+			if(matricula == null){
+				nuevaMatricula.setEstado(estadoActivo);
+				nuevaMatricula.setFechaMatricula(fechaCreacion);
+				nuevaMatricula.getEstudiante().setNombres(nuevaMatricula.getEstudiante().getNombres().toUpperCase());
+				if(nuevaMatricula.getEstudiante().getUsuario().getUsername() == null){
+					nuevaMatricula.getEstudiante().getUsuario().setUsername(nuevaMatricula.getEstudiante().getNumeroDocumento());
+					nuevaMatricula.getEstudiante().getUsuario().setClave(Crypt.encryptMD5(nuevaMatricula.getEstudiante().getNumeroDocumento()));
+					nuevaMatricula.getEstudiante().getUsuario().setEstado(estadoActivo);
+				}
+				matriculaServicio.crearEstudianteYMatricula(nuevaMatricula.getEstudiante(), nuevaMatricula, rolMatriculado);
+				bitacora = new Bitacora(fechaCreacion, "Creación de Matricula: " + nuevaMatricula.getIdMatricula(), this.getUsuario());
+	            bitacoraServicio.crear(bitacora);
+				this.ponerMensajeInfo("La Matricula fue creada correctamente", "");
+				initValores();
+			}else{
+				ponerMensajeError("Error - El(la) estudiante: " + nuevaMatricula.getEstudiante().getNombres() + 
+						", ya está matriculad@ en el curso: " + nuevaMatricula.getCurso().getInformacionCurso().getNombre(), "");
+			}			
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, null, e);
 		}

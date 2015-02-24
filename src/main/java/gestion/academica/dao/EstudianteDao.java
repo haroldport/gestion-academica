@@ -32,5 +32,15 @@ public class EstudianteDao extends Generico<Estudiante> {
         String sql = "SELECT e FROM Estudiante e WHERE e.estado.idEstado = 1 ORDER BY e.idEstudiante";
         return this.getEntityManager().createQuery(sql).getResultList();
     }
+    
+    /**
+     * Buscar estudiante en base al numero de documento
+     * @param numeroDocumento
+     * @return
+     */
+    public Estudiante buscarPorNumeroDocumento(String numeroDocumento) {
+        String sql = "SELECT e FROM Estudiante e WHERE e.estado.idEstado = 1 AND e.numeroDocumento = :numeroDocumento ";
+        return (Estudiante) this.getEntityManager().createQuery(sql).setParameter("numeroDocumento", numeroDocumento).getResultList().get(0);
+    }
 
 }
