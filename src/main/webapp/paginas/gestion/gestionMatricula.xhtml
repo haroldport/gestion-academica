@@ -92,24 +92,19 @@
 						</h:panelGrid>
 						<div class="footerTabla">
 							<p:outputPanel id="panelTabla">
-								<p:dataTable value="#{instructorBean.listaInstructores}"
-									var="instructor"
-									rendered="#{instructorBean.listaInstructores.size() > 0}"
+								<p:dataTable value="#{matriculaBean.listaMatriculas}"
+									var="matricula" rendered="#{matriculaBean.listaMatriculas.size() > 0}"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									paginatorPosition="bottom" rows="5" paginator="true"
 									rowsPerPageTemplate="5,10,15,20,25,30"
 									tableStyle="table-layout:auto;width:100%;">
 
-									<p:column styleClass="wrap" headerText="Tipo de documento">
-										<h:outputText value="#{instructor.catalogoDetalle.nombre}" />
+									<p:column styleClass="wrap" headerText="No. documento">
+										<h:outputText value="#{matricula.estudiante.numeroDocumento}" />
 									</p:column>
-
-									<p:column styleClass="wrap" headerText="No. de documento">
-										<h:outputText value="#{instructor.numeroDocumento}" />
-									</p:column>
-
+									
 									<p:column styleClass="wrap" headerText="Nombres">
-										<h:outputText value="#{instructor.nombres}" />
+										<h:outputText value="#{matricula.estudiante.nombres}" />
 									</p:column>
 
 									<p:column styleClass="wrap" headerText="Teléfono">

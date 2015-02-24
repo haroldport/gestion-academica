@@ -1,5 +1,7 @@
 package gestion.academica.servicio;
 
+import java.util.List;
+
 import gestion.academica.dao.MatriculaDao;
 import gestion.academica.modelo.Estudiante;
 import gestion.academica.modelo.Matricula;
@@ -60,5 +62,28 @@ public class MatriculaServicio {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Editar estudiante y matricula
+	 * @param estudiante
+	 * @param matricula
+	 */
+	public void editarEstudianteYMatricula(Estudiante estudiante, Matricula matricula){		
+		try {
+			estudianteServicio.editar(estudiante);
+			matricula.setEstudiante(estudiante);
+			matriculaDao.edit(matricula);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+     * Listar las matriculas
+     * @return
+     */
+	public List<Matricula> listarMatriculas() {
+    	return matriculaDao.listarMatriculas();
+    }
 
 }
