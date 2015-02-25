@@ -5,8 +5,13 @@ import gestion.academica.modelo.Usuario;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,13 +30,12 @@ import javax.sql.DataSource;
 /**
  * Clase con utilidades generales.
  * 
- * @author Ing. Harold Portocarrero.
+ * @author Jorge Rivera
  */
 public class Utilitario implements Serializable {
 
-	/**
-	 * 
-	 */
+	private static final Logger LOGGER = Logger.getLogger(Utilitario.class.getName());
+	
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Patron para formatear las variables tipo fecha.
@@ -373,6 +377,88 @@ public class Utilitario implements Serializable {
             }
         }
         return Boolean.TRUE;
+    }
+	
+	/**
+     * Método usado para recuperar mensajes desde el archivo de propiedades de
+     * la aplicacion.
+     *
+     * @param key Es la clave por la que se recuperara el mensaje en el archivo
+     * de propiedades
+     * @param params Si el mensaje tiene parametros, este array contiene los
+     * parámetros necesarios para completar el mensaje
+     * @return El mensaje recuperado
+     */
+    public static String getBundle(final String key, final Object... params) {
+        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+
+        // LOGGER.trace(locale);
+        ResourceBundle bundle = ResourceBundle.getBundle(
+                "recursos.messages", locale,
+                getCurrentClassLoader(params));
+
+        String mensaje = recuperarRecurso(bundle, key);
+
+        if (mensaje == null) {
+            mensaje = key;
+        } else {
+            if (params != null && params.length > 0) {
+                MessageFormat mf = new MessageFormat(mensaje, locale);
+                mensaje = mf.format(params, new StringBuffer(), null).toString();
+            }
+
+        }
+
+        return mensaje;
+    }
+    
+    /**
+     * Se encarga de recuperar una instancia del classloader del thread actual.
+     *
+     * @param defaultObject objeto usado para recuperar el class loader
+     * @return Instancia del class loader
+     */
+    protected static ClassLoader getCurrentClassLoader(
+            final Object defaultObject) {
+
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        if (loader == null) {
+            loader = defaultObject.getClass().getClassLoader();
+        }
+
+        return loader;
+    }
+    
+    /**
+     * Se encarga de recuperar un recuros desde el repositorio de recursos
+     * pasado como parametro.
+     *
+     * @param bundle repositorio de recursos
+     * @param key key del recurso que se quiere recuperar
+     * @return el recurso recuperado, si no existe retorna null
+     */
+    private static String recuperarRecurso(final ResourceBundle bundle,
+            final String key) {
+        String mensaje = null;
+        try {
+            mensaje = bundle.getString(key);
+        } catch (MissingResourceException e) {
+            LOGGER.log(Level.INFO,
+                    "No existe el recuros {0} en el archivo de recursos", key);
+            LOGGER.info(e.toString());
+        }
+        return mensaje;
+    }
+    
+    /**
+     * Obtener el tamaño de los campos de cada uno de los registros del archivo.
+     * @param linea
+     * @return
+     */
+    public static int obtenerTamanioString(String linea) {
+        StringTokenizer toke = new StringTokenizer(linea, ";");
+        return toke.countTokens();
     }
 
 }

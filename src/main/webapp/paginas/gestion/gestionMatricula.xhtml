@@ -14,8 +14,8 @@
 			<p:tabView id="tab" style="font-size: 14px">
 				<p:tab title="Administración de matriculas">
 					<center>
-						<h:panelGrid columns="2">
-							<p:outputPanel>
+						<h:panelGrid columns="3">
+							<p:panel header="Administración individual de matriculas">
 								<h:panelGrid columns="2">
 									<h:outputLabel class="label" value="Curso:" />
 									<p:outputPanel>
@@ -39,8 +39,10 @@
 											required="true"
 											requiredMessage="El campo No. Documento es requerido!"
 											onkeypress="return aceptarNumeros(event);" maxlength="15">
-											<p:ajax event="blur" listener="#{matriculaBean.verificarEstudianteExiste}"
-												update=":formMatricula:tab:nombre, :formMatricula:tab:email" process="@this" />
+											<p:ajax event="blur"
+												listener="#{matriculaBean.verificarEstudianteExiste}"
+												update=":formMatricula:tab:nombre, :formMatricula:tab:email"
+												process="@this" />
 										</p:inputText>
 										<h:outputText value=" *" style="color: red" />
 									</p:outputPanel>
@@ -49,7 +51,8 @@
 									<p:outputPanel>
 										<p:inputText id="nombre" styleClass="lblbtn" size="35"
 											value="#{matriculaBean.nuevaMatricula.estudiante.nombres}"
-											required="true" requiredMessage="El campo Nombres es requerido!"
+											required="true"
+											requiredMessage="El campo Nombres es requerido!"
 											style="text-transform: uppercase"
 											onchange="toUpperCase(this)" />
 										<h:outputText value=" *" style="color: red" />
@@ -68,21 +71,123 @@
 									</p:outputPanel>
 								</h:panelGrid>
 								<br />
-								<p:commandButton value="Editar"
-									action="#{matriculaBean.editarMatricula}"
-									rendered="#{matriculaBean.editarMatricula}"
-									update=":formMatricula:tab" process="@all" styleClass="btnClic" />
-								<p:commandButton value="Guardar"
-									action="#{matriculaBean.guardar}"
-									update=":formMatricula:tab" process="@all" styleClass="btnClic"
-									rendered="#{!matriculaBean.editarMatricula}" />
-								<p:commandButton value="Cancelar" process="@this"
-									action="#{matriculaBean.iniciar}"
-									update=":formMatricula:tab" styleClass="btnClic" />
+								<center>
+									<p:commandButton value="Editar"
+										action="#{matriculaBean.editarMatricula}"
+										rendered="#{matriculaBean.editarMatricula}"
+										update=":formMatricula:tab" process="@all"
+										styleClass="btnClic" />
+									<p:commandButton value="Guardar"
+										action="#{matriculaBean.guardar}" update=":formMatricula:tab"
+										process="@all" styleClass="btnClic"
+										rendered="#{!matriculaBean.editarMatricula}" />
+									<p:commandButton value="Cancelar" process="@this"
+										action="#{matriculaBean.iniciar}" update=":formMatricula:tab"
+										styleClass="btnClic" />
+								</center>
 								<br />
 								<br />
-							</p:outputPanel>
+							</p:panel>
+							<p:spacer height="30" width="30" />
+							<p:panel header="Carga masiva de matriculas">
+								<h:panelGrid columns="2">
+									<p:fileUpload styleClass="CargaArchivo"
+										fileUploadListener="#{matriculaBean.upload}"
+										mode="advanced" update=":formMatricula" auto="true"
+										sizeLimit="100000000" allowTypes="/(\.|\/)(csv)$/"
+										label="Cargar Archivo *.csv" oncomplete="statusDialog.hide();" />
+									<p:outputPanel id="panelBotonCarga"
+										rendered="#{matriculaBean.adjunto != null}">
+										<p:commandButton value="Procesar" id="start"
+											update=":formMatricula" onclick="start()"
+											widgetVar="startButton1"
+											action="#{matriculaBean.matriculaMasiva}" />
+									</p:outputPanel>
+								</h:panelGrid>
+								<br />
+								<br />
+								<p:panel id="pnlResultados"
+									header="Resultados del proceso"
+									rendered="#{matriculaBean.mostrarResultados}">
+									<h:panelGrid columns="2">
+										<h:outputLabel class="label"
+											value="Total de registros:" />
+										<h:outputLabel
+											value="#{matriculaBean.numeroTotalRegistros}" />
+										<h:outputLabel class="label"
+											value="Total de registros procesados:" />
+										<h:outputLabel
+											value="#{matriculaBean.contadorRegistrosProcesados}" />
+										<h:outputLabel class="label"
+											value="Total de registros rechazados:" />
+										<h:outputLabel
+											value="#{matriculaBean.contadorRegistrosRechazados}" />
+									</h:panelGrid>
+								</p:panel>
+								<br />
+								<br />
+								<p:commandButton
+									value="Ver detalle de registros rechazados"
+									update=":formMatricula"
+									rendered="#{matriculaBean.listaEstadisticas.size() > 0}"
+									id="btnMostrar"
+									action="#{matriculaBean.mostrarErrores}" />
+								<br />
+								<br />
+								<p:outputPanel id="tblEstadistica"
+									rendered="#{matriculaBean.mostrarDetalleErrores}">
+									<p:dataTable id="tblActualizar"
+										value="#{matriculaBean.listaEstadisticas}"
+										var="estadistica"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										paginatorPosition="bottom" rows="10" paginator="true"
+										rowsPerPageTemplate="10,15,20,25,30"
+										tableStyle="font-size: 12px"
+										filteredValue="#{matriculaBean.listaEstadisticasFilter}">
+
+										<p:column>
+											<f:facet name="header">
+												<h:outputText
+													value="No. registro" />
+											</f:facet>
+											<h:outputText value="#{estadistica.numeroRegistro}" />
+										</p:column>
+
+										<p:column filterBy="#{estadistica.nombreCampo}"
+											filterMatchMode="contains">
+											<f:facet name="header">
+												<h:outputText
+													value="Campo" />
+											</f:facet>
+											<h:outputText value="#{estadistica.nombreCampo}" />
+										</p:column>
+
+										<p:column filterBy="#{estadistica.mensaje}"
+											filterMatchMode="contains">
+											<f:facet name="header">
+												<h:outputText
+													value="Mensaje" />
+											</f:facet>
+											<h:outputText value="#{estadistica.mensaje}" />
+										</p:column>
+
+										<f:facet name="footer">
+											<h:commandLink>
+												<p:graphicImage width="40"
+													title="Exportar a Excel}"
+													library="images" name="xls.png" />
+												<p:dataExporter type="xls" target="tblActualizar"
+													fileName="detalleRechazos" pageOnly="false"
+													postProcessor="#{matriculaBean.postProcessXLS}" />
+											</h:commandLink>
+										</f:facet>
+
+									</p:dataTable>
+								</p:outputPanel>
+							</p:panel>
 						</h:panelGrid>
+						<br />
+						<br />
 						<div class="footerTabla">
 							<p:outputPanel id="panelTabla">
 								<p:dataTable value="#{matriculaBean.listaMatriculas}"
@@ -139,13 +244,13 @@
 										<h:outputText
 											value="#{matricula.curso.horario.dias} (#{matricula.curso.horario.horas})" />
 									</p:column>
-									
+
 									<p:column styleClass="wrap">
 										<h:outputText value="#{matricula.curso.fechaInicio}">
 											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
 										</h:outputText>
 									</p:column>
-									
+
 									<p:column styleClass="wrap">
 										<h:outputText value="#{matricula.curso.fechaFin}">
 											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
@@ -165,9 +270,8 @@
 											update=":formMatricula" process="@this"
 											actionListener="#{matriculaBean.seleccionarMatricula(matricula)}"
 											oncomplete="dlgEliminar.show()" />
-										<p:tooltip for="cbEliminar"
-											value="Eliminar matricula" showEffect="fade"
-											hideEffect="fade" />
+										<p:tooltip for="cbEliminar" value="Eliminar matricula"
+											showEffect="fade" hideEffect="fade" />
 									</p:column>
 								</p:dataTable>
 							</p:outputPanel>
@@ -178,8 +282,7 @@
 			<br />
 
 			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
-				message="Desea eliminar la matricula?"
-				header="Eliminar matricula"
+				message="Desea eliminar la matricula?" header="Eliminar matricula"
 				severity="alert" widgetVar="dlgEliminar">
 				<p:commandButton value="Si" update=":formMatricula"
 					oncomplete="dlgEliminar.hide()" process="@this"
