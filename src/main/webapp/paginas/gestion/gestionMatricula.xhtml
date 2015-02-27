@@ -90,17 +90,18 @@
 							</p:panel>
 							<p:spacer height="30" width="30" />
 							<p:panel header="Carga masiva de matriculas">
-								<h:panelGrid columns="2">
+								<h:panelGrid columns="3">
 									<p:fileUpload styleClass="CargaArchivo"
 										fileUploadListener="#{matriculaBean.upload}"
 										mode="advanced" update=":formMatricula" auto="true"
 										sizeLimit="100000000" allowTypes="/(\.|\/)(csv)$/"
 										label="Cargar Archivo *.csv" oncomplete="statusDialog.hide();" />
+									<p:spacer height="20" width="20" />
 									<p:outputPanel id="panelBotonCarga"
 										rendered="#{matriculaBean.adjunto != null}">
 										<p:commandButton value="Procesar" id="start"
 											update=":formMatricula" onclick="start()"
-											widgetVar="startButton1"
+											widgetVar="startButton1" immediate="true"
 											action="#{matriculaBean.matriculaMasiva}" />
 									</p:outputPanel>
 								</h:panelGrid>
@@ -109,17 +110,20 @@
 								<p:panel id="pnlResultados"
 									header="Resultados del proceso"
 									rendered="#{matriculaBean.mostrarResultados}">
-									<h:panelGrid columns="2">
+									<h:panelGrid columns="3">
 										<h:outputLabel class="label"
 											value="Total de registros:" />
+										<p:spacer height="20" width="20" />
 										<h:outputLabel
 											value="#{matriculaBean.numeroTotalRegistros}" />
 										<h:outputLabel class="label"
 											value="Total de registros procesados:" />
+										<p:spacer height="20" width="20" />
 										<h:outputLabel
 											value="#{matriculaBean.contadorRegistrosProcesados}" />
 										<h:outputLabel class="label"
 											value="Total de registros rechazados:" />
+										<p:spacer height="20" width="20" />
 										<h:outputLabel
 											value="#{matriculaBean.contadorRegistrosRechazados}" />
 									</h:panelGrid>
@@ -130,7 +134,7 @@
 									value="Ver detalle de registros rechazados"
 									update=":formMatricula"
 									rendered="#{matriculaBean.listaEstadisticas.size() > 0}"
-									id="btnMostrar"
+									id="btnMostrar" immediate="true"
 									action="#{matriculaBean.mostrarErrores}" />
 								<br />
 								<br />
@@ -172,7 +176,7 @@
 										</p:column>
 
 										<f:facet name="footer">
-											<h:commandLink>
+											<h:commandLink immediate="true">
 												<p:graphicImage width="40"
 													title="Exportar a Excel}"
 													library="images" name="xls.png" />

@@ -70,7 +70,6 @@ private static final long serialVersionUID = 1L;
 	private Estado estadoInactivo;
 	private static final Logger LOGGER = Logger.getLogger(MatriculaBean.class.getName());
 	private static final String DOBLE_BARRA = "\\";
-	private static final String	UPLOAD = "/upload/";
 	private Bitacora bitacora;
 	private boolean editarMatricula;
 	private Rol rolMatriculado;
@@ -81,7 +80,7 @@ private static final long serialVersionUID = 1L;
 	private File adjunto;
 	private List<String> listaArchivo;
 	private String destino = getRequest().getSession().getServletContext()
-			.getRealPath(UPLOAD) + DOBLE_BARRA;
+			.getRealPath("/upload/") + DOBLE_BARRA;
 	private int contadorRegistros;
 	private int numeroTotalRegistros;
 	private int contadorRegistrosVacios;
@@ -213,8 +212,6 @@ private static final long serialVersionUID = 1L;
 		this.adjunto = null;
 		inicializarValoresCargaMasiva();
 		UploadedFile file1 = evt.getFile();
-		System.out.println("Destino: " + destino + getRequest().getSession().getId()
-				+ file1.getFileName());
 		this.adjunto = new File(destino + getRequest().getSession().getId()
 				+ file1.getFileName());
 		FileOutputStream out = new FileOutputStream(this.getAdjunto());
@@ -269,13 +266,15 @@ private static final long serialVersionUID = 1L;
 			}
 		}
 		this.setMostrarResultados(Boolean.TRUE);
+		initValores();
 	}
 	
 	
 	private boolean validaRegistro(String registro, int numeroRegistro){
 		boolean result = true;
-		if(!validaCurso(Integer.parseInt(registro.split(";")[0].trim()), numeroRegistro) && 
-				!validaEstudiante(registro.split(";")[1].trim(), registro.split(";")[2].trim(), registro.split(";")[3].trim(), numeroRegistro)){
+		if(!validaCurso(Integer.parseInt(registro.split(";")[0].trim()), numeroRegistro) || 
+				!validaEstudiante(registro.split(";")[1].trim(), registro.split(";")[2].trim(), registro.split(";")[3].trim(), numeroRegistro)
+				|| !validaMatricula(numeroRegistro)){
 			contadorRegistrosRechazados++;
 			result = false;
 		}
@@ -310,6 +309,27 @@ private static final long serialVersionUID = 1L;
 		return result;
 	}
 	
+	private boolean validaMatricula(int numeroRegistro){
+		boolean result = true;
+		if(cursoMasivo != null && estudianteMasivo != null){
+			try{
+				if(estudianteMasivo.getIdEstudiante() != null){
+					Matricula matricula = matriculaServicio.buscarPorEstudianteYCurso(estudianteMasivo, cursoMasivo);
+					if(matricula != null){
+						result = false;
+						registrarEstadistica(numeroRegistro, "Matricula", "El estudiante ya está registrado en este curso");
+					}
+				}				
+			}catch(Exception e){
+				LOGGER.log(Level.SEVERE, null, e);
+				result = false;
+			}
+		}else{
+			result = false;
+		}
+		return result;
+	}
+	
 	private void registrarEstadistica(int numeroRegistro, String nombreCampo, String descripcionProblema){
 		registroEstadistica = new EstadisticaDTO(
 				numeroRegistro,nombreCampo,descripcionProblema);
@@ -320,9 +340,9 @@ private static final long serialVersionUID = 1L;
 		Date fechaMatricula = new Date();
 		if(cursoMasivo != null && estudianteMasivo != null){
 			Matricula matricula = new Matricula(fechaMatricula, cursoMasivo, estadoActivo);
-//			matriculaServicio.crearEstudianteYMatricula(estudianteMasivo, matricula, rolMatriculado);
-//			bitacora = new Bitacora(fechaMatricula, "Creación de Matricula (proceso masivo): " + matricula.getIdMatricula(), this.getUsuario());
-//            bitacoraServicio.crear(bitacora);
+			matriculaServicio.crearEstudianteYMatricula(estudianteMasivo, matricula, rolMatriculado);
+			bitacora = new Bitacora(fechaMatricula, "Creación de Matricula (proceso masivo): " + matricula.getIdMatricula(), this.getUsuario());
+            bitacoraServicio.crear(bitacora);
             contadorRegistrosProcesados++;
 		}
 	}
