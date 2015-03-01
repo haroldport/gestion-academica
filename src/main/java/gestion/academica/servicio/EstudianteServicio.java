@@ -45,5 +45,14 @@ public class EstudianteServicio {
 	public List<Estudiante> listarEstudiantes() {
     	return estudianteDao.listarEstudiantes();
     }
+	
+	/**
+     * Buscar estudiante en base al numero de documento
+     * @param numeroDocumento
+     * @return
+     */
+    public Estudiante buscarPorNumeroDocumento(String numeroDocumento) {
+    	return estudianteDao.buscarPorNumeroDocumento(numeroDocumento);
+    }
 
 }

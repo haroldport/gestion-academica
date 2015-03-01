@@ -3,6 +3,7 @@ package gestion.academica.servicio;
 import java.util.List;
 
 import gestion.academica.dao.MatriculaDao;
+import gestion.academica.modelo.Curso;
 import gestion.academica.modelo.Estudiante;
 import gestion.academica.modelo.Matricula;
 import gestion.academica.modelo.Rol;
@@ -54,8 +55,15 @@ public class MatriculaServicio {
 		try {
 			Usuario usuario = estudiante.getUsuario();
 			usuario.setRol(rolMatriculado);
-			usuarioServicio.actualizar(usuario);
-			estudianteServicio.crear(estudiante);
+			if(usuario.getIdUsuario() == null){
+				usuarioServicio.ingresar(usuario);
+				estudiante.setUsuario(usuario);
+			}else{
+				usuarioServicio.actualizar(usuario);
+			}
+			if(estudiante.getIdEstudiante() == null){
+				estudianteServicio.crear(estudiante);
+			}			
 			matricula.setEstudiante(estudiante);
 			matriculaDao.create(matricula);
 		} catch (Exception e) {
@@ -84,6 +92,16 @@ public class MatriculaServicio {
      */
 	public List<Matricula> listarMatriculas() {
     	return matriculaDao.listarMatriculas();
+    }
+	
+	/**
+     * Buscar por estudiante y curso
+     * @param estudiante
+     * @param curso
+     * @return
+     */
+    public Matricula buscarPorEstudianteYCurso(Estudiante estudiante, Curso curso) {
+    	return matriculaDao.buscarPorEstudianteYCurso(estudiante, curso);
     }
 
 }
