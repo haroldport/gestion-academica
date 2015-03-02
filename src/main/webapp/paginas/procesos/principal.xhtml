@@ -1,22 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:pou="http://primefaces.org/ui">
-    <ui:composition template="/templates/page-template-menu.xhtml">
-        <ui:define name="contenido">
-            <h:form>
-                <p:outputPanel>
-                    <center>
-                    	<br /><br /><br /><br /><br /><br /><br />
-                        <h:outputLabel style="font-size: 2.5em;color: #5E5F5F;" value="MÓDULO DE PROCESOS" />
-                        <br /><br /><br /><br /><br /><br /><br />
-                    </center>
-                </p:outputPanel>
-                <br/>                
-            </h:form>
-        </ui:define>
-    </ui:composition>
-</html>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+<f:view contentType="text/html" locale="es">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title">Ingreso al Sistema - Compras Públicas</ui:insert></title>
+		<h:outputStylesheet library="css" name="normalize.css" />
+		<h:outputStylesheet library="css" name="proceso.css" />
+		<link REL="shortcut icon"
+			href="#{request.contextPath}/resources/images/favicon.ico" />
+	</h:head>
+
+	<h:body>
+		<h:form>
+			<center>
+				<div id="header">
+					<div class="main">
+						<h:panelGrid columns="3" style="margin-top: 20px">
+							<h:graphicImage library="images" name="logo-cp.png" />
+							<h1>Sistema Oficial de Contratación Pública</h1>
+							<h:graphicImage library="images" name="logo-ec.png" />
+						</h:panelGrid>
+					</div>
+					<div id="top">
+						<div class="main"></div>
+					</div>
+				</div>
+
+				<div id="contenido">
+					<h:panelGrid columns="3">
+						<p:panel styleClass="panelAlertas">
+							<f:facet name="header">
+    							Alertas y Notificaciones
+  							</f:facet>
+							<p:scrollPanel
+								style="width:600px;height:400px; margin: 0 !important; padding: 0 !important; border: none">
+								<div style="font-size: 15px; padding: 10px;">
+									<div
+										style="width: 96%; height: 1px; background: none repeat scroll 0 0 #444444;"></div>
+									<p></p>
+									<p style="font-weight: bold; color: red; font-size: 12px">SEÑORES
+										USUARIOS DEL PORTAL</p>
+
+									<p style="font-weight: normal; font-size: 11px">El SERCOP
+										recuerda a las entidades contratantes del Gobierno Central,
+										que de acuerdo al literal n) del numeral 10.2.1.3, del Acuerdo
+										Ministerial 118 de 2 de agosto de 2013, le corresponde a la
+										Subsecretaría de Gobierno Electrónico, evaluar de manera
+										ex-ante y ex-post; y aprobar los proyectos de Gobierno
+										Electrónico de las entidades de la Administración Pública
+										Central, Institucional y Dependiente que sobrepasan el valor
+										de cincuenta salarios mínimos unificados.</p>
+								</div>
+								<div style="font-size: 15px; padding: 10px;">
+									<div
+										style="width: 96%; height: 1px; background: none repeat scroll 0 0 #444444;"></div>
+									<p></p>
+									<p style="font-weight: bold; color: red; font-size: 12px">PLIEGOS
+										USHAY</p>
+									<p style="font-weight: normal; font-size: 11px">Se recuerda
+										a las Entidades Contratantes la obligación de publicar los
+										pliegos de los procedimientos de contratación en formato .pdf
+										y .ushay conforme a lo dispuesto en el literal e) artículo 1
+										de la Resolución INCOP No. 053-2011.</p>
+								</div>
+								<div style="font-size: 15px; padding: 10px;">
+									<div
+										style="width: 96%; height: 1px; background: none repeat scroll 0 0 #444444;"></div>
+									<p></p>
+									<p style="font-weight: bold; color: red; font-size: 12px">MANTENIMIENTO
+										DEL PORTAL DE CONTRATACIÓN PÚBLICA</p>
+									<p style="font-weight: normal; font-size: 11px">SEÑORES
+										USUARIOS DEL PORTAL</p>
+									<p style="font-weight: normal; font-size: 11px">Debido a
+										trabajos de mantenimiento del portal de Contratación Pública,
+										éste se encontrará fuera de servicio a partir de las 16:30 del
+										10 de Enero del 2015 hasta las 20:00 del 11 de Enero 2015.</p>
+									<p style="font-weight: normal; font-size: 11px">En caso de
+										que algún procedimiento fuera afectado durante el día y
+										horario indicados, se deberá notificar al SERCOP para proceder
+										a la reprogramación correspondiente, en aplicación del
+										Artículo 15 del Reglamento General de la Ley Orgánica del
+										Sistema Nacional de Contratación Pública.</p>
+									<p style="font-weight: normal; font-size: 11px">Gracias por
+										su comprensión.</p>
+								</div>
+								<div style="font-size: 15px; padding: 10px;">
+									<div
+										style="width: 96%; height: 1px; background: none repeat scroll 0 0 #444444;"></div>
+									<p></p>
+									<p style="font-weight: bold; color: red; font-size: 12px">PROBLEMAS
+										EN EL PORTAL DE CONTRATACIÓN PÚBLICA</p>
+									<p style="font-weight: normal; font-size: 11px">SEÑORES
+										USUARIOS DEL PORTAL</p>
+									<p style="font-weight: normal; font-size: 11px">El día de
+										hoy 19 de Diciembre de 2014 en el siguiente horario de 10:03
+										am a 12:23 pm se presentó un incidente en el portal de
+										contratación pública:</p>
+									<p style="font-weight: normal; font-size: 11px">En caso de
+										que algún procedimiento fue afectado durante el día y horario
+										indicados, se deberá notificar al SERCOP para proceder a la
+										reprogramación correspondiente, en aplicación del Artículo 15
+										del Reglamento General de la Ley Orgánica del Sistema Nacional
+										de Contratación Pública.</p>
+									<p style="font-weight: normal; font-size: 11px">Gracias por
+										su comprensión.</p>
+								</div>
+								<div style="font-size: 15px; padding: 10px;">
+									<div
+										style="width: 96%; height: 1px; background: none repeat scroll 0 0 #444444;"></div>
+									<p></p>
+									<p style="font-weight: bold; color: red; font-size: 12px">MANTENIMIENTO
+										DEL CATÁLOGO ELECTRÓNICO DEL PORTAL DE CONTRATACIÓN PÚBLICA</p>
+									<p style="font-weight: normal; font-size: 11px">SEÑORES
+										USUARIOS DEL PORTAL</p>
+									<p style="font-weight: normal; font-size: 11px">Debido a
+										trabajos de mantenimiento en el Catálogo Electrónico del
+										portal de COMPRAS PÚBLICAS, éste se encontrará fuera de
+										servicio a partir desde las 17h00 hasta las 20h00 del día de
+										hoy lunes 24 de noviembre de 2014.</p>
+									<p style="font-weight: normal; font-size: 11px">Gracias por
+										su comprensión.</p>
+								</div>
+								<br />
+								<br />
+							</p:scrollPanel>
+							<div class="botones">
+								<h:panelGrid columns="3">
+									<h:graphicImage styleClass="imageBoton" library="images"
+										name="sistema.png" />
+									<h:graphicImage styleClass="imageBoton" library="images"
+										name="informativo.png" />
+									<h:graphicImage styleClass="imageBoton" library="images"
+										name="concurso.png" />
+								</h:panelGrid>
+							</div>
+						</p:panel>
+						<p:outputPanel styleClass="panelCentral">
+							<div class="myform">
+								<h1>Bienvenidos</h1>
+								<p>Ingrese los datos para el acceso al sistema</p>
+								<p>&nbsp;</p>
+								<label>RUC: <span>Número Identificación</span></label><br />
+								<p:inputText style="margin-bottom: 12px" size="60"
+									maxlength="100" styleClass="box" />
+								<br /> <label>Usuario: <span>Nombre de Usuario</span></label><br />
+								<p:inputText style="margin-bottom: 12px" size="60"
+									maxlength="100" styleClass="box" />
+								<br /> <label>Contraseña: <span>Su contraseña de
+										compras públicas.</span></label><br />
+								<p:inputText style="margin-bottom: 12px" size="60"
+									maxlength="100" styleClass="box" />
+								<label for="chkRecordar"><span class="chkRecordar">Recordarme
+										en este computador</span></label><br />
+								<p>&nbsp;</p>
+								<a href="#" class="chkOlvido"><span> ¿Olvidó su
+										contraseña?</span></a>
+								<div align="center">
+									<p:commandButton style="color: white !important" value="Entrar"
+										styleClass="btnEntrar" />
+								</div>
+								<input name="txtVerifica" type="hidden" id="txtVerifica"
+									value="" size="17" />
+							</div>
+						</p:outputPanel>
+						<p:accordionPanel styleClass="panelEnlaces">
+							<p:tab title="Sistema de Contratación" titleStyleClass="tituloTab">
+								<p:outputPanel style="background:#e0e2e2; padding: 1em 3em 0 1em">
+									<h:graphicImage library="images" name="bg_li1.png" />
+									<h:outputText style="font-weight: bold; margin-left: 1em" value="Regístrese" />
+									<br /><br />
+									<h:panelGrid columns="2">
+										<h:graphicImage style="margin: 0 1em 0 3em" library="images" name="ic-mhp_r1.png" />
+										<h:outputText value="Como proveedor del estado" />
+										<h:graphicImage style="margin: 1em 1em 1em 3em" library="images" name="ic-mhp_r2.png" />
+										<h:outputText value="Como entidad contratante" />
+									</h:panelGrid>									
+								</p:outputPanel>
+								<div style="border-bottom: 1px solid #E6E6E6"></div>
+								<p:outputPanel style="background:#e0e2e2; padding: 1em 3em 0 1em">
+									<h:graphicImage library="images" name="bg_li1.png" />
+									<h:outputText style="font-weight: bold; margin-left: 1em" value="Busqueda" />
+									<br /><br />
+									<h:panelGrid columns="2">
+										<h:graphicImage style="margin: 0 1em 0 3em" library="images" name="ic-mhp_r1.png" />
+										<h:outputText value="Como proveedor del estado" />
+										<h:graphicImage style="margin: 1em 1em 1em 3em" library="images" name="ic-mhp_r2.png" />
+										<h:outputText value="Como entidad contratante" />
+									</h:panelGrid>									
+								</p:outputPanel>
+								<div style="border-bottom: 1px solid #E6E6E6"></div>
+							</p:tab>
+							<p:tab title="Herramientas Adicionales" titleStyleClass="tituloTab">
+								<h:panelGrid columns="2" cellpadding="10">
+									<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+									<h:outputText value="Francis Ford Coppola's legendary..." />
+								</h:panelGrid>
+							</p:tab>
+							<p:tab title="Enlaces de Interés" titleStyleClass="tituloTab">
+								<h:panelGrid columns="2" cellpadding="10">
+									<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+									<h:outputText value="After a break of more than 15 years..." />
+								</h:panelGrid>
+							</p:tab>
+						</p:accordionPanel>
+					</h:panelGrid>
+				</div>
+
+				<div id="bottom">
+					<div class="bg-bbot">
+						<div class="browsers">
+							<center>
+								<h:panelGrid columns="6">
+									<h:graphicImage library="images" name="ico-alert.png" />
+									<h:outputText
+										value="Este sistema soporta los siguientes navegadores:" />
+									<h:graphicImage library="images" name="ico-ff.png" />
+									<h:outputText value="FIREFOX 3.0 o Superior" />
+									<h:graphicImage library="images" name="ico-ie.png" />
+									<h:outputText value="IEXPLORER 7 o Superior" />
+								</h:panelGrid>
+							</center>
+						</div>
+					</div>
+				</div>
+
+			</center>
+		</h:form>
+
+
+	</h:body>
+</f:view>
+</html>
