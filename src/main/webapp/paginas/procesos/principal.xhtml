@@ -19,6 +19,14 @@
 	<h:body>
 		<h:form>
 			<center>
+				<div class="footerT">
+					<div>
+						<p>Powered by JRivera Consulting</p>
+						<p>Este sistema de Emulación de Procesos es de Propiedad Intelectual de JRivera Consulting</p>
+					</div>
+					<p:graphicImage styleClass="Header-imageT" library="images"
+						name="logo.jpg" />
+				</div>
 				<div id="header">
 					<div class="main">
 						<h:panelGrid columns="3" style="margin-top: 20px">
@@ -39,7 +47,7 @@
     							Alertas y Notificaciones
   							</f:facet>
 							<p:scrollPanel
-								style="width:600px;height:400px; margin: 0 !important; padding: 0 !important; border: none">
+								style="width:570px;height:400px; margin: 0 !important; padding: 0 !important; border: none">
 								<div style="font-size: 15px; padding: 10px;">
 									<div
 										style="width: 96%; height: 1px; background: none repeat scroll 0 0 #444444;"></div>
@@ -147,14 +155,14 @@
 								<p>Ingrese los datos para el acceso al sistema</p>
 								<p>&nbsp;</p>
 								<label>RUC: <span>Número Identificación</span></label><br />
-								<p:inputText style="margin-bottom: 12px" size="60"
+								<p:inputText style="margin-bottom: 12px" size="45"
 									maxlength="100" styleClass="box" />
 								<br /> <label>Usuario: <span>Nombre de Usuario</span></label><br />
-								<p:inputText style="margin-bottom: 12px" size="60"
+								<p:inputText style="margin-bottom: 12px" size="45"
 									maxlength="100" styleClass="box" />
 								<br /> <label>Contraseña: <span>Su contraseña de
 										compras públicas.</span></label><br />
-								<p:inputText style="margin-bottom: 12px" size="60"
+								<p:inputText style="margin-bottom: 12px" size="45"
 									maxlength="100" styleClass="box" />
 								<label for="chkRecordar"><span class="chkRecordar">Recordarme
 										en este computador</span></label><br />
@@ -170,43 +178,156 @@
 							</div>
 						</p:outputPanel>
 						<p:accordionPanel styleClass="panelEnlaces">
-							<p:tab title="Sistema de Contratación" titleStyleClass="tituloTab">
-								<p:outputPanel style="background:#e0e2e2; padding: 1em 3em 0 1em">
+							<p:tab title="Sistema de Contratación"
+								titleStyleClass="tituloTab">
+								<p:outputPanel
+									style="background:#e0e2e2; padding: 1em 3em 0 1em">
 									<h:graphicImage library="images" name="bg_li1.png" />
-									<h:outputText style="font-weight: bold; margin-left: 1em" value="Regístrese" />
-									<br /><br />
+									<h:outputText style="font-weight: bold; margin-left: 1em"
+										value="Regístrese" />
+									<br />
+									<br />
 									<h:panelGrid columns="2">
-										<h:graphicImage style="margin: 0 1em 0 3em" library="images" name="ic-mhp_r1.png" />
-										<h:outputText value="Como proveedor del estado" />
-										<h:graphicImage style="margin: 1em 1em 1em 3em" library="images" name="ic-mhp_r2.png" />
-										<h:outputText value="Como entidad contratante" />
-									</h:panelGrid>									
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_r1.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Como proveedor del estado" />
+										<h:graphicImage style="margin: 1em 1em 1em 2em"
+											library="images" name="ic-mhp_r2.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Como entidad contratante" />
+									</h:panelGrid>
+									<br />
 								</p:outputPanel>
-								<div style="border-bottom: 1px solid #E6E6E6"></div>
-								<p:outputPanel style="background:#e0e2e2; padding: 1em 3em 0 1em">
+								<div style="border-bottom: 1px solid #BDBDBD"></div>
+								<p:outputPanel
+									style="background:#e0e2e2; padding: 1em 3em 0 1em">
 									<h:graphicImage library="images" name="bg_li1.png" />
-									<h:outputText style="font-weight: bold; margin-left: 1em" value="Busqueda" />
-									<br /><br />
+									<h:outputText style="font-weight: bold; margin-left: 1em"
+										value="Busqueda" />
+									<br />
+									<br />
 									<h:panelGrid columns="2">
-										<h:graphicImage style="margin: 0 1em 0 3em" library="images" name="ic-mhp_r1.png" />
-										<h:outputText value="Como proveedor del estado" />
-										<h:graphicImage style="margin: 1em 1em 1em 3em" library="images" name="ic-mhp_r2.png" />
-										<h:outputText value="Como entidad contratante" />
-									</h:panelGrid>									
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_b1.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="De procesos" />
+										<h:graphicImage style="margin: 1em 1em 1em 2em"
+											library="images" name="ic-mhp_b2.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="De emergencias" />
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_b3.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="De Adquisiciones de ínfima Cuantía" />
+										<h:graphicImage style="margin: 1em 1em 1em 2em"
+											library="images" name="ic-mhp_b5.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="De Régimen Especial" />
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_b4.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="De Procedimientos Especiales" />
+									</h:panelGrid>
+									<br />
+									<br />
 								</p:outputPanel>
 								<div style="border-bottom: 1px solid #E6E6E6"></div>
 							</p:tab>
-							<p:tab title="Herramientas Adicionales" titleStyleClass="tituloTab">
-								<h:panelGrid columns="2" cellpadding="10">
-									<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-									<h:outputText value="Francis Ford Coppola's legendary..." />
-								</h:panelGrid>
+							<p:tab title="Herramientas Adicionales"
+								titleStyleClass="tituloTab">
+								<p:outputPanel
+									style="background:#e0e2e2; padding: 1em 3em 0 1em">
+									<h:graphicImage library="images" name="bg_li1.png" />
+									<h:outputText style="font-weight: bold; margin-left: 1em"
+										value="Consulta" />
+									<br />
+									<br />
+									<h:panelGrid columns="2">
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_c1.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Clasificador Central de Productos" />
+										<h:graphicImage style="margin: 0.5em 1em 0.5em 2em"
+											library="images" name="ic-mhp_c2.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Planes de Compras de Entidades Contratantes" />
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_c3.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Proveedores del Estado Ecuatoriano" />
+										<h:graphicImage style="margin: 0.5em 1em 0.5em 2em"
+											library="images" name="ic-mhp_c5.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Márgenes de Preferencia de Producción Nacional" />
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_c7.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Emisión Electrónica de Certificados" />
+										<h:graphicImage style="margin: 1em 1em 0.5em 2em"
+											library="images" name="ic-mhp_c8.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Verificación de Certificados" />
+									</h:panelGrid>
+								</p:outputPanel>
+								<div style="border-bottom: 1px solid #BDBDBD"></div>
+								<p:outputPanel
+									style="background:#e0e2e2; padding: 1em 3em 0 1em">
+									<h:graphicImage library="images" name="bg_li1.png" />
+									<h:outputText style="font-weight: bold; margin-left: 1em"
+										value="Transparencia en la Contratación" />
+									<br />
+									<br />
+									<h:panelGrid columns="2">
+										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
+											name="ic-mhp_t1.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Proveedores Incumplidos" />
+										<h:graphicImage style="margin: 1em 1em 0.5em 2em"
+											library="images" name="ic-mhp_t2.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Colabora a Combatir la Corrupción" />
+									</h:panelGrid>
+								</p:outputPanel>
 							</p:tab>
 							<p:tab title="Enlaces de Interés" titleStyleClass="tituloTab">
-								<h:panelGrid columns="2" cellpadding="10">
-									<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-									<h:outputText value="After a break of more than 15 years..." />
-								</h:panelGrid>
+								<p:outputPanel
+									style="background:#e0e2e2; padding: 1em 3em 0 1em">
+									<h:graphicImage library="images" name="bg_li1.png" />
+									<h:outputText style="font-weight: bold; margin-left: 1em"
+										value="Accesos directos" />
+									<br />
+									<br />
+									<h:panelGrid columns="2">
+										<p:outputPanel>
+											<br />
+											<br />
+										</p:outputPanel>
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Resoluciones Normativas" />
+										<p:outputPanel>
+											<br />
+											<br />
+										</p:outputPanel>
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Directorio" />
+										<p:outputPanel>
+											<br />
+											<br />
+										</p:outputPanel>
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Manuales Capacitación" />
+										<h:graphicImage style="margin: 1em 1em 1em 2em"
+											library="images" name="ic-mhp_e4.png" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Módulo Facilitador" />
+										<p:columnGroup style="margin: 0 1em 0 2em" />
+										<h:outputText styleClass="itemColor" style="font-size: 10px"
+											value="Consultar VAE Empresarial" />
+									</h:panelGrid>
+									<br />
+								</p:outputPanel>
+								<div style="border-bottom: 1px solid #BDBDBD"></div>
 							</p:tab>
 						</p:accordionPanel>
 					</h:panelGrid>
@@ -228,6 +349,11 @@
 							</center>
 						</div>
 					</div>
+				</div>
+
+				<div id="footer">
+					<div class="main">Copyright © 2008 - 2015 Servicio Nacional
+						de Contratación Pública.</div>
 				</div>
 
 			</center>

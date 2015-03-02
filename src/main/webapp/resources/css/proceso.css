@@ -70,7 +70,8 @@ div.main {
 }
 
 .panelAlertas {
-	height: 500px;
+	border-radius: 10px 10px 0 0;
+	height: 491px;
 	padding: 0 !important;
 }
 
@@ -83,12 +84,13 @@ div.main {
 .panelAlertas>.ui-panel-titlebar {
 	background: #747579;
 	border-bottom-color: #ebebeb;
+	border-radius: 10px 10px 0 0;
 	color: #fff;
 	font-size: 16px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: normal;
-	line-height: 30px;
-	height: 34px;
+	line-height: 20px;
+	height: 20px;
 	text-align: left;
 }
 
@@ -139,7 +141,7 @@ div#bottom div.browsers img {
 	height: 491px !important;	
 	padding: 0 6px !important;
 	color: #0174ad !important;	
-	width: 450px !important;
+	width: 350px !important;
 }
 
 div.myform h1{ margin:0; padding:0; line-height:30px; font-size:18px; text-transform:uppercase; text-align:center;}
@@ -179,11 +181,59 @@ div.myform a.chkOlvido{ margin:0 0 20px 20px; display:block;}
 }
 
 .tituloTab{
-	background-color: #747577 !important;
+	background-color: #747577 !important;	
 }
 
 .tituloTab a{
 	background-color: #747577 !important;
+	background: url(#{resource['images/bg_accord-plus.png']}) 99% -1px no-repeat #569cbe;
 	color: white !important;
 	font-size: 13px !important;
+}
+
+.tituloTab a:hover{
+	color: #FFFFCC !important;
+}
+
+.itemColor:hover{
+	color: #FA5858 !important;
+	cursor: pointer;
+}
+
+div#footer {
+    height: 20px;
+    clear: both;
+    background: #1d1060;
+    letter-spacing: 0.5px;
+    line-height: 20px;
+    text-align: center;
+    color: #FFF;
+    font-weight: normal;
+}
+
+.footerT{
+	background: #1E1E1E;
+	color: white;
+	height: 2.75em;
+	overflow: hidden;
+	padding: 0.5em 0 2em 0;
+	position: relative;
+	text-align: center;
+}
+
+.footerT p:first-child{
+	margin-bottom: 0;
+}
+
+.footerT p:last-child{
+	margin-top: 0;
+}
+
+.Header-imageT{
+	border-radius: 50%;
+	margin: 1em 2em;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 4em;
 }
