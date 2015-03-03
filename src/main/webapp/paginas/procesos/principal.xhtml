@@ -22,10 +22,13 @@
 				<div class="footerT">
 					<div>
 						<p>Powered by JRivera Consulting</p>
-						<p>Este sistema de Emulación de Procesos es de Propiedad Intelectual de JRivera Consulting</p>
+						<p>Este sistema de Emulación de Procesos es de Propiedad
+							Intelectual de JRivera Consulting</p>
 					</div>
-					<p:graphicImage styleClass="Header-imageT" library="images"
-						name="logo.jpg" />
+					<p:commandLink id="page" action="#{indexBean.inicio}">
+						<p:graphicImage styleClass="Header-imageT" library="images"
+							name="logo.jpg" />
+					</p:commandLink>
 				</div>
 				<div id="header">
 					<div class="main">
@@ -190,8 +193,11 @@
 									<h:panelGrid columns="2">
 										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
 											name="ic-mhp_r1.png" />
-										<h:outputText styleClass="itemColor" style="font-size: 10px"
-											value="Como proveedor del estado" />
+										<h:commandLink id="page" style="text-decoration: none" action="#{registroPortalBean.verRegistroProveedores}"
+											target="_blank">
+											<h:outputText styleClass="itemColor" style="font-size: 10px"
+												value="Como proveedor del estado" />
+										</h:commandLink>
 										<h:graphicImage style="margin: 1em 1em 1em 2em"
 											library="images" name="ic-mhp_r2.png" />
 										<h:outputText styleClass="itemColor" style="font-size: 10px"

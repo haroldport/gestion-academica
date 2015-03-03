@@ -214,7 +214,7 @@ div#footer {
 .footerT{
 	background: #1E1E1E;
 	color: white;
-	height: 2.75em;
+	height: 3.2em;
 	overflow: hidden;
 	padding: 0.5em 0 2em 0;
 	position: relative;
@@ -231,9 +231,38 @@ div#footer {
 
 .Header-imageT{
 	border-radius: 50%;
-	margin: 1em 2em;
+	margin: 1em 2em 2em 1em !important;
 	position: absolute;
 	right: 0;
 	top: 0;
 	width: 4em;
+}
+
+.principal{
+	border: 1px solid #E6E6E6 !important;
+	margin: 0.5em 1.5em !important;
+	padding: 0.5em;
+}
+
+.ui-clock {
+	list-style: none !important;
+	background: #ecf0f9 !important;
+	color: #000 !important;
+	margin: 0 0 30px 5em !important;
+	padding: 5px 10px 5px !important;
+	font-size: 11px !important;
+	line-height: 12px !important;
+	border-radius: 5px !important;
+}
+
+.menuPasoActivo {
+	background-color: #00468C;
+	background-image: url(#{resource['images/flechaderecha.jpg']});
+	background-position: right;
+	background-repeat: no-repeat;
+	color: #FFFFFF;
+	font-size: 13px !important;
+	height: 3.5em;
+	text-align: left;
+	width: 12em;
 }

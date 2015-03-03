@@ -1,0 +1,160 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-registro.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+			<p:growl id="growl" sticky="true" showDetail="true" />
+
+			<p:wizard flowListener="#{userWizard.onFlowProcess}">
+				<p:tab id="paso1" titleStyleClass="menuPasoActivo" title="Paso 1 Términos y Condiciones">
+					<p:panel header="Personal Details">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Firstname: *" />
+							<p:inputText value="#{userWizard.user.firstname}" required="true"
+								label="Firstname" />
+
+							<h:outputText value="Lastname: *" />
+							<p:inputText value="#{userWizard.user.lastname}" required="true"
+								label="Lastname" />
+
+							<h:outputText value="Age: " />
+							<p:inputText value="#{userWizard.user.age}" />
+
+							<h:outputText value="Skip to last: " />
+							<h:selectBooleanCheckbox value="#{userWizard.skip}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+
+				<p:tab id="paso2" titleStyleClass="menuPasoActivo" title="Paso 2 Información General">
+					<p:panel header="Address Details">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Street: " />
+							<p:inputText value="#{userWizard.user.street}" />
+
+							<h:outputText value="Postal Code: " />
+							<p:inputText value="#{userWizard.user.postalCode}" />
+
+							<h:outputText value="City: " />
+							<p:inputText value="#{userWizard.user.city}" />
+
+							<h:outputText value="Skip to last: " />
+							<h:selectBooleanCheckbox value="#{userWizard.skip}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+
+				<p:tab id="paso3" titleStyleClass="menuPasoActivo" title="Paso 3 Información del Proveedor">
+					<p:panel header="Contact Information">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Email: *" />
+							<p:inputText value="#{userWizard.user.email}" required="true"
+								label="Email" />
+
+							<h:outputText value="Phone: " />
+							<p:inputText value="#{userWizard.user.phone}" />
+
+							<h:outputText value="Additional Info: " />
+							<p:inputText value="#{userWizard.user.info}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				
+				<p:tab id="paso4" titleStyleClass="menuPasoActivo" title="Paso 4 Dirección y Teléfonos">
+					<p:panel header="Contact Information">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Email: *" />
+							<p:inputText value="#{userWizard.user.email}" required="true"
+								label="Email" />
+
+							<h:outputText value="Phone: " />
+							<p:inputText value="#{userWizard.user.phone}" />
+
+							<h:outputText value="Additional Info: " />
+							<p:inputText value="#{userWizard.user.info}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				
+				<p:tab id="paso5" titleStyleClass="menuPasoActivo" title="Paso 5 Información de Contactos">
+					<p:panel header="Contact Information">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Email: *" />
+							<p:inputText value="#{userWizard.user.email}" required="true"
+								label="Email" />
+
+							<h:outputText value="Phone: " />
+							<p:inputText value="#{userWizard.user.phone}" />
+
+							<h:outputText value="Additional Info: " />
+							<p:inputText value="#{userWizard.user.info}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				
+				<p:tab id="paso6" titleStyleClass="menuPasoActivo" title="Paso 6 Productos">
+					<p:panel header="Contact Information">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Email: *" />
+							<p:inputText value="#{userWizard.user.email}" required="true"
+								label="Email" />
+
+							<h:outputText value="Phone: " />
+							<p:inputText value="#{userWizard.user.phone}" />
+
+							<h:outputText value="Additional Info: " />
+							<p:inputText value="#{userWizard.user.info}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				
+				<p:tab id="paso7" titleStyleClass="menuPasoActivo" title="Paso 7 Indicadores">
+					<p:panel header="Contact Information">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Email: *" />
+							<p:inputText value="#{userWizard.user.email}" required="true"
+								label="Email" />
+
+							<h:outputText value="Phone: " />
+							<p:inputText value="#{userWizard.user.phone}" />
+
+							<h:outputText value="Additional Info: " />
+							<p:inputText value="#{userWizard.user.info}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				
+				<p:tab id="paso8" titleStyleClass="menuPasoActivo" title="Paso 8 Finalización de Registro">
+					<p:panel header="Contact Information">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Email: *" />
+							<p:inputText value="#{userWizard.user.email}" required="true"
+								label="Email" />
+
+							<h:outputText value="Phone: " />
+							<p:inputText value="#{userWizard.user.phone}" />
+
+							<h:outputText value="Additional Info: " />
+							<p:inputText value="#{userWizard.user.info}" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>
