@@ -6,153 +6,396 @@
 	xmlns:pou="http://primefaces.org/ui">
 <ui:composition template="/templates/page-template-registro.xhtml">
 	<ui:define name="contenido">
-		<h:form>
-			<p:growl id="growl" sticky="true" showDetail="true" />
-
-			<p:wizard flowListener="#{userWizard.onFlowProcess}">
-				<p:tab id="paso1" titleStyleClass="menuPasoActivo" title="Paso 1 Términos y Condiciones">
-					<p:panel header="Personal Details">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Firstname: *" />
-							<p:inputText value="#{userWizard.user.firstname}" required="true"
-								label="Firstname" />
-
-							<h:outputText value="Lastname: *" />
-							<p:inputText value="#{userWizard.user.lastname}" required="true"
-								label="Lastname" />
-
-							<h:outputText value="Age: " />
-							<p:inputText value="#{userWizard.user.age}" />
-
-							<h:outputText value="Skip to last: " />
-							<h:selectBooleanCheckbox value="#{userWizard.skip}" />
-						</h:panelGrid>
-					</p:panel>
+		<h:form id="formRegistro">
+			<p:wizard flowListener="#{registroPortalBean.onFlowProcess}"
+				widgetVar="registroP" backLabel="Regresar" nextLabel="Continuar">
+				<p:tab id="paso1" titleStyleClass="menuPasoActivo"
+					title="Paso 1 Términos y Condiciones">
+					<h1 class="tituloAzul">Términos de Uso y Condiciones de
+						Privacidad en el Portal</h1>
+					<p:outputPanel styleClass="panel">
+						<p style="text-align: left; font-size: 0.9em">
+							<strong>Por favor, lea atentamente los siguientes
+								términos y condiciones.</strong> Al usar las páginas de este sitio, el
+							usuario acepta estos términos y condiciones de uso. Estos
+							términos y condiciones podrán ser modificados o actualizados en
+							forma periódica.
+						</p>
+						<p:outputPanel styleClass="panelTerminos">
+							<p:scrollPanel
+								style="width:90%;height:200px; margin: 0 !important; padding: 0 !important; background: #E6E6E6;
+								border-top: 1px solid grey; border-bottom: none; border-left: none; border-right: none">
+								<p:outputPanel style="padding: 1em; color: black">
+									<p style="text-align: justify; font-size: 0.9em">Los
+										derechos de propiedad intelectual respecto de los servicios,
+										contenidos, logotipos, signos distintivos y dominios del
+										portal, así como los derechos de uso y explotación de los
+										mismos, incluyendo su divulgación, publicación, reproducción,
+										distribución y transformación, son propiedad exclusiva del
+										Instituto Nacional de Contratación Pública (INCOP).</p>
+									<p style="text-align: justify; font-size: 0.9em">Con la
+										aprobación del INCOP, de las condiciones generales y
+										responsabilidades de uso del portal.</p>
+									<p style="text-align: justify; font-size: 0.9em">El
+										Proveedor, acepta las siguientes condiciones relacionadas a la
+										utilización del Nombre de Usuario, Contraseña y Tecnología que
+										tendrá acceso, para realizar transacciones comerciales con las
+										Entidades del Estado a través del Portal.</p>
+									<div align="left">
+										<h5 style="text-align: justify; font-size: 0.9em">RESPONSABILIDAD
+											DEL PROVEEDOR</h5>
+									</div>
+									<p style="text-align: justify; font-size: 0.9em">El
+										Proveedor asume la responsabilidad total del uso del portal y
+										sus herramientas con el Nombre de Usuario y Contraseña,
+										registrados por el Proveedor durante la inscripción en el
+										Registro Único de Proveedores (RUP). Además se responsabiliza
+										de la información registrada, la vigencia, veracidad y
+										coherencia de la misma y de la participación en procesos de
+										contratación de las Entidades que aparecen en el portal, junto
+										con las obligaciones que generen la mencionada participación.
+										De la responsabilidad que hoy se desprenden de la firma y
+										rúbrica, según señala la “Ley de Comercio Electrónico, Firmas
+										Electrónicas y Mensajes de Datos” y en base a la libertad
+										tecnológica determinada en la Ley, las partes acuerdan que el
+										Nombre de Usuario y Contraseña, surtirá los mismos efectos que
+										una firma electrónica y se entenderá como una completa
+										equivalencia funcional, técnica y jurídica. Por lo tanto,
+										todas las transacciones que realizará el Proveedor en el
+										portal se garantizarán y legalizarán con el Nombre de Usuario
+										y Contraseña. El Proveedor será responsable de la veracidad,
+										exactitud, consistencia y vigencia de la información de la
+										propuesta u oferta anexada en los módulos del portal, en los
+										cuales participe, y deberá entregar el respaldo físico de la
+										información anexada, en el caso de requerirlo. En todo
+										momento, el Proveedor es el responsable de mantener en secreto
+										el número de sus cuentas, contraseñas personales, claves de
+										acceso y números confidenciales con los cuales tenga acceso a
+										los servicios y contenidos del portal. El Proveedor no
+										adquiere ningún derecho de propiedad intelectual por el simple
+										uso de los servicios y contenidos del portal y en ningún
+										momento dicho uso será considerado como una autorización ni
+										licencia para utilizar los servicios y contenidos con fines
+										distintos a los procesos de contratación. Por lo tanto, no
+										podrá comercializar de manera alguna los servicios y
+										contenidos, ni tiene el derecho de colocar hipervínculos desde
+										y al portal, ni el derecho de colocar o utilizar los servicios
+										y contenidos del portal en sitios o páginas propias o de
+										terceros sin autorización previa y por escrito del INCOP y no
+										tiene el derecho de limitar o impedir a cualquier otro
+										Proveedor el uso del portal. El Proveedor autoriza al INCOP a
+										utilizar, publicar, reproducir, divulgar, comunicar
+										públicamente y transmitir la información considerada como no
+										confidencial.</p>
+									<div align="left">
+										<h5 style="text-align: justify; font-size: 0.9em">RESPONSABILIDAD
+											DEL INCOP</h5>
+									</div>
+									<p style="text-align: justify; font-size: 0.9em">El INCOP
+										tendrá el derecho a negar, restringir o condicionar al
+										Proveedor el acceso al portal, total o parcialmente, a su
+										entera discreción, así como a modificar los servicios y
+										contenidos del portal, en cualquier momento y sin necesidad de
+										previo aviso.</p>
+									<p style="text-align: justify; font-size: 0.9em">El INCOP,
+										no se hace responsable por errores, omisiones o caídas
+										temporales del Sistema provocados por cualquier causa, propios
+										o de terceros, ni por cualquier inexactitud en la información
+										distribuida a través del mismo, sea por error u omisión, ni de
+										la oportunidad y contenidos de los correos electrónicos que
+										este Sistema genere. Se deja constancia que la información y
+										contenido de los documentos publicados en COMPRASPUBLICAS son
+										de responsabilidad del Proveedor que los publica y envía.
+										Asimismo, no será responsable por la interrupción en la
+										recepción de correos electrónicos, ofertas, publicaciones y
+										tiempos de respuesta del Sistema debido a un mal servicio de
+										los proveedores de Internet, únicamente es responsabilidad del
+										INCOP el correcto funcionamiento de sus servidores donde se
+										encuentran alojadas sus aplicaciones. El INCOP se obliga a
+										mantener en confidencialidad la información que recibe del
+										Proveedor con dicho carácter conforme a las disposiciones
+										legales aplicables en la República del Ecuador.</p>
+									<p style="text-align: justify; font-size: 0.9em">
+										Aceptación</p>
+									<p style="text-align: justify; font-size: 0.9em">Los
+										términos y condiciones están sujetos a las disposiciones
+										contenidas en la Ley de Comercio Electrónico, Firmas
+										Electrónicas y Mensajes de Datos. El Proveedor, acepta la
+										validez de este acuerdo, así como la información que anexe en
+										cualquiera de los módulos de COMPRASPUBLICAS. La suscripción
+										de este acuerdo implicará la aceptación de todas y cada una de
+										las disposiciones establecidas en este documento.</p>
+									<br />
+									<br />
+								</p:outputPanel>
+							</p:scrollPanel>
+						</p:outputPanel>
+					</p:outputPanel>
+					<h:panelGrid columns="3">
+						<p:outputPanel style="width: 70%">
+							<p style="text-align: justify; font-size: 0.9em">Aceptación
+								de Términos y Condiciones</p>
+						</p:outputPanel>
+						<p:spacer height="10" width="80" />
+						<p:outputPanel id="customPanel" style="margin-bottom:10px">
+							<p:selectOneRadio id="customRadio"
+								value="#{registroPortalBean.opcion}" layout="pageDirection">
+								<f:selectItem
+									itemLabel="SI, declaro haber leído y Acepto los Términos y Condiciones"
+									itemValue="1" />
+								<f:selectItem
+									itemLabel="NO, declaro haber leído y NO Acepto los Términos y Condiciones"
+									itemValue="2" />
+							</p:selectOneRadio>
+						</p:outputPanel>
+					</h:panelGrid>
 				</p:tab>
 
-				<p:tab id="paso2" titleStyleClass="menuPasoActivo" title="Paso 2 Información General">
-					<p:panel header="Address Details">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Street: " />
-							<p:inputText value="#{userWizard.user.street}" />
-
-							<h:outputText value="Postal Code: " />
-							<p:inputText value="#{userWizard.user.postalCode}" />
-
-							<h:outputText value="City: " />
-							<p:inputText value="#{userWizard.user.city}" />
-
-							<h:outputText value="Skip to last: " />
-							<h:selectBooleanCheckbox value="#{userWizard.skip}" />
-						</h:panelGrid>
-					</p:panel>
+				<p:tab id="paso2" titleStyleClass="menuPasoActivo"
+					title="Paso 2 Información General">
+					<h1 class="tituloAzul">Información General</h1>
+					<p:outputPanel
+						style="background: #FFFFD9; border-top: 1px solid #00468C; 
+						border-bottom: 1px solid #00468C; padding: 0.5em;">
+						<p style="text-align: justify; font-size: 0.9em">En este
+							documento se aplica el término "proveedor" tanto a personas
+							jurídicas como naturales.</p>
+						<p style="text-align: justify; font-size: 0.9em">A
+							continuación debe ingresar la información del proveedor, en la
+							parte inferior de cada campo se muestra un ejemplo de como
+							llenarlo y en la parte derecha se encuentra una descripción del
+							mismo.</p>
+						<p style="text-align: justify; font-size: 0.9em">
+							Todos los campos con (<span style="color: red">*</span>) son
+							campos obligatorios no puede dejarlos en blanco.
+						</p>
+					</p:outputPanel>
+					<h1 style="font-size: 14px;" class="tituloAzul">Datos de
+						Ingreso al Sistema de Registro de Proveedores</h1>
+					<p:outputPanel
+						style="border-top: 1px solid #00468C; 
+						border-bottom: 1px solid #00468C;margin-bottom: 1em">
+						<div align="left" style="margin-left: 5em">
+							<h:panelGrid columns="3" styleClass="top-aligned-columns"
+								cellpadding="5" style="display:block" cellspacing="5">
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Usuario" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 8em">
+									<p:inputText id="usuario" size="30" required="true"
+										requiredMessage="Este campo no puede estar vacío" />
+									<p:message for="usuario" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										juan14, jfalconi, alvear_paul, paul-paredes</p>
+									<p style="text-align: justify; font-size: 0.9em">El nombre
+										de usuario puede contener letras, números o los caracteres
+										especiales: guión ( - ) o el guión bajo ( _ ). No incluya
+										espacios en blanco, puntos, ni caracteres especiales como ñ,
+										?, *, etc.</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 8em">
+									<p style="text-align: justify; font-size: 0.9em">Esta
+										información le será solicitada para ingresar a su zona
+										privada, le recomendamos elegir un nombre que recuerde
+										fácilmente.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0; height: 2em">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Contraseña" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p:password id="clave" size="30" required="true"
+										requiredMessage="La contraseña no tiene la longitud adecuada, debe contener mínimo 6 caracteres, y solo letras y/o números">
+										<f:validateLength minimum="6" maximum="15" />
+									</p:password>
+									<p:message for="clave" />
+									<p style="text-align: justify; font-size: 0.9em">Mínimo 6
+										máximo 15 caracteres</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #FFFFD9; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">
+										<span style="color: #990000; font-weight: bold">IMPORTANTE:</span>
+										Ingrese una clave que pueda recordar fácilmente y sea
+										únicamente de su conocimiento.
+									</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0; height: 2em">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Confirme su contraseña" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p:password id="confirmar" size="30" required="true" requiredMessage="Este campo no puede estar vacío" />
+									<p:message for="confirmar" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p style="text-align: justify; font-size: 0.9em">Vuelva a
+										ingresar su contraseña para verificar que este correcta</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0; height: 2em">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Correo Electrónico" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p:inputText id="correo" size="30" required="true"
+										validatorMessage="El valor ingresado no es un correo válido"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</p:inputText>
+									<p:message for="correo" />
+										<p
+											style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+											paulparedes81@empresa.ec</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">Ingrese el
+										correo en donde desea recibir todos los datos de ingreso al
+										sistema. Guarde este correo en un lugar seguro para futuras
+										consultas.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel
+									style="border-bottom: 1px solid #00468C;margin-top: 1em" />
+								<p:outputPanel
+									style="border-bottom: 1px solid #00468C;margin-top: 1em" />
+								<p:outputPanel
+									style="border-bottom: 1px solid #00468C;margin-top: 1em" />
+								<p:outputPanel style="top: 0; height: 3em">
+									<h:outputLabel style="font-size: 14px;" class="tituloAzul"
+										value="Tipo de Persona" />
+									<br />
+									<br />
+									<h:outputLabel style="font-size: 14px;" class="tituloAzul"
+										value="Orígen" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p:selectOneRadio style="font-size: 10px">
+										<f:selectItem itemLabel="Natural" itemValue="1" />
+										<f:selectItem itemLabel="Jurídica" itemValue="2" />
+									</p:selectOneRadio>
+									<br />
+									<p:selectOneRadio style="font-size: 10px">
+										<f:selectItem itemLabel="Nacional" itemValue="1" />
+										<f:selectItem itemLabel="Extranjera" itemValue="2" />
+									</p:selectOneRadio>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p style="text-align: justify; font-size: 0.9em">Si es
+										artesano, lo más probable es que usted sea una Persona
+										Natural.</p>
+									<br />
+									<p style="text-align: justify; font-size: 0.9em">Si es una
+										empresa extranjera, usted debe tener una Personería Jurídica.
+									</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0; height: 3em">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Residente en el Ecuador" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p:selectOneRadio style="font-size: 10px"
+										layout="pageDirection">
+										<f:selectItem itemLabel="Residente en el Ecuador"
+											itemValue="1" />
+										<f:selectItem itemLabel="No Residente en el Ecuador"
+											itemValue="2" />
+									</p:selectOneRadio>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+							</h:panelGrid>
+							<br />
+						</div>
+					</p:outputPanel>
 				</p:tab>
 
-				<p:tab id="paso3" titleStyleClass="menuPasoActivo" title="Paso 3 Información del Proveedor">
-					<p:panel header="Contact Information">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Email: *" />
-							<p:inputText value="#{userWizard.user.email}" required="true"
-								label="Email" />
+				<p:tab id="paso3" titleStyleClass="menuPasoActivo"
+					title="Paso 3 Información del Proveedor">
 
-							<h:outputText value="Phone: " />
-							<p:inputText value="#{userWizard.user.phone}" />
-
-							<h:outputText value="Additional Info: " />
-							<p:inputText value="#{userWizard.user.info}" />
-						</h:panelGrid>
-					</p:panel>
 				</p:tab>
-				
-				<p:tab id="paso4" titleStyleClass="menuPasoActivo" title="Paso 4 Dirección y Teléfonos">
-					<p:panel header="Contact Information">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Email: *" />
-							<p:inputText value="#{userWizard.user.email}" required="true"
-								label="Email" />
 
-							<h:outputText value="Phone: " />
-							<p:inputText value="#{userWizard.user.phone}" />
+				<p:tab id="paso4" titleStyleClass="menuPasoActivo"
+					title="Paso 4 Dirección y Teléfonos">
 
-							<h:outputText value="Additional Info: " />
-							<p:inputText value="#{userWizard.user.info}" />
-						</h:panelGrid>
-					</p:panel>
 				</p:tab>
-				
-				<p:tab id="paso5" titleStyleClass="menuPasoActivo" title="Paso 5 Información de Contactos">
-					<p:panel header="Contact Information">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Email: *" />
-							<p:inputText value="#{userWizard.user.email}" required="true"
-								label="Email" />
 
-							<h:outputText value="Phone: " />
-							<p:inputText value="#{userWizard.user.phone}" />
+				<p:tab id="paso5" titleStyleClass="menuPasoActivo"
+					title="Paso 5 Información de Contactos">
 
-							<h:outputText value="Additional Info: " />
-							<p:inputText value="#{userWizard.user.info}" />
-						</h:panelGrid>
-					</p:panel>
 				</p:tab>
-				
-				<p:tab id="paso6" titleStyleClass="menuPasoActivo" title="Paso 6 Productos">
-					<p:panel header="Contact Information">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Email: *" />
-							<p:inputText value="#{userWizard.user.email}" required="true"
-								label="Email" />
 
-							<h:outputText value="Phone: " />
-							<p:inputText value="#{userWizard.user.phone}" />
+				<p:tab id="paso6" titleStyleClass="menuPasoActivo"
+					title="Paso 6 Productos">
 
-							<h:outputText value="Additional Info: " />
-							<p:inputText value="#{userWizard.user.info}" />
-						</h:panelGrid>
-					</p:panel>
 				</p:tab>
-				
-				<p:tab id="paso7" titleStyleClass="menuPasoActivo" title="Paso 7 Indicadores">
-					<p:panel header="Contact Information">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Email: *" />
-							<p:inputText value="#{userWizard.user.email}" required="true"
-								label="Email" />
 
-							<h:outputText value="Phone: " />
-							<p:inputText value="#{userWizard.user.phone}" />
+				<p:tab id="paso7" titleStyleClass="menuPasoActivo"
+					title="Paso 7 Indicadores">
 
-							<h:outputText value="Additional Info: " />
-							<p:inputText value="#{userWizard.user.info}" />
-						</h:panelGrid>
-					</p:panel>
 				</p:tab>
-				
-				<p:tab id="paso8" titleStyleClass="menuPasoActivo" title="Paso 8 Finalización de Registro">
-					<p:panel header="Contact Information">
-						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Email: *" />
-							<p:inputText value="#{userWizard.user.email}" required="true"
-								label="Email" />
 
-							<h:outputText value="Phone: " />
-							<p:inputText value="#{userWizard.user.phone}" />
+				<p:tab id="paso8" titleStyleClass="menuPasoActivo"
+					title="Paso 8 Finalización de Registro">
 
-							<h:outputText value="Additional Info: " />
-							<p:inputText value="#{userWizard.user.info}" />
-						</h:panelGrid>
-					</p:panel>
 				</p:tab>
+				<br />
 			</p:wizard>
-
+			<br />
+			<p:confirmDialog id="cdRegresar"
+				message="No acepta los terminos y condiciones. Desea cerrar esta ventana?"
+				header="Mensaje de la pagina:" severity="alert"
+				widgetVar="dlgRegresar">
+				<p:commandButton value="Si" update=":formRegistro"
+					oncomplete="dlgRegresar.hide()" process="@this"
+					action="#{registroPortalBean.regresarLogin}" />
+				<p:commandButton value="No" update=":formRegistro"
+					onclick="dlgRegresar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
 		</h:form>
 
 	</ui:define>

@@ -266,3 +266,39 @@ div#footer {
 	text-align: left;
 	width: 12em;
 }
+
+.tituloAzul {
+  color:#00468C;
+  font-size:16px;
+  font-weight:bold;
+  text-align: left;
+}
+
+.textoAzul12 {
+	top: 0;
+	color: #00468C;
+	font-size: 12px;
+	font-weight: normal;
+	text-align: justify;
+}
+
+.panel{
+	border: 1px solid #00468C;
+	padding: 1em;
+}
+
+.panelTerminos{
+	border-top: 1px solid grey;
+	padding: 0.5em;
+}
+
+.ui-selectmanycheckbox label, .ui-selectoneradio label {
+	display: block;
+	font-size: 12px;
+	margin-top: 4px;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+.top-aligned-columns td{
+    vertical-align: top !important;
+}
