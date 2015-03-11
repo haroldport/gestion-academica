@@ -186,7 +186,7 @@
 								</p:outputPanel>
 								<p:outputPanel
 									style="background: #E6E6E6; padding: 0.5em; height: 8em">
-									<p:inputText id="usuario" size="30" required="true"
+									<p:inputText id="usuario" value="#{registroPortalBean.nuevoProveedor.usuario}" size="30" required="true"
 										requiredMessage="Este campo no puede estar vacío" />
 									<p:message for="usuario" />
 									<p
@@ -216,7 +216,7 @@
 								</p:outputPanel>
 								<p:outputPanel
 									style="background: #E6E6E6; padding: 0.5em; height: 6em">
-									<p:password id="clave" size="30" required="true"
+									<p:password id="clave" value="#{registroPortalBean.nuevoProveedor.clave}" size="30" required="true"
 										requiredMessage="La contraseña no tiene la longitud adecuada, debe contener mínimo 6 caracteres, y solo letras y/o números">
 										<f:validateLength minimum="6" maximum="15" />
 									</p:password>
@@ -244,7 +244,7 @@
 								</p:outputPanel>
 								<p:outputPanel
 									style="background: #E6E6E6; padding: 0.5em; height: 5em">
-									<p:password id="confirmar" size="30" required="true" requiredMessage="Este campo no puede estar vacío" />
+									<p:password id="confirmar" value="#{registroPortalBean.nuevoProveedor.confirmarClave}" size="30" required="true" requiredMessage="Este campo no puede estar vacío" />
 									<p:message for="confirmar" />
 								</p:outputPanel>
 								<p:outputPanel
@@ -264,7 +264,7 @@
 								</p:outputPanel>
 								<p:outputPanel
 									style="background: #E6E6E6; padding: 0.5em; height: 6em">
-									<p:inputText id="correo" size="30" required="true"
+									<p:inputText id="correo" value="#{registroPortalBean.nuevoProveedor.correo}" size="30" required="true"
 										validatorMessage="El valor ingresado no es un correo válido"
 										requiredMessage="Este campo no puede estar vacío">
 										<f:validateRegex
@@ -302,14 +302,14 @@
 								</p:outputPanel>
 								<p:outputPanel
 									style="background: #E6E6E6; padding: 0.5em; height: 5em">
-									<p:selectOneRadio style="font-size: 10px">
-										<f:selectItem itemLabel="Natural" itemValue="1" />
-										<f:selectItem itemLabel="Jurídica" itemValue="2" />
+									<p:selectOneRadio value="#{registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle}" style="font-size: 10px">
+										<f:selectItems value="#{registroPortalBean.tiposPersona}" var="tipoP" itemLabel="#{tipoP.nombre}" itemValue="#{tipoP.idCatalogoDetalle}" />
+										<p:ajax update=":formRegistro:pnlLabel, :formRegistro:pnlResidente" />
 									</p:selectOneRadio>
 									<br />
-									<p:selectOneRadio style="font-size: 10px">
-										<f:selectItem itemLabel="Nacional" itemValue="1" />
-										<f:selectItem itemLabel="Extranjera" itemValue="2" />
+									<p:selectOneRadio value="#{registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle}" style="font-size: 10px">
+										<f:selectItems value="#{registroPortalBean.origenes}" var="origen" itemLabel="#{origen.nombre}" itemValue="#{origen.idCatalogoDetalle}" />
+										<p:ajax update=":formRegistro:pnlLabel, :formRegistro:pnlResidente" />
 									</p:selectOneRadio>
 								</p:outputPanel>
 								<p:outputPanel
@@ -326,20 +326,33 @@
 								<p:outputPanel style="border-bottom: 1px solid #00468C" />
 								<p:outputPanel style="border-bottom: 1px solid #00468C" />
 								<p:outputPanel style="top: 0; height: 3em">
-									<h:outputLabel style="color: red" value="*" />
-									<p:spacer height="5" width="6" />
-									<h:outputLabel styleClass="textoAzul12"
-										value="Residente en el Ecuador" />
+									<p:outputPanel id="pnlLabel">
+										<h:outputLabel style="color: red" value="*" rendered="#{(registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 19 or 
+										registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 20) 
+											and (registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 21 or registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 22)}" />
+										<p:spacer height="5" width="6" rendered="#{(registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 19 or 
+										registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 20) 
+											and (registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 21 or registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 22)}"  />									
+										<h:outputLabel styleClass="textoAzul12"
+											value="Residente en el Ecuador" rendered="#{registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 19 
+											and (registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 21 or registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 22)}" />
+										<h:outputLabel styleClass="textoAzul12"
+											value="Domiciliado en el Ecuador" rendered="#{registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 20 
+											and registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 22}" />
+									</p:outputPanel>
 									<p:spacer height="10" width="120" />
 								</p:outputPanel>
-								<p:outputPanel
+								<p:outputPanel id="pnlResidente"
 									style="background: #E6E6E6; padding: 0.5em; height: 5em">
-									<p:selectOneRadio style="font-size: 10px"
-										layout="pageDirection">
-										<f:selectItem itemLabel="Residente en el Ecuador"
-											itemValue="1" />
-										<f:selectItem itemLabel="No Residente en el Ecuador"
-											itemValue="2" />
+									<p:selectOneRadio layout="pageDirection" value="#{registroPortalBean.nuevoProveedor.idResidenteEcuador.idCatalogoDetalle}" style="font-size: 10px"
+										rendered="#{registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 19 
+											and (registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 21 or registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 22)}">
+										<f:selectItems value="#{registroPortalBean.residentesEcuador}" var="resEc" itemLabel="#{resEc.nombre}" itemValue="#{resEc.idCatalogoDetalle}" />
+									</p:selectOneRadio>
+									<p:selectOneRadio layout="pageDirection" value="#{registroPortalBean.nuevoProveedor.idResidenteEcuador.idCatalogoDetalle}" style="font-size: 10px"
+										rendered="#{registroPortalBean.nuevoProveedor.idTipoPersona.idCatalogoDetalle eq 20 
+											and registroPortalBean.nuevoProveedor.idOrigen.idCatalogoDetalle eq 22}">
+										<f:selectItems value="#{registroPortalBean.domiciliadoEcuador}" var="domEc" itemLabel="#{domEc.nombre}" itemValue="#{domEc.idCatalogoDetalle}" />
 									</p:selectOneRadio>
 								</p:outputPanel>
 								<p:outputPanel

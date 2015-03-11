@@ -17,7 +17,17 @@ public enum CatalogoEnum {
     /**
      * Tipo de proceso.
      */
-    TIPO_PROCESO("TIPPR");
+    TIPO_PROCESO("TIPPR"),
+    /**
+     * Tipo de persona 2.
+     */
+    TIPO_PERSONA2("TIPP2"),
+    /**
+     * Origenes.
+     */
+    ORIGEN("ORIGE"),
+    RESIDENTE_ECUADOR("RESEC"),
+    DOMICILIADO_ECUADOR("DOMEC");
     
     private String nemonico;
 
