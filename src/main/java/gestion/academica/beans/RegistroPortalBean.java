@@ -7,6 +7,7 @@ import gestion.academica.servicio.CatalogoDetalleServicio;
 import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,11 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 	private List<CatalogoDetalle> origenes;
 	private List<CatalogoDetalle> residentesEcuador;
 	private List<CatalogoDetalle> domiciliadoEcuador;
+	private List<CatalogoDetalle> generos;
+	private List<CatalogoDetalle> estadosCiviles;
+	private List<CatalogoDetalle> nivelesEducacion;
+	private List<CatalogoDetalle> areasEspecialidad;
+	private List<Integer> anios;
 	
 	@PostConstruct
 	public void iniciar() {
@@ -52,6 +58,10 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		nuevoProveedor.setIdTipoPersona(new CatalogoDetalle());
 		nuevoProveedor.setIdOrigen(new CatalogoDetalle());
 		nuevoProveedor.setIdResidenteEcuador(new CatalogoDetalle());
+		nuevoProveedor.setIdGenero(new CatalogoDetalle());
+		nuevoProveedor.setIdEstadoCivil(new CatalogoDetalle());
+		nuevoProveedor.setIdNivelEducacion(new CatalogoDetalle());
+		nuevoProveedor.setIdAreaEspecialidad(new CatalogoDetalle());
 	}
 	
 	private void obtenerCatalogos(){
@@ -59,6 +69,14 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		origenes = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.ORIGEN.getNemonico());
 		residentesEcuador = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.RESIDENTE_ECUADOR.getNemonico());
 		domiciliadoEcuador = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.DOMICILIADO_ECUADOR.getNemonico());
+		generos = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.GENERO.getNemonico());
+		estadosCiviles = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.ESTADO_CIVIL.getNemonico());
+		nivelesEducacion = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.NIVEL_EDUCACION.getNemonico());
+		areasEspecialidad = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.AREA_ESPECIALIDAD.getNemonico());
+		anios = new ArrayList<>();
+		for(int i = 1900; i < 2021; i++){
+			anios.add(i);
+		}
 	}
 	
 	public String verRegistroProveedores(){
@@ -142,6 +160,46 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 
 	public void setDomiciliadoEcuador(List<CatalogoDetalle> domiciliadoEcuador) {
 		this.domiciliadoEcuador = domiciliadoEcuador;
+	}
+
+	public List<CatalogoDetalle> getGeneros() {
+		return generos;
+	}
+
+	public void setGeneros(List<CatalogoDetalle> generos) {
+		this.generos = generos;
+	}
+
+	public List<CatalogoDetalle> getEstadosCiviles() {
+		return estadosCiviles;
+	}
+
+	public void setEstadosCiviles(List<CatalogoDetalle> estadosCiviles) {
+		this.estadosCiviles = estadosCiviles;
+	}
+
+	public List<CatalogoDetalle> getNivelesEducacion() {
+		return nivelesEducacion;
+	}
+
+	public void setNivelesEducacion(List<CatalogoDetalle> nivelesEducacion) {
+		this.nivelesEducacion = nivelesEducacion;
+	}
+
+	public List<CatalogoDetalle> getAreasEspecialidad() {
+		return areasEspecialidad;
+	}
+
+	public void setAreasEspecialidad(List<CatalogoDetalle> areasEspecialidad) {
+		this.areasEspecialidad = areasEspecialidad;
+	}
+
+	public List<Integer> getAnios() {
+		return anios;
+	}
+
+	public void setAnios(List<Integer> anios) {
+		this.anios = anios;
 	}
 	
 }

@@ -27,7 +27,11 @@ public enum CatalogoEnum {
      */
     ORIGEN("ORIGE"),
     RESIDENTE_ECUADOR("RESEC"),
-    DOMICILIADO_ECUADOR("DOMEC");
+    DOMICILIADO_ECUADOR("DOMEC"),
+    GENERO("GENER"),
+    ESTADO_CIVIL("ESTCI"),
+    NIVEL_EDUCACION("NIVED"),
+    AREA_ESPECIALIDAD("ARESP");
     
     private String nemonico;
 

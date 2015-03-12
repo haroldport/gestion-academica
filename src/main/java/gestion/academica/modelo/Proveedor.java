@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Proveedor.findAll", query = "SELECT p FROM Proveedor p")})
 public class Proveedor implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -73,10 +73,6 @@ public class Proveedor implements Serializable {
     @Size(max = 100)
     @Column(name = "segundo_nombre")
     private String segundoNombre;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_area_especialidad")
-    private long idAreaEspecialidad;
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
@@ -149,6 +145,9 @@ public class Proveedor implements Serializable {
     private Integer porcentajeAgregadoNacional;
     @Column(name = "anio_fiscal")
     private Integer anioFiscal;
+    @JoinColumn(name = "id_area_especialidad", referencedColumnName = "id_catalogo_detalle")
+    @ManyToOne(optional = false)
+    private CatalogoDetalle idAreaEspecialidad;
     @JoinColumn(name = "id_ventas_brutas", referencedColumnName = "id_catalogo_detalle")
     @ManyToOne
     private CatalogoDetalle idVentasBrutas;
@@ -170,9 +169,6 @@ public class Proveedor implements Serializable {
     @JoinColumn(name = "id_parroquia", referencedColumnName = "id_catalogo_detalle")
     @ManyToOne(optional = false)
     private CatalogoDetalle idParroquia;
-    @JoinColumn(name = "id_nivel_educacion", referencedColumnName = "id_catalogo_detalle")
-    @ManyToOne(optional = false)
-    private CatalogoDetalle idNivelEducacion;
     @JoinColumn(name = "id_area_ocupacional_contacto", referencedColumnName = "id_catalogo_detalle")
     @ManyToOne
     private CatalogoDetalle idAreaOcupacionalContacto;
@@ -197,6 +193,9 @@ public class Proveedor implements Serializable {
     @JoinColumn(name = "id_genero", referencedColumnName = "id_catalogo_detalle")
     @ManyToOne(optional = false)
     private CatalogoDetalle idGenero;
+    @JoinColumn(name = "id_nivel_educacion", referencedColumnName = "id_catalogo_detalle")
+    @ManyToOne(optional = false)
+    private CatalogoDetalle idNivelEducacion;
     @JoinColumn(name = "id_nivel_educacion_contacto", referencedColumnName = "id_catalogo_detalle")
     @ManyToOne
     private CatalogoDetalle idNivelEducacionContacto;
@@ -216,7 +215,7 @@ public class Proveedor implements Serializable {
         this.idProveedor = idProveedor;
     }
 
-    public Proveedor(Integer idProveedor, String usuario, String clave, String correo, String ruc, String primerApellido, String primerNombre, long idAreaEspecialidad, String nombreComercial, int anioInicio, String domicilioTributario, int numeroCalle) {
+    public Proveedor(Integer idProveedor, String usuario, String clave, String correo, String ruc, String primerApellido, String primerNombre, String nombreComercial, int anioInicio, String domicilioTributario, int numeroCalle) {
         this.idProveedor = idProveedor;
         this.usuario = usuario;
         this.clave = clave;
@@ -224,7 +223,6 @@ public class Proveedor implements Serializable {
         this.ruc = ruc;
         this.primerApellido = primerApellido;
         this.primerNombre = primerNombre;
-        this.idAreaEspecialidad = idAreaEspecialidad;
         this.nombreComercial = nombreComercial;
         this.anioInicio = anioInicio;
         this.domicilioTributario = domicilioTributario;
@@ -301,14 +299,6 @@ public class Proveedor implements Serializable {
 
     public void setSegundoNombre(String segundoNombre) {
         this.segundoNombre = segundoNombre;
-    }
-
-    public long getIdAreaEspecialidad() {
-        return idAreaEspecialidad;
-    }
-
-    public void setIdAreaEspecialidad(long idAreaEspecialidad) {
-        this.idAreaEspecialidad = idAreaEspecialidad;
     }
 
     public Date getFechaNacimiento() {
@@ -503,6 +493,14 @@ public class Proveedor implements Serializable {
         this.anioFiscal = anioFiscal;
     }
 
+    public CatalogoDetalle getIdAreaEspecialidad() {
+        return idAreaEspecialidad;
+    }
+
+    public void setIdAreaEspecialidad(CatalogoDetalle idAreaEspecialidad) {
+        this.idAreaEspecialidad = idAreaEspecialidad;
+    }
+
     public CatalogoDetalle getIdVentasBrutas() {
         return idVentasBrutas;
     }
@@ -557,14 +555,6 @@ public class Proveedor implements Serializable {
 
     public void setIdParroquia(CatalogoDetalle idParroquia) {
         this.idParroquia = idParroquia;
-    }
-
-    public CatalogoDetalle getIdNivelEducacion() {
-        return idNivelEducacion;
-    }
-
-    public void setIdNivelEducacion(CatalogoDetalle idNivelEducacion) {
-        this.idNivelEducacion = idNivelEducacion;
     }
 
     public CatalogoDetalle getIdAreaOcupacionalContacto() {
@@ -631,6 +621,14 @@ public class Proveedor implements Serializable {
         this.idGenero = idGenero;
     }
 
+    public CatalogoDetalle getIdNivelEducacion() {
+        return idNivelEducacion;
+    }
+
+    public void setIdNivelEducacion(CatalogoDetalle idNivelEducacion) {
+        this.idNivelEducacion = idNivelEducacion;
+    }
+
     public CatalogoDetalle getIdNivelEducacionContacto() {
         return idNivelEducacionContacto;
     }
@@ -653,7 +651,7 @@ public class Proveedor implements Serializable {
 
     public void setIdOrigen(CatalogoDetalle idOrigen) {
         this.idOrigen = idOrigen;
-    }    
+    }
 
     public String getConfirmarClave() {
 		return confirmarClave;
