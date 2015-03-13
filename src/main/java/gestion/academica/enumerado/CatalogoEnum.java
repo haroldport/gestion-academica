@@ -31,7 +31,11 @@ public enum CatalogoEnum {
     GENERO("GENER"),
     ESTADO_CIVIL("ESTCI"),
     NIVEL_EDUCACION("NIVED"),
-    AREA_ESPECIALIDAD("ARESP");
+    AREA_ESPECIALIDAD("ARESP"),
+    PROVINCIA("PROVI"),
+    CANTON("CANTO"),
+    PARROQUIA("PARRO"),
+    TIPO_TELEFONO("TIPTF");
     
     private String nemonico;
 

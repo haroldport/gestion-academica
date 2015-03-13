@@ -58,6 +58,10 @@ public class CatalogoDetalle implements Serializable {
 	// bi-directional many-to-one association to SitioCurso
 	@OneToMany(mappedBy = "ciudad")
 	private List<SitioCurso> sitioCursoCiudad;
+	
+	@JoinColumn(name = "id_catalogo_detalle_padre", referencedColumnName = "id_catalogo_detalle")
+    @ManyToOne
+    private CatalogoDetalle idCatalogoDetallePadre;
 
 	public CatalogoDetalle() {
 	}
@@ -185,6 +189,14 @@ public class CatalogoDetalle implements Serializable {
 	public void setProcesos(List<Proceso> procesos) {
 		this.procesos = procesos;
 	}
+	
+	public CatalogoDetalle getIdCatalogoDetallePadre() {
+        return idCatalogoDetallePadre;
+    }
+
+    public void setIdCatalogoDetallePadre(CatalogoDetalle idCatalogoDetallePadre) {
+        this.idCatalogoDetallePadre = idCatalogoDetallePadre;
+    }
 
 	public Proceso addProceso(Proceso proceso) {
 		getProcesos().add(proceso);

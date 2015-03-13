@@ -41,6 +41,10 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 	private List<CatalogoDetalle> nivelesEducacion;
 	private List<CatalogoDetalle> areasEspecialidad;
 	private List<Integer> anios;
+	private List<CatalogoDetalle> provincias;
+    private List<CatalogoDetalle> cantones;
+    private List<CatalogoDetalle> parroquias;
+    private List<CatalogoDetalle> tiposTelefono;
 	
 	@PostConstruct
 	public void iniciar() {
@@ -62,6 +66,9 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		nuevoProveedor.setIdEstadoCivil(new CatalogoDetalle());
 		nuevoProveedor.setIdNivelEducacion(new CatalogoDetalle());
 		nuevoProveedor.setIdAreaEspecialidad(new CatalogoDetalle());
+		nuevoProveedor.setIdProvincia(new CatalogoDetalle());
+		nuevoProveedor.setIdCanton(new CatalogoDetalle());
+		nuevoProveedor.setIdParroquia(new CatalogoDetalle());
 	}
 	
 	private void obtenerCatalogos(){
@@ -77,6 +84,8 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		for(int i = 1900; i < 2021; i++){
 			anios.add(i);
 		}
+		provincias = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.PROVINCIA.getNemonico());
+		tiposTelefono = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_TELEFONO.getNemonico());
 	}
 	
 	public String verRegistroProveedores(){
@@ -105,6 +114,24 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 	public String regresarLogin(){
 		return "/faces/paginas/procesos/principal.xhtml?faces-redirect=true";
 	}
+	
+	public void obtenerCantones() {
+        cantones = new ArrayList<>();
+        cantones = catalogoDetalleServicio.obtenerPorCatalogoNemonicoYPadre(CatalogoEnum.CANTON.getNemonico(),
+                nuevoProveedor.getIdProvincia().getIdCatalogoDetalle());
+        if (cantones == null) {
+            cantones = catalogoDetalleServicio.obtenerPorCatDetNemonico("OTR");
+        }
+    }
+	
+	public void obtenerParroquias() {
+        parroquias = new ArrayList<>();
+        parroquias = catalogoDetalleServicio.obtenerPorCatalogoNemonicoYPadre(CatalogoEnum.PARROQUIA.getNemonico(),
+                nuevoProveedor.getIdCanton().getIdCatalogoDetalle());
+        if (parroquias == null) {
+            parroquias = catalogoDetalleServicio.obtenerPorCatDetNemonico("OTR");
+        }
+    }
 
 	public boolean isSkip() {
 		return skip;
@@ -200,6 +227,38 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 
 	public void setAnios(List<Integer> anios) {
 		this.anios = anios;
+	}
+
+	public List<CatalogoDetalle> getProvincias() {
+		return provincias;
+	}
+
+	public void setProvincias(List<CatalogoDetalle> provincias) {
+		this.provincias = provincias;
+	}
+
+	public List<CatalogoDetalle> getCantones() {
+		return cantones;
+	}
+
+	public void setCantones(List<CatalogoDetalle> cantones) {
+		this.cantones = cantones;
+	}
+
+	public List<CatalogoDetalle> getParroquias() {
+		return parroquias;
+	}
+
+	public void setParroquias(List<CatalogoDetalle> parroquias) {
+		this.parroquias = parroquias;
+	}
+
+	public List<CatalogoDetalle> getTiposTelefono() {
+		return tiposTelefono;
+	}
+
+	public void setTiposTelefono(List<CatalogoDetalle> tiposTelefono) {
+		this.tiposTelefono = tiposTelefono;
 	}
 	
 }

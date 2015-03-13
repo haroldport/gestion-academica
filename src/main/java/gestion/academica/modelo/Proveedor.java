@@ -96,10 +96,8 @@ public class Proveedor implements Serializable {
     @Size(max = 100)
     @Column(name = "interseccion_referencia")
     private String interseccionReferencia;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "numero_calle")
-    private int numeroCalle;
+    private String numeroCalle;
     @Size(max = 80)
     @Column(name = "edificio_referencia")
     private String edificioReferencia;
@@ -215,7 +213,7 @@ public class Proveedor implements Serializable {
         this.idProveedor = idProveedor;
     }
 
-    public Proveedor(Integer idProveedor, String usuario, String clave, String correo, String ruc, String primerApellido, String primerNombre, String nombreComercial, int anioInicio, String domicilioTributario, int numeroCalle) {
+    public Proveedor(Integer idProveedor, String usuario, String clave, String correo, String ruc, String primerApellido, String primerNombre, String nombreComercial, int anioInicio, String domicilioTributario, String numeroCalle) {
         this.idProveedor = idProveedor;
         this.usuario = usuario;
         this.clave = clave;
@@ -349,11 +347,11 @@ public class Proveedor implements Serializable {
         this.interseccionReferencia = interseccionReferencia;
     }
 
-    public int getNumeroCalle() {
+    public String getNumeroCalle() {
         return numeroCalle;
     }
 
-    public void setNumeroCalle(int numeroCalle) {
+    public void setNumeroCalle(String numeroCalle) {
         this.numeroCalle = numeroCalle;
     }
 
