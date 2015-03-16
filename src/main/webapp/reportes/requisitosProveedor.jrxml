@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="requisitosProveedor" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ca23d13-b0e8-4a5f-969d-ea325375b574">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="LOGO_DIR" class="java.lang.String"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="correo" class="java.lang.String"/>
+	<field name="idTipoPersona" class="java.lang.Object"/>
+	<field name="idOrigen" class="java.lang.Object"/>
+	<title>
+		<band height="75" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="223" height="75" uuid="328c538d-4d76-4dce-bb2d-db480fce1cb8"/>
+				<imageExpression><![CDATA[$P{LOGO_DIR} + "//logo_reporte.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="249" y="26" width="306" height="20" uuid="bffb17dc-52bf-45ec-a74e-3ace6acbb820"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA NACIONAL DE CONTRATACIÓN PÚBLICA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="470" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="470" forecolor="#0066FF" uuid="86a65106-51c0-42f5-b281-c5425eebb09c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="17" y="11" width="150" height="20" forecolor="#0033CC" uuid="cb4d7682-9763-4edb-8386-ae0cc9b9bfc2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos del Proveedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="39" width="110" height="20" forecolor="#006699" uuid="1988004e-4d85-457a-acfb-c0c8a35c6757"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="59" width="110" height="20" forecolor="#006699" uuid="cbb18e65-de42-4edd-8d12-46e97d45500b"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Correo Electrónico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="79" width="110" height="20" forecolor="#006699" uuid="144ca46c-3d09-469f-a824-47e2a807e8b1"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Tipo de Persona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="99" width="110" height="20" forecolor="#006699" uuid="b1b6a3f7-9be2-4014-b2ed-d1af691b0979"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Origen]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="39" width="303" height="20" uuid="35b9559d-f70d-4282-a51a-6f57f20cbcc2"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="59" width="303" height="20" uuid="8623c223-d58f-401e-a1d3-11639de3d6d0"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="127" y="79" width="20" height="20" uuid="4e2e8ce0-0920-458d-8317-8851a33d9da4"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="149" y="79" width="100" height="20" uuid="616f1636-ebbe-434f-938d-04b9afd12a27"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Natural]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="79" width="100" height="20" uuid="d62ecedd-4e75-434e-99fb-3757259633f0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Jurídica]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="247" y="79" width="20" height="20" uuid="5e23eb60-68e9-4a8e-958c-c2cf4ae5414a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="149" y="99" width="100" height="20" uuid="77b1c495-f000-4664-95a8-fe4385e1c9dc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Nacional]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="127" y="99" width="20" height="20" uuid="1078ad5d-7b37-47cb-a739-bfeb36302b12"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="247" y="99" width="20" height="20" uuid="b87b56e7-6768-49df-927e-2b25d086bca7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="269" y="99" width="100" height="20" uuid="728334b2-349d-4526-be74-6ffced6a105e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Extranjera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="132" width="150" height="20" forecolor="#0033CC" uuid="8bfc8f5e-c537-4d21-b7a8-3422332b96c6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documentos Generales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="163" width="515" height="295" uuid="1c52e8b0-6274-4eb7-b11e-3d25efbf5eb9"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Justified">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[- Formulario de registro en el RUP impreso del Portal www.compraspublicas.gob.ec, firmado por la persona que aplica a ser proveedor del Estado;
+- Acuerdo de responsabilidad impreso del Portal www.compraspublicas.gob.ec, firmado por la persona que aplica a ser proveedor del Estado;
+- Copia de la cédula de ciudadanía (para ecuatorianos) del proveedor, o copia de la cédula de identidad o pasaporte, y visa (para extranjeros), que le permita legalmente ejercer las actividades para las que se habilita;
+- Copia del certificado de votación vigente, en caso de ser ecuatoriano con obligación de votar;
+- Original y copia del Registro Único de Constribuyentes, RUC;
+- En caso de que el trámite no se realice personalmente por el interesado, quién lo realice por él deberá presentar la autorización escrita de aquel, acompañando la copia de la cédula de ciudadanía y el certificado de votación de quien realice el trámite;
+- En el caso de ser consultor, el correspondiente título académico de tercer o cuarto nivel deberá estar registrado en el Sistema Nacional de Información de la Educación Superior, según lo previsto por la Ley Orgánica de Educación Superior. El reconocimiento del título obtenido en el extranjero se someterá a lo previsto en la citada ley. No será necesario el reconocimiento mencionado en  caso de que el consultor nacional o extranjero celebre un contrato de consultoría por un plazo de hasta seis meses, dentro del periodo de un año; si se verifica esta situación, el consultor deberá adjuntar la documentación certificada por la máxima autoridad de la entidad, en la que se indique el objeto de la consultoría y el tiempo de duración de la misma.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="129" y="81" width="17" height="18" uuid="e86b962b-a5d2-4544-9b98-11522e78fa3e">
+					<printWhenExpression><![CDATA[$F{idTipoPersona}.idCatalogoDetalle == 19]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="248" y="81" width="17" height="18" uuid="2c4902f6-c101-4223-b63b-29752acebd5f">
+					<printWhenExpression><![CDATA[$F{idTipoPersona}.idCatalogoDetalle == 20]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="129" y="101" width="17" height="18" uuid="84ed59d7-44eb-4580-9ff8-32e6c5844f08">
+					<printWhenExpression><![CDATA[$F{idOrigen}.idCatalogoDetalle == 21]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="249" y="101" width="17" height="18" uuid="e50c9e58-bb22-4723-a078-f76a25841112">
+					<printWhenExpression><![CDATA[$F{idOrigen}.idCatalogoDetalle == 22]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="17" y="31" width="510" height="1" forecolor="#999999" uuid="15fa6bc7-afee-4847-8011-86652bcca615"/>
+			</line>
+			<line>
+				<reportElement x="17" y="152" width="510" height="1" forecolor="#999999" uuid="375593f1-fb93-4b66-8ea9-da486c081667"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

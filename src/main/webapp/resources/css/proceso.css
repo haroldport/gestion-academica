@@ -306,7 +306,7 @@ div#footer {
 .btnClasi{
 	text-decoration: none;
     padding: 3px 7px;
-    margin-right: 3px;
+    margin: 3px;
     border: 1px solid gray;
     border-bottom: none;
     background-color: #C5C5C5;

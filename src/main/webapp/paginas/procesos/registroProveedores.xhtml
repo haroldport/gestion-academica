@@ -6,7 +6,7 @@
 	xmlns:pou="http://primefaces.org/ui">
 <ui:composition template="/templates/page-template-registro.xhtml">
 	<ui:define name="contenido">
-		<h:form id="formRegistro">
+		<h:form id="formRegistro" target="_blank">
 			<p:wizard flowListener="#{registroPortalBean.onFlowProcess}"
 				widgetVar="registroP" backLabel="Regresar" nextLabel="Continuar">
 				<p:tab id="paso1" titleStyleClass="menuPasoActivo"
@@ -1984,12 +1984,18 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 						</div>
 						<br /><br />
 						<div align="right">
-							<h:panelGrid columns="4" style="border: 1px solid #00468C; padding: 15px !important">
-								<p:commandButton value="Imprimir Requisitos" />
-								<p:commandButton value="Imprimir Formulario" />
-								<p:commandButton value="Acuerdo de Responsabilidad" />
-								<p:commandButton value="Ingresar al Sistema" />
-							</h:panelGrid>							
+							<p:outputPanel style="border: 1px solid #00468C; padding: 15px !important">
+								<h:panelGrid columns="4">
+									<p:commandLink target="_blank" value="Imprimir Requisitos" styleClass="btnClasi" 
+												   ajax="false" action="#{registroPortalBean.imprimirRequisitos}" />
+									<p:commandLink target="_blank" value="Imprimir Formulario" styleClass="btnClasi" 
+												   ajax="false" action="#{registroPortalBean.imprimirRequisitos}" />
+									<p:commandLink target="_blank" value="Acuerdo de Responsabilidad" styleClass="btnClasi" 
+												   ajax="false" action="#{registroPortalBean.imprimirRequisitos}" />
+									<p:commandLink target="_blank" value="Ingresar al Sistema" styleClass="btnClasi" 
+												   ajax="false" action="#{registroPortalBean.regresarLogin}" />
+								</h:panelGrid>
+							</p:outputPanel>						
 						</div>
 						<br />
 					</p:outputPanel>

@@ -12,7 +12,9 @@ import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,10 +65,12 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
     private TreeNode[] productosSeleccionados;
     private boolean mostrarClasificador;
     private List<ProductoProveedor> listaProductos;
+    private ReporteBean reporteBean;
 	
 	@PostConstruct
 	public void iniciar() {
 		try {
+			reporteBean = new ReporteBean();
 			opcion = 0;
 			obtenerCatalogos();
 			setearValoresProveedor();
@@ -232,6 +236,15 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 				listaProductos.add(new ProductoProveedor(producto));
 	        }
 		}
+	}
+	
+	public void imprimirRequisitos() throws Exception{
+		Map<String, Object> pars = new HashMap<>();
+		String filepathImage = getRequest().getSession().getServletContext().getRealPath("/resources/images/");
+		pars.put("LOGO_DIR", filepathImage);
+		List<Object> listaProveedor = new ArrayList<>();
+		listaProveedor.add(nuevoProveedor);
+		reporteBean.imprimirPDF(listaProveedor, "requisitosProveedor", pars);
 	}
 	
 	public void quitarProducto(ProductoProveedor producto){
@@ -445,6 +458,14 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 
 	public void setNumeroTrabajadores(List<CatalogoDetalle> numeroTrabajadores) {
 		this.numeroTrabajadores = numeroTrabajadores;
+	}
+
+	public ReporteBean getReporteBean() {
+		return reporteBean;
+	}
+
+	public void setReporteBean(ReporteBean reporteBean) {
+		this.reporteBean = reporteBean;
 	}
 	
 }

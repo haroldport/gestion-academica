@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acuerdoResponsabilidad" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a5ae0851-f96e-42d2-9929-6d15ae49c7e7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="360"/>
+	<parameter name="LOGO_DIR" class="java.lang.String"/>
+	<field name="primerApellido" class="java.lang.String"/>
+	<field name="segundoApellido" class="java.lang.String"/>
+	<field name="primerNombre" class="java.lang.String"/>
+	<field name="segundoNombre" class="java.lang.String"/>
+	<field name="ruc" class="java.lang.String"/>
+	<title>
+		<band height="150" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="20" width="223" height="75" uuid="281fbeb7-435d-47ae-882c-521d18f3262c"/>
+				<imageExpression><![CDATA[$P{LOGO_DIR} + "//logo_reporte.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="249" y="44" width="306" height="20" uuid="78f7e39f-9cf2-48b4-b4b9-8b012ba187cb"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA NACIONAL DE CONTRATACIÓN PÚBLICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="0" width="146" height="20" uuid="ad736a21-ec1d-46a4-b5a7-0c6e2b144302"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Habilitación del RUP]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="97" width="555" height="2" forecolor="#999999" uuid="542518d7-0ba9-4ae7-aa59-81bf793ea00f"/>
+			</line>
+			<line>
+				<reportElement x="0" y="148" width="555" height="2" forecolor="#999999" uuid="3444994a-7b07-48e1-848e-d2385d78275b"/>
+			</line>
+			<staticText>
+				<reportElement x="189" y="103" width="228" height="20" uuid="350ef43b-4908-4866-bd1f-e3a769067b52"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACUERDO DE RESPONSABILIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="123" width="306" height="20" uuid="4a9b2d61-7983-46e1-94df-4fc839bb3385"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DE USO DEL PORTAL www.compraspublicas.gob.ec]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="17" width="555" height="133" uuid="4eb2a3da-87e9-499a-ba0e-4f9947d4a6c3"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Justified">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Los derechos de propiedad intelectual respecto de los servicios, contenidos, logotipos, signos distintivos y dominios del portal, así como los derechos de uso y explotación de los mismos, incluyendo su divulgación, publicación, reproducción, distribución y transformación, son propiedad exclusiva del Servicio Nacional de Contratación Pública (SERCOP).\n\n"+
+"Con la aprobación del SERCOP, de las condiciones generales y responsabilidades de uso del portal.\n\n" +
+
+"El Proveedor, " + $F{primerApellido} + " " + $F{segundoApellido} == null ? "" : $F{segundoApellido} + " " + $F{primerNombre} + " " + $F{segundoNombre} == null ? "" : $F{segundoNombre} + ", con RUC No. $F{ruc}, acepta las siguientes condiciones relacionadas a la utilización del Nombre de Usuario, Contraseña y Tecnología que tendrá acceso, para realizar transacciones comerciales con las Entidades del Estado a través del Portal."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="150" width="228" height="20" uuid="c827bebb-f0c5-46f5-9358-55f13cf72175"/>
+				<box leftPadding="5"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsabilidad del Proveedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="170" width="555" height="318" uuid="ffb073ac-4bb5-4755-a9d2-9d59fe71d5ee"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<text><![CDATA[El Proveedor asume la responsabilidad total del uso del portal y sus herramientas con el Nombre de Usuario y Contraseña, registrados por el Proveedor durante la inscripción en el Registro Único de Proveedores (RUP). Además se responsabiliza de la información registrada, la vigencia, veracidad y coherencia de la misma y de la participación en procesos de contratación de las Entidades que aparecen en el portal, junto con las obligaciones que generen la mencionada participación.
+De la responsabilidad que hoy se desprenden de la firma y rúbrica, según señala la “Ley de Comercio Electrónico, Firmas Electrónicas y Mensajes de Datos” y en base a la libertad tecnológica determinada en la Ley, las partes acuerdan que el Nombre de Usuario y Contraseña, surtirá los mismos efectos que una firma electrónica y se entenderá como una completa equivalencia funcional, técnica y jurídica. Por lo tanto, todas las transacciones que realizará el Proveedor en el portal se garantizarán y legalizarán con el Nombre de Usuario y Contraseña.
+El Proveedor será responsable de la veracidad, exactitud, consistencia y vigencia de la información de la propuesta u oferta anexada en los módulos del portal, en los cuales participe, y deberá entregar el respaldo físico de la información anexada, en el caso de requerirlo.
+En todo momento, el Proveedor es el responsable de mantener en secreto el número de sus cuentas, contraseñas personales, claves de acceso y números confidenciales con los cuales tenga acceso a los servicios y contenidos del portal.
+El Proveedor no adquiere ningún derecho de propiedad intelectual por el simple uso de los servicios y contenidos del portal y en ningún momento dicho uso será considerado como una autorización ni licencia para utilizar los servicios y contenidos con fines distintos a los procesos de contratación. Por lo tanto, no podrá comercializar de manera alguna los servicios y contenidos, ni tiene el derecho de colocar hipervínculos desde y al portal, ni el derecho de colocar o utilizar los servicios y contenidos del portal en sitios o páginas propias o de terceros sin autorización previa y por escrito del SERCOP y no tiene el derecho de limitar o impedir a cualquier otro Proveedor el uso del portal.
+El Proveedor autoriza al SERCOP a utilizar, publicar, reproducir, divulgar, comunicar públicamente y transmitir la información considerada como no confidencial.
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
