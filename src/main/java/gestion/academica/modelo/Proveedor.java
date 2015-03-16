@@ -2,8 +2,8 @@ package gestion.academica.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,20 +13,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Jorge Rivera
  */
 @Entity
-@Table(name = "proveedor")
+@Table(name = "proveedor", schema = "gestion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Proveedor.findAll", query = "SELECT p FROM Proveedor p")})
@@ -34,102 +34,62 @@ public class Proveedor implements Serializable {
 	private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id_proveedor")
     private Integer idProveedor;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "usuario")
     private String usuario;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "clave")
     private String clave;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "correo")
     private String correo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 13)
     @Column(name = "ruc")
     private String ruc;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "primer_apellido")
     private String primerApellido;
-    @Size(max = 100)
     @Column(name = "segundo_apellido")
     private String segundoApellido;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "primer_nombre")
     private String primerNombre;
-    @Size(max = 100)
     @Column(name = "segundo_nombre")
     private String segundoNombre;
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 150)
     @Column(name = "nombre_comercial")
     private String nombreComercial;
-    @Size(max = 100)
     @Column(name = "pagina_web")
     private String paginaWeb;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "anio_inicio")
     private int anioInicio;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
     @Column(name = "domicilio_tributario")
     private String domicilioTributario;
-    @Size(max = 100)
     @Column(name = "interseccion_referencia")
     private String interseccionReferencia;
     @Column(name = "numero_calle")
     private String numeroCalle;
-    @Size(max = 80)
     @Column(name = "edificio_referencia")
     private String edificioReferencia;
-    @Size(max = 80)
     @Column(name = "departamento_oficina")
     private String departamentoOficina;
-    @Size(max = 15)
     @Column(name = "telefono")
     private String telefono;
-    @Size(max = 15)
     @Column(name = "celular")
     private String celular;
-    @Size(max = 100)
     @Column(name = "primer_apellido_contacto")
     private String primerApellidoContacto;
-    @Size(max = 100)
     @Column(name = "segundo_apellido_contacto")
     private String segundoApellidoContacto;
-    @Size(max = 100)
     @Column(name = "primer_nombre_contacto")
     private String primerNombreContacto;
-    @Size(max = 100)
     @Column(name = "segundo_nombre_contacto")
     private String segundoNombreContacto;
-    @Size(max = 15)
     @Column(name = "numero_identificacion_contacto")
     private String numeroIdentificacionContacto;
     @Column(name = "fecha_nacimiento_contacto")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimientoContacto;
     @Column(name = "cumple_normativa")
-    private Boolean cumpleNormativa;
+    private Integer cumpleNormativa;
     @Column(name = "porcentaje_exporta")
     private Integer porcentajeExporta;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -205,6 +165,8 @@ public class Proveedor implements Serializable {
     private CatalogoDetalle idOrigen;
     @Transient
     private String confirmarClave;
+    @OneToMany(mappedBy = "idProveedor")
+    private List<Telefono> telefonoList;
 
     public Proveedor() {
     }
@@ -435,11 +397,11 @@ public class Proveedor implements Serializable {
         this.fechaNacimientoContacto = fechaNacimientoContacto;
     }
 
-    public Boolean getCumpleNormativa() {
+    public Integer getCumpleNormativa() {
         return cumpleNormativa;
     }
 
-    public void setCumpleNormativa(Boolean cumpleNormativa) {
+    public void setCumpleNormativa(Integer cumpleNormativa) {
         this.cumpleNormativa = cumpleNormativa;
     }
 
@@ -658,6 +620,15 @@ public class Proveedor implements Serializable {
 	public void setConfirmarClave(String confirmarClave) {
 		this.confirmarClave = confirmarClave;
 	}
+	
+	@XmlTransient
+    public List<Telefono> getTelefonoList() {
+        return telefonoList;
+    }
+
+    public void setTelefonoList(List<Telefono> telefonoList) {
+        this.telefonoList = telefonoList;
+    }
 
 	@Override
     public int hashCode() {

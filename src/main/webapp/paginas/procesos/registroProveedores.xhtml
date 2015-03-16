@@ -419,7 +419,7 @@
 									style="background: #E6E6E6; padding: 0.5em; height: 6em">
 									<p:inputText id="ruc"
 										value="#{registroPortalBean.nuevoProveedor.ruc}" size="30"
-										required="true"
+										required="true" onkeypress="return aceptarNumeros(event);" maxlength="13"
 										requiredMessage="Este campo no puede estar vacío" />
 									<p:message for="ruc" />
 									<p
@@ -663,7 +663,7 @@
 								</p:outputPanel>
 								<p:outputPanel
 									style="background: #E6E6E6; padding: 0.5em; height: 5em">
-									<p:calendar id="fecha"
+									<p:calendar id="fecha" navigator="true"
 										value="#{registroPortalBean.nuevoProveedor.fechaNacimiento}"
 										size="30" pattern="yyyy-MMM-dd" />
 									<p
@@ -1059,20 +1059,105 @@
 							</p:outputPanel>
 							<p:outputPanel
 								style="background: #fff; padding: 0.5em; border-bottom: 1px solid #00468C">
-								<h:panelGrid columns="2" styleClass="top-aligned-columns"
+								<h:panelGrid columns="3" styleClass="top-aligned-columns"
 									cellpadding="5" style="display:block" cellspacing="5">
 									<p:outputPanel style="top: 0">
-										<h:outputLabel styleClass="textoAzul12" value="Ingrese su(s) teléfono(s) " />
-										<br /><br />
-										<p style="text-align: justify; font-size: 0.8em; font-style: italic">Ejemplo:</p>
-										<p style="text-align: justify; font-size: 0.8em; font-style: italic">Tipo: Celular</p>
-										<p style="text-align: justify; font-size: 0.8em; font-style: italic">Teléfono: 09 615-5247</p>
-										<p style="text-align: justify; font-size: 0.8em; font-style: italic">Observaciones: Llamar en horarios de oficina</p>
-										<p:spacer height="10" width="120" />
+										<h:outputLabel styleClass="textoAzul12"
+											value="Ingrese su(s) teléfono(s) " />
+										<br />
+										<br />
+										<p
+											style="text-align: justify; font-size: 0.8em; font-style: italic">Ejemplo:</p>
+										<p
+											style="text-align: justify; font-size: 0.8em; font-style: italic">Tipo:
+											Celular</p>
+										<p
+											style="text-align: justify; font-size: 0.8em; font-style: italic">Teléfono:
+											09 615-5247</p>
+										<p
+											style="text-align: justify; font-size: 0.8em; font-style: italic">Observaciones:
+											Llamar en horarios de oficina</p>
 									</p:outputPanel>
+									<p:spacer height="10" width="200" />
 									<p:outputPanel
-										style="background: #fff; padding: 0.5em">
-										
+										style="background: #fff; padding: 0.5em; border-top: 1px solid #00468C; border-bottom: 1px solid #00468C">
+										<h:panelGrid columns="7">
+											<p:spacer height="10" width="100" />
+											<h:outputText style="font-size: 12px;" value="Tipo" />
+											<p:spacer height="10" width="180" />
+											<h:outputText style="font-size: 12px;" value="Teléfono" />
+											<p:spacer height="10" width="150" />
+											<h:outputText style="font-size: 12px;" value="Observaciones" />
+											<p:spacer height="10" width="200" />
+										</h:panelGrid>
+										<br />
+										<p:outputPanel id="pnlValores">
+											<h:panelGrid columns="8">
+												<p:spacer height="10" width="50" />
+												<p:selectOneMenu id="tipoTel"
+													style="margin-left: 10px; width: 150px;"
+													value="#{registroPortalBean.nuevoTelefono.idTipoTelefono.idCatalogoDetalle}">
+													<f:selectItems value="#{registroPortalBean.tiposTelefono}"
+														var="teltip" itemValue="#{teltip.idCatalogoDetalle}"
+														itemLabel="#{teltip.nombre}" />
+												</p:selectOneMenu>
+												<p:spacer height="10" width="70" />
+												<p:inputText id="tel"
+													value="#{registroPortalBean.nuevoTelefono.numeroTelefono}"
+													size="12" />
+												<p:spacer height="10" width="100" />
+												<p:inputText id="obs"
+													value="#{registroPortalBean.nuevoTelefono.observaciones}"
+													size="12" />
+												<p:spacer height="10" width="180" />
+												<p:commandLink
+													action="#{registroPortalBean.agregarTelefono}"
+													update=":formRegistro:pnlTelefono, :formRegistro:pnlValores"
+													process="@this :formRegistro:tipoTel, :formRegistro:tel, :formRegistro:obs">
+													<h:graphicImage library="images"
+														name="aumentarTelefono.jpg" />
+												</p:commandLink>
+											</h:panelGrid>
+										</p:outputPanel>
+										<br />
+										<h:panelGrid columns="7">
+											<p:spacer height="10" width="70" />
+											<h:outputText style="font-size: 12px; font-style: italic"
+												value="Ej.: Celular" />
+											<p:spacer height="10" width="150" />
+											<h:outputText style="font-size: 12px; font-style: italic"
+												value="Ej.: 09-8636489" />
+											<p:spacer height="10" width="120" />
+											<h:outputText style="font-size: 12px; font-style: italic"
+												value="Ej.: Ext-123" />
+											<p:spacer height="10" width="200" />
+										</h:panelGrid>
+										<br />
+										<p:outputPanel id="pnlTelefono">
+											<p:dataTable var="telef"
+												value="#{registroPortalBean.listadoTelefonos}"
+												rendered="#{registroPortalBean.listadoTelefonos.size() > 0}">
+												<p:column>
+													<p:commandLink
+														action="#{registroPortalBean.quitarTelefono(telef)}"
+														update=":formRegistro:pnlTelefono"
+														process="@this :formRegistro:pnlTelefono">
+														<h:graphicImage library="images" name="cajachequeo.jpg" />
+													</p:commandLink>
+												</p:column>
+												<p:column>
+													<h:outputText value="#{telef.idTipoTelefono.nombre}" />
+												</p:column>
+
+												<p:column>
+													<h:outputText value="#{telef.numeroTelefono}" />
+												</p:column>
+
+												<p:column>
+													<h:outputText value="#{telef.observaciones}" />
+												</p:column>
+											</p:dataTable>
+										</p:outputPanel>
 									</p:outputPanel>
 								</h:panelGrid>
 							</p:outputPanel>
@@ -1083,22 +1168,831 @@
 
 				<p:tab id="paso5" titleStyleClass="menuPasoActivo"
 					title="Paso 5 Información de Contactos">
-
+					<h1 style="font-size: 14px;" class="tituloAzul">Contactos</h1>
+					<p:outputPanel
+						style="border-top: 1px solid #00468C; width: 100%; 
+						border-bottom: 1px solid #00468C;margin-bottom: 1em">
+						<div align="left" style="margin-left: 1em">
+							<h:outputText style="font-size: 14px;" styleClass="tituloAzul"
+								value="MODO DE USO: " />
+							<h:outputLabel styleClass="textoAzul12"
+								value="Si desea aumentar contactos presione el botón 'Contactos Adicionales' que le pedirá ingresar la información de la persona de Contacto. Cuando esté agregado el contacto aparecerá en la lista de contactos." />
+							<br />
+							<h:outputText style="font-size: 14px;" styleClass="tituloAzul"
+								value="PARA QUITAR " />
+							<h:outputLabel styleClass="textoAzul12"
+								value="un contacto de la lista desmarque la caja de chequeo con un clic " />
+							<h:graphicImage library="images" name="cajachequeo.jpg" />
+						</div>
+					</p:outputPanel>
+					<h1 style="font-size: 14px;" class="tituloAzul">Datos del
+						Contacto</h1>
+					<p:outputPanel
+						style="border-top: 1px solid #00468C; width: 100%; 
+						border-bottom: 1px solid #00468C;margin-bottom: 1em">
+						<div align="left" style="margin-left: 1em">
+							<h:panelGrid columns="3" styleClass="top-aligned-columns"
+								cellpadding="5" style="display:block" cellspacing="5">
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Primer Apellido" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p:inputText id="primerApellidoC"
+										value="#{registroPortalBean.nuevoProveedor.primerApellidoContacto}"
+										size="30" required="true"
+										requiredMessage="Este campo no puede estar vacío" />
+									<p:message for="primerApellidoC" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										Aguinaga</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">Ingrese el
+										Primer Apellido del Contacto</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Segundo Apellido" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p:inputText id="segundoApellidoC"
+										value="#{registroPortalBean.nuevoProveedor.segundoApellidoContacto}"
+										size="30" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										Flores</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p style="text-align: justify; font-size: 0.9em">Ingrese el
+										Segundo Apellido del Contacto</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Primer Nombre" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p:inputText id="primerNombreC"
+										value="#{registroPortalBean.nuevoProveedor.primerNombreContacto}"
+										size="30" required="true"
+										requiredMessage="Este campo no puede estar vacío" />
+									<p:message for="primerNombreC" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										Juan</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em"></p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Segundo Nombre" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p:inputText id="segundoNombreC"
+										value="#{registroPortalBean.nuevoProveedor.segundoNombreContacto}"
+										size="30" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										Francisco</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p style="text-align: justify; font-size: 0.9em">Ingrese el
+										Segundo Nombre de la Persona de Contacto, si tiene más nombres
+										ingréselos aquí</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Sexo" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p:selectOneRadio id="sexo"
+										value="#{registroPortalBean.nuevoProveedor.idSexoContacto.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems value="#{registroPortalBean.generos}" var="gen"
+											itemLabel="#{gen.nombre}"
+											itemValue="#{gen.idCatalogoDetalle}" />
+									</p:selectOneRadio>
+									<p:message for="sexo" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">Marque
+										Masculino si es hombre y Femenino si es mujer.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Estado Civil" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:selectOneMenu id="estadoCivilC"
+										value="#{registroPortalBean.nuevoProveedor.idEstadoCivilContacto.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems value="#{registroPortalBean.estadosCiviles}"
+											var="est" itemLabel="#{est.nombre}"
+											itemValue="#{est.idCatalogoDetalle}" />
+									</p:selectOneMenu>
+									<p:message for="estadoCivilC" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.9em"></p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Documento de Identificación" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:selectOneMenu id="docId"
+										value="#{registroPortalBean.nuevoProveedor.idDocumentoContacto.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems
+											value="#{registroPortalBean.documentosIdentificacion}"
+											var="doc" itemLabel="#{doc.nombre}"
+											itemValue="#{doc.idCatalogoDetalle}" />
+									</p:selectOneMenu>
+									<p:message for="docId" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.9em">Seleccione
+										si es Ecuatoriano Cédula de Ciudadanía y si es extranjero
+										pasaporte.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Número de Identificación" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p:inputText id="numId"
+										value="#{registroPortalBean.nuevoProveedor.numeroIdentificacionContacto}"
+										size="30" required="true" onkeypress="return aceptarNumeros(event);" maxlength="10"
+										requiredMessage="Este campo no puede estar vacío" />
+									<p:message for="numId" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										173297682</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em"></p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Cargo" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:selectOneMenu id="cargo"
+										value="#{registroPortalBean.nuevoProveedor.idCargoContacto.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems value="#{registroPortalBean.cargos}"
+											var="cargo" itemLabel="#{cargo.nombre}"
+											itemValue="#{cargo.idCatalogoDetalle}" />
+									</p:selectOneMenu>
+									<p:message for="cargo" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.9em">Ingrese el
+										Cargo que desempeña para el Proveedor</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Nivel de Educación" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:selectOneMenu id="nivelEc"
+										value="#{registroPortalBean.nuevoProveedor.idNivelEducacionContacto.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems value="#{registroPortalBean.nivelesEducacion}"
+											var="nive" itemLabel="#{nive.nombre}"
+											itemValue="#{nive.idCatalogoDetalle}" />
+									</p:selectOneMenu>
+									<p:message for="nivelEc" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.9em">Seleccione
+										el nivel de educación del representante.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Área Ocupacional" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:selectOneMenu id="areaC"
+										value="#{registroPortalBean.nuevoProveedor.idAreaOcupacionalContacto.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems value="#{registroPortalBean.areasEspecialidad}"
+											var="area" itemLabel="#{area.nombre}"
+											itemValue="#{area.idCatalogoDetalle}" />
+									</p:selectOneMenu>
+									<p:message for="areaC" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.9em">Seleccione
+										su área de especialidad o profesión de la lista</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Fecha de Nacimiento" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p:calendar id="fechaC" required="true" navigator="true"
+										requiredMessage="Este campo no puede estar vacío"
+										value="#{registroPortalBean.nuevoProveedor.fechaNacimientoContacto}"
+										size="30" pattern="yyyy-MMM-dd" />
+									<p:message for="fechaC" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										1980-Enero-25</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 5em">
+									<p style="text-align: justify; font-size: 0.9em">Seleccione
+										su fecha de nacimiento el formato es Año-Mes-Día, el combo le
+										permite seleccionar facilmente la fecha.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+							</h:panelGrid>
+						</div>
+					</p:outputPanel>
 				</p:tab>
 
 				<p:tab id="paso6" titleStyleClass="menuPasoActivo"
 					title="Paso 6 Productos">
-
+					<h1 style="font-size: 14px;" class="tituloAzul">Productos del
+						Proveedor</h1>
+					<p:outputPanel
+						style="border-top: 1px solid #00468C; width: 100%; 
+						border-bottom: 1px solid #00468C;margin-bottom: 1em">
+						<div align="left" style="margin-left: 1em">
+							<h:outputText style="font-size: 14px;" styleClass="tituloAzul"
+								value="MODO DE USO: " />
+							<h:outputLabel styleClass="textoAzul12"
+								value="Para comenzar usted puede ingresar una palabra clave y se le mostrarán las categorías de productos existentes, marque la(s) categoría(s) que definan a sus productos y presione el botón 'Aumentar Producto'. 
+Puede también navegar en el clasificador de productos para utilizarlo de clic en el botón 'Navegador de Productos' este le mostrará todas las categorías de productos para desplegar las subcategorías de clic en el botón [+] y se deplegarán las sub-categorías siga desplegando las subcategorías hasta llegar a las categorías finales para que seleccione la categoría de su producto. " />
+							<br /> <br />
+							<h:outputText style="font-size: 14px;" styleClass="tituloAzul"
+								value="PARA QUITAR " />
+							<h:outputLabel styleClass="textoAzul12"
+								value="un producto de la lista desmarque la caja de chequeo con un clic " />
+							<h:graphicImage library="images" name="cajachequeo.jpg" />
+							<br /> <br />
+							<p:outputPanel style="border-bottom: 1px solid #00468C" />
+							<h:panelGrid columns="2">
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Registre sus Productos" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #FFFFD9; padding: 0.5em; height: 3em">
+									<h:outputLabel style="color: #990000; font-weight: bold"
+										value="IMPORTANTE: " />
+									<h:outputLabel
+										value="Es indispensable que ingrese los productos que elabora el proveedor." />
+									<p:spacer height="5" width="150" />
+								</p:outputPanel>
+							</h:panelGrid>
+						</div>
+					</p:outputPanel>
+					<p:outputPanel
+						style="border-top: 1px solid #00468C; width: 100%; 
+						border-bottom: 1px solid #00468C;margin-bottom: 1em">
+						<div align="left" style="margin-left: 1em">
+							<h1 style="font-size: 14px;" class="tituloAzul">Selección de
+								Productos con la Clasificación Central de Productos (CPC)
+								versión 1</h1>
+							<h:outputLabel styleClass="textoAzul12"
+								value="Puede seleccionar sus productos de dos maneras:" />
+							<br />
+							<h:outputLabel styleClass="textoAzul12"
+								value="1) Puede buscar su producto ingresando una palabra clave y buscando los tipos de productos asociados." />
+							<br />
+							<h:outputLabel styleClass="textoAzul12"
+								value="2) Puede dar clic en 'Navegar en el Clasificador' y buscar su producto de acuerdo a la categoría que más se aproxime." />
+							<br />
+							<h:outputLabel styleClass="textoAzul12"
+								value="3) Para Eliminar sus productos, clic en la pestaña Eliminar Productos." />
+							<br /> <br />
+							<h:panelGrid columns="2">
+								<p:commandLink
+									update=":formRegistro:pnlBuscar, :formRegistro:pnlNavegar"
+									styleClass="btnClasi"
+									action="#{registroPortalBean.buscarClasificador}"
+									value="Buscar en el Clasificador" />
+								<p:commandLink
+									update=":formRegistro:pnlNavegar, :formRegistro:pnlBuscar"
+									styleClass="btnClasi"
+									action="#{registroPortalBean.navegarClasificador}"
+									value="Navegar en el Clasificador" />
+							</h:panelGrid>
+							<br /> <br />
+							<p:outputPanel id="pnlBuscar">
+								<h:panelGrid columns="5"
+									rendered="#{registroPortalBean.mostrarClasificador}">
+									<h:outputLabel value="Palabra Clave o Sinónimos" />
+									<p:inputText size="40" />
+									<p:commandButton value="Buscar" />
+								</h:panelGrid>
+							</p:outputPanel>
+							<p:outputPanel id="pnlNavegar">
+								<p:treeTable value="#{registroPortalBean.rootProducto}"
+									var="producto"
+									rendered="#{!registroPortalBean.mostrarClasificador}"
+									selectionMode="checkbox"
+									selection="#{registroPortalBean.productosSeleccionados}"
+									style="text-align: left; height: 300px;overflow: scroll;">
+									<p:column styleClass="wrap">
+										<h:outputText value="#{producto.nombre}" />
+									</p:column>
+								</p:treeTable>
+							</p:outputPanel>
+							<br /> <br />
+							<div align="right">
+								<p:commandLink update=":formRegistro:pnlProductos"
+									action="#{registroPortalBean.agregarProducto}"
+									value="Aumentar Producto" styleClass="btnAgregar" />
+							</div>
+							<br /> <br />
+							<p:outputPanel id="pnlProductos">
+								<p:dataTable var="prod"
+									value="#{registroPortalBean.listaProductos}"
+									rendered="#{registroPortalBean.listaProductos.size() > 0}">
+									<p:column>
+										<p:commandLink
+											action="#{registroPortalBean.quitarProducto(prod)}"
+											update=":formRegistro:pnlProductos"
+											process="@this :formRegistro:pnlTelefono">
+											<h:graphicImage library="images" name="cajachequeo.jpg" />
+										</p:commandLink>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{prod.idProducto.nombre}" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+							<br /> <br />
+						</div>
+					</p:outputPanel>
 				</p:tab>
 
 				<p:tab id="paso7" titleStyleClass="menuPasoActivo"
 					title="Paso 7 Indicadores">
-
+					<h1 style="font-size: 14px;" class="tituloAzul">Indicadores
+						del Proveedor</h1>
+					<p:outputPanel
+						style="border-top: 1px solid #00468C; width: 100%; 
+						border-bottom: 1px solid #00468C;margin-bottom: 1em">
+						<div align="left" style="margin-left: 1em">
+							<h:panelGrid columns="3" styleClass="top-aligned-columns"
+								cellpadding="5" style="display:block" cellspacing="5">
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="¿Cumple Usted con la normativa para ser proveedor de proyectos financiados con el BID?" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 22em">
+									<p:selectOneRadio id="norma"
+										value="#{registroPortalBean.nuevoProveedor.cumpleNormativa}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItem itemLabel="Si" itemValue="1" />
+										<f:selectItem itemLabel="No" itemValue="2" />
+									</p:selectOneRadio>
+									<p:message for="norma" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 22em">
+									<h:outputLabel style="font-size: 11px; font-weight: bold"
+										value="Paises miembros BID:" />
+									<br />
+									<h:outputLabel style="font-size: 11px; font-style: italic"
+										value="'Argentina,Bahamas,Barbados,Belice,Bolivia,Brasil,Chile,Colombia,Costa Rica,Ecuador, El Salvador,Guatemala,Guyana,Haití,Honduras,Jamaica,México,Nicaragua, Panamá,Paraguay,Perú,República Dominicana,Surinam,Trinidad y Tobago, Uruguay,Venezuela, Alemania,Austria,Bélgica,Canadá,Croacia,Dinamarca,Eslovenia,España, Estados Unidos,Finlandia,Francia,Israel,Italia,Japón,Noruega,Países Bajos, Portugal,Reino Unido,República de China,República de Corea,Suecia y Suiza.'" />
+									<br />
+									<h:outputLabel style="font-size: 11px; font-weight: bold"
+										value="A) Nacionalidad" />
+									<br />
+									<h:outputLabel style="font-size: 11px; margin-left: 15px"
+										value="a) " />
+									<h:outputLabel
+										style="font-size: 11px; font-weight: bold; margin-left: 10px"
+										value="Un individuo " />
+									<h:outputLabel style="font-size: 11px;"
+										value="tiene la nacionalidad de un país miembro del Banco si él o ella satisface uno de los siguientes requisitos: " />
+									<br />
+									<br />
+									<h:outputLabel style="font-size: 11px; margin-left: 30px"
+										value="(i) es ciudadano de un país miembro; o" />
+									<br />
+									<h:outputLabel style="font-size: 11px; margin-left: 30px"
+										value="(ii) ha establecido su domicilio en un país miembro como residente “bona fide” y está legalmente autorizado para trabajar en dicho país." />
+									<br />
+									<br />
+									<h:outputLabel style="font-size: 11px; margin-left: 15px"
+										value="b) " />
+									<h:outputLabel
+										style="font-size: 11px; font-weight: bold; margin-left: 10px"
+										value="Una firma " />
+									<h:outputLabel style="font-size: 11px;"
+										value="tiene la nacionalidad de un país miembro si satisface los dos siguientes requisitos: " />
+									<br />
+									<br />
+									<h:outputLabel style="font-size: 11px; margin-left: 30px"
+										value="(i) esta legalmente constituida o incorporada conforme a las leyes de un país miembro del Banco; y" />
+									<br />
+									<h:outputLabel style="font-size: 11px; margin-left: 30px"
+										value="(ii) más del cincuenta por ciento (50%) del capital de la firma es de propiedad de individuos o firmas de países miembros del Banco." />
+									<br />
+									<br />
+									<h:outputLabel style="font-size: 11px; margin-left: 15px"
+										value="Todos los socios de una asociación en participación, consorcio o asociación (APCA) con responsabilidad mancomunada y solidaria y todos los subcontratistas deben cumplir con los requisitos arriba establecidos." />
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Obligado a llevar Contabilidad:" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:inputText id="contab" value="NO" readonly="true" size="10"
+										required="true"
+										requiredMessage="Este campo no puede estar vacío" />
+									<p:message for="contab" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic"></p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<h:outputLabel style="font-size: 11px;"
+										value="Información tomada del " />
+									<h:outputLabel style="font-size: 11px; font-weight: bold;"
+										value="Servicio de Rentas Internas" />
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Ventas / Ingresos Brutos Anuales" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:selectOneMenu id="ventas"
+										value="#{registroPortalBean.nuevoProveedor.idVentasBrutas.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems value="#{registroPortalBean.ventasBrutas}"
+											var="ven" itemLabel="#{ven.nombre}"
+											itemValue="#{ven.idCatalogoDetalle}" />
+									</p:selectOneMenu>
+									<p:message for="ventas" />
+									<h:outputLabel style="font-size: 11px; font-weight: bold;"
+										value="Tamaño: " />
+									<h:outputLabel style="font-size: 11px;" value="Micro" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.9em">Este campo
+										corresponde a las ventas o ingresos brutos anuales, de acuerdo
+										a la información proporcionada por el Servicio de Rentas
+										Internas SRI.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="% que Exporta" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<h:panelGrid columns="2">
+										<p:inputText id="porc"
+											value="#{registroPortalBean.nuevoProveedor.porcentajeExporta}"
+											size="30" required="true" onkeypress="return aceptarNumeros(event);" maxlength="3"
+											requiredMessage="Este campo no puede estar vacío" />
+										<h:outputLabel style="font-size: 11px;" value="%" />
+									</h:panelGrid>
+									<p:message for="porc" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										15</p>
+									<h:outputLabel style="font-size: 11px;"
+										value="No incluya el caracter %" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">De su
+										facturación anual que porcentaje exporta</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Número de Trabajadores Permanentes" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:selectOneMenu id="traba"
+										value="#{registroPortalBean.nuevoProveedor.idNumeroTrabajadores.idCatalogoDetalle}"
+										style="font-size: 10px" required="true"
+										requiredMessage="Este campo no puede estar vacío">
+										<f:selectItems
+											value="#{registroPortalBean.numeroTrabajadores}" var="trab"
+											itemLabel="#{trab.nombre}"
+											itemValue="#{trab.idCatalogoDetalle}" />
+									</p:selectOneMenu>
+									<p:message for="traba" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.9em">Si es un
+										proveedor unipersonal debe ingresar 1. Se consideran empleados
+										permanentes, aquellas personas que trabajan con el proveedor
+										en forma directa, dependiente de la misma y a tiempo completo,
+										según las modalidades del sector.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Activos totales" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<h:panelGrid columns="2">
+										<p:inputText id="act"
+											value="#{registroPortalBean.nuevoProveedor.activosTotales}"
+											size="30" required="true" onkeypress="return aceptarNumerosDecimales(event);"
+											requiredMessage="Este campo no puede estar vacío" />
+									</h:panelGrid>
+									<p:message for="act" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										54220.25</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">Ingrese el
+										valor total de todos sus activos Ejemplo: Casas, muebles,
+										vehículos, dinero en efectivo, en bancos, etc.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Pasivos totales" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<h:panelGrid columns="2">
+										<p:inputText id="pas"
+											value="#{registroPortalBean.nuevoProveedor.pasivosTotales}"
+											size="30" required="true" onkeypress="return aceptarNumerosDecimales(event);"
+											requiredMessage="Este campo no puede estar vacío" />
+									</h:panelGrid>
+									<p:message for="pas" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										8584.12</p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">Ingrese el
+										valor total de todos sus pasivos Ejemplo: Deudas con bancos,
+										con proveedores, etc.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12" value="Patrimonio" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<h:panelGrid columns="2">
+										<p:inputText id="pat"
+											value="#{registroPortalBean.nuevoProveedor.patrimonio}"
+											size="30" required="true" onkeypress="return aceptarNumerosDecimales(event);"
+											requiredMessage="Este campo no puede estar vacío" />
+									</h:panelGrid>
+									<p:message for="pat" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic"></p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">Valor
+										resultante de Activos - Pasivos</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="*" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="% de Agregado Nacional" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<h:panelGrid columns="2">
+										<p:inputText id="porcA"
+											value="#{registroPortalBean.nuevoProveedor.porcentajeAgregadoNacional}"
+											size="30" required="true" onkeypress="return aceptarNumeros(event);" maxlength="3"
+											requiredMessage="Este campo no puede estar vacío" />
+										<h:outputLabel style="font-size: 11px;" value="%" />
+									</h:panelGrid>
+									<p:message for="porcA" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic">Ejemplo:
+										15</p>
+									<h:outputLabel style="font-size: 11px;"
+										value="No incluya el caracter %" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 6em">
+									<p style="text-align: justify; font-size: 0.9em">De toda la
+										materia prima que utiliza que porcentaje es de origen
+										Nacional. También se considera la materia prima extranjera que
+										ha sido transformada o procesada en Ecuador previo a ser la
+										materia prima del proveedor.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="color: red" value="" />
+									<p:spacer height="5" width="6" />
+									<h:outputLabel styleClass="textoAzul12"
+										value="Año fiscal" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<p:inputText id="anioF" value="2014" readonly="true" size="10" />
+									<p
+										style="text-align: justify; font-size: 0.9em; font-style: italic"></p>
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<h:outputLabel style="font-size: 11px;"
+										value="Valor tomado del SRI" />
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+								<p:outputPanel style="border-bottom: 1px solid #00468C" />
+							</h:panelGrid>
+						</div>
+					</p:outputPanel>
 				</p:tab>
 
 				<p:tab id="paso8" titleStyleClass="menuPasoActivo"
-					title="Paso 8 Finalización de Registro">
-
+					title="Paso 8 Finalización de Registro">					
+					<p:outputPanel
+						style="border: 1px solid #00468C; width: 100%;margin-bottom: 1em">
+						<br /><br />
+						<div align="left" style="margin-left: 1em">
+							<p:outputPanel style="margin: 1em; background: #A9F5E1; padding: 1em">
+								<h:panelGrid columns="2">
+									<p:graphicImage style="margin-right: 20px" library="images" name="aviso.png" />
+									<h:outputLabel styleClass="textoAzul12;" value="Estimado Proveedor para completar el proceso de Registro y posterior Habilitación en el Sistema 
+									Oficial de Contratación Pública, favor ingrese al sistema con su RUC, usuario y contraseña. Completa los pasos que le indica la herramienta, 
+									una vez que la información sea verificada y aprobada por el SERCOP se procederá con su habilitación." />
+								</h:panelGrid>							
+							</p:outputPanel>
+							<h1 style="font-size: 14px;margin-left: 1em" class="tituloAzul">Sus datos han sido registrados correctamente, si utilizó el procedimiento abreviado por favor imprima los siguientes documentos, caso contrario ingrese al sistema.</h1>
+						</div>
+						<br /><br />
+						<div align="right">
+							<h:panelGrid columns="4" style="border: 1px solid #00468C; padding: 15px !important">
+								<p:commandButton value="Imprimir Requisitos" />
+								<p:commandButton value="Imprimir Formulario" />
+								<p:commandButton value="Acuerdo de Responsabilidad" />
+								<p:commandButton value="Ingresar al Sistema" />
+							</h:panelGrid>							
+						</div>
+						<br />
+					</p:outputPanel>
 				</p:tab>
 				<br />
 			</p:wizard>

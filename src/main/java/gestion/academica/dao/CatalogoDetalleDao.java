@@ -101,5 +101,37 @@ public class CatalogoDetalleDao extends Generico<CatalogoDetalle> {
             return null;
         }
     }
+    
+    /**
+     * Obtener por id
+     * @param id
+     * @return 
+     */
+    public CatalogoDetalle obtenerPorId(Integer id) {
+        String sql = "SELECT c FROM CatalogoDetalle c WHERE c.estado.idEstado = 1 AND c.idCatalogoDetalle = :id";
+        return (CatalogoDetalle) this.getEntityManager().createQuery(sql).setParameter("id",id).getResultList().get(0);
+    }
+    
+    /**
+     * Obtener padres por catalogo nemonico
+     * @param nemonico
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<CatalogoDetalle> obtenerPadresPorCatalogoNemonico(String nemonico) {
+        try {
+            String sql = "SELECT c FROM CatalogoDetalle c WHERE c.estado.idEstado = 1 "
+                    + "AND c.catalogo.nemonico = :nemonico "
+                    + "AND c.idCatalogoDetallePadre IS NULL "
+                    + "ORDER BY c.idCatalogoDetalle";
+            Query query = getEntityManager().createQuery(sql);
+            query.setParameter("nemonico", nemonico);
+            List<CatalogoDetalle> catalogosDetalle = query.getResultList() != null && !query.getResultList().isEmpty() ? (List<CatalogoDetalle>) query.getResultList() : null;
+            return catalogosDetalle;
+        } catch (Exception e) {
+            Logger.getLogger(CatalogoDetalleDao.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
 
 }

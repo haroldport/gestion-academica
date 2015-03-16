@@ -35,7 +35,12 @@ public enum CatalogoEnum {
     PROVINCIA("PROVI"),
     CANTON("CANTO"),
     PARROQUIA("PARRO"),
-    TIPO_TELEFONO("TIPTF");
+    TIPO_TELEFONO("TIPTF"),
+    DOCUMENTO_IDENTIFICACION("DOCID"),
+    CARGO("CARGO"),
+    PRODUCTOS("PRODU"),
+    VENTAS_BRUTAS("VENBR"),
+    NUMERO_TRABAJADORES("NUMTR");
     
     private String nemonico;
 

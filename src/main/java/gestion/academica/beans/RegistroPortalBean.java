@@ -1,9 +1,13 @@
 package gestion.academica.beans;
 
 import gestion.academica.enumerado.CatalogoEnum;
+import gestion.academica.enumerado.EstadoEnum;
 import gestion.academica.modelo.CatalogoDetalle;
+import gestion.academica.modelo.ProductoProveedor;
 import gestion.academica.modelo.Proveedor;
+import gestion.academica.modelo.Telefono;
 import gestion.academica.servicio.CatalogoDetalleServicio;
+import gestion.academica.servicio.ProveedorServicio;
 import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
@@ -19,6 +23,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 @ManagedBean
 @ViewScoped
@@ -26,6 +32,8 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 	
 	@EJB
 	private CatalogoDetalleServicio catalogoDetalleServicio;
+	@EJB
+	private ProveedorServicio proveedorServicio;
 	
 	private static final long serialVersionUID = 1L;
 	private boolean skip;
@@ -45,6 +53,16 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
     private List<CatalogoDetalle> cantones;
     private List<CatalogoDetalle> parroquias;
     private List<CatalogoDetalle> tiposTelefono;
+    private List<CatalogoDetalle> documentosIdentificacion;
+    private List<CatalogoDetalle> cargos;
+    private List<CatalogoDetalle> ventasBrutas;
+    private List<CatalogoDetalle> numeroTrabajadores;
+    private Telefono nuevoTelefono;
+    private List<Telefono> listadoTelefonos;
+    private TreeNode rootProducto;
+    private TreeNode[] productosSeleccionados;
+    private boolean mostrarClasificador;
+    private List<ProductoProveedor> listaProductos;
 	
 	@PostConstruct
 	public void iniciar() {
@@ -68,7 +86,59 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		nuevoProveedor.setIdAreaEspecialidad(new CatalogoDetalle());
 		nuevoProveedor.setIdProvincia(new CatalogoDetalle());
 		nuevoProveedor.setIdCanton(new CatalogoDetalle());
-		nuevoProveedor.setIdParroquia(new CatalogoDetalle());
+		nuevoProveedor.setIdParroquia(new CatalogoDetalle());	
+		nuevoProveedor.setIdEstadoCivilContacto(new CatalogoDetalle());
+		nuevoProveedor.setIdSexoContacto(new CatalogoDetalle());
+		nuevoProveedor.setIdDocumentoContacto(new CatalogoDetalle());
+		nuevoProveedor.setIdCargoContacto(new CatalogoDetalle());
+		nuevoProveedor.setIdNivelEducacionContacto(new CatalogoDetalle());
+		nuevoProveedor.setIdAreaOcupacionalContacto(new CatalogoDetalle());
+		nuevoProveedor.setCumpleNormativa(2);
+		nuevoProveedor.setIdNumeroTrabajadores(new CatalogoDetalle());
+		nuevoProveedor.setIdVentasBrutas(new CatalogoDetalle());
+		setearTelefono();
+		listadoTelefonos = new ArrayList<>();
+		setMostrarClasificador(Boolean.TRUE);
+		rootProducto = new DefaultTreeNode("root", null);
+		llenarArbol();
+	}
+	
+	public void llenarArbol() {
+        try {
+        	List<CatalogoDetalle> listaProductosArbol = catalogoDetalleServicio.obtenerPadresPorCatalogoNemonico(CatalogoEnum.PRODUCTOS.getNemonico());
+            setRootProducto(new DefaultTreeNode("root", null));
+            cargarArbolEstOrg(listaProductosArbol, getRootProducto());
+        } catch (Exception e) {
+        	LOGGER.log(Level.SEVERE, null, e);
+        }
+    }
+
+    private void cargarArbolEstOrg(List<CatalogoDetalle> listaProductos, TreeNode nodoPadre) {
+        try {
+            for (CatalogoDetalle producto : listaProductos) {
+            	if(producto.getEstado().getNemonico().equals(EstadoEnum.ACTIVO.getNemonico())){
+            		TreeNode node = new DefaultTreeNode(producto, nodoPadre);
+            		if (!producto.getCatalogoDetalleList().isEmpty()) {
+                        cargarArbolEstOrg(producto.getCatalogoDetalleList(), node);
+                    }
+            	}
+            }
+        } catch (Exception e) {
+        	LOGGER.log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public void buscarClasificador(){
+    	setMostrarClasificador(Boolean.TRUE);
+    }
+    
+    public void navegarClasificador(){
+    	setMostrarClasificador(Boolean.FALSE);
+    }
+	
+	private void setearTelefono(){
+		nuevoTelefono = new Telefono();
+		nuevoTelefono.setIdTipoTelefono(new CatalogoDetalle());
 	}
 	
 	private void obtenerCatalogos(){
@@ -80,6 +150,10 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		estadosCiviles = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.ESTADO_CIVIL.getNemonico());
 		nivelesEducacion = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.NIVEL_EDUCACION.getNemonico());
 		areasEspecialidad = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.AREA_ESPECIALIDAD.getNemonico());
+		documentosIdentificacion = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.DOCUMENTO_IDENTIFICACION.getNemonico());
+		cargos = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.CARGO.getNemonico());
+		ventasBrutas = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.VENTAS_BRUTAS.getNemonico());
+		numeroTrabajadores = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.NUMERO_TRABAJADORES.getNemonico());
 		anios = new ArrayList<>();
 		for(int i = 1900; i < 2021; i++){
 			anios.add(i);
@@ -100,6 +174,11 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
         else {
         	if(opcion == null){
         		opcion = 0;
+        	}
+        	if(event.getNewStep().equals("paso8")){
+        		proveedorServicio.crearProveedorConTelefonoYProductos(nuevoProveedor, listadoTelefonos, listaProductos);
+        		skip = true;
+        		return "paso8";
         	}
         	if(event.getOldStep().equals("paso1") && (opcion != 1)){
         		RequestContext.getCurrentInstance().execute("PF('dlgRegresar').show();");
@@ -132,6 +211,32 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
             parroquias = catalogoDetalleServicio.obtenerPorCatDetNemonico("OTR");
         }
     }
+	
+	public void agregarTelefono(){
+		CatalogoDetalle tipoTele = catalogoDetalleServicio.obtenerPorId(nuevoTelefono.getIdTipoTelefono().getIdCatalogoDetalle());
+		nuevoTelefono.setIdTipoTelefono(tipoTele);
+		listadoTelefonos.add(nuevoTelefono);
+		setearTelefono();
+	}
+	
+	public void quitarTelefono(Telefono telefono){
+		listadoTelefonos.remove(telefono);
+	}
+	
+	public void agregarProducto(){
+		listaProductos = new ArrayList<>();
+		if(productosSeleccionados != null && productosSeleccionados.length > 0) {
+			for(TreeNode node : productosSeleccionados) {
+				CatalogoDetalle productoTmp = (CatalogoDetalle) node.getData();
+				CatalogoDetalle producto = catalogoDetalleServicio.obtenerPorId(productoTmp.getIdCatalogoDetalle());
+				listaProductos.add(new ProductoProveedor(producto));
+	        }
+		}
+	}
+	
+	public void quitarProducto(ProductoProveedor producto){
+		listaProductos.remove(producto);
+	}
 
 	public boolean isSkip() {
 		return skip;
@@ -259,6 +364,87 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 
 	public void setTiposTelefono(List<CatalogoDetalle> tiposTelefono) {
 		this.tiposTelefono = tiposTelefono;
+	}
+
+	public Telefono getNuevoTelefono() {
+		return nuevoTelefono;
+	}
+
+	public void setNuevoTelefono(Telefono nuevoTelefono) {
+		this.nuevoTelefono = nuevoTelefono;
+	}
+
+	public List<Telefono> getListadoTelefonos() {
+		return listadoTelefonos;
+	}
+
+	public void setListadoTelefonos(List<Telefono> listadoTelefonos) {
+		this.listadoTelefonos = listadoTelefonos;
+	}
+
+	public List<CatalogoDetalle> getDocumentosIdentificacion() {
+		return documentosIdentificacion;
+	}
+
+	public void setDocumentosIdentificacion(
+			List<CatalogoDetalle> documentosIdentificacion) {
+		this.documentosIdentificacion = documentosIdentificacion;
+	}
+
+	public List<CatalogoDetalle> getCargos() {
+		return cargos;
+	}
+
+	public void setCargos(List<CatalogoDetalle> cargos) {
+		this.cargos = cargos;
+	}
+
+	public TreeNode getRootProducto() {
+		return rootProducto;
+	}
+
+	public void setRootProducto(TreeNode rootProducto) {
+		this.rootProducto = rootProducto;
+	}
+
+	public boolean isMostrarClasificador() {
+		return mostrarClasificador;
+	}
+
+	public void setMostrarClasificador(boolean mostrarClasificador) {
+		this.mostrarClasificador = mostrarClasificador;
+	}
+
+	public TreeNode[] getProductosSeleccionados() {
+		return productosSeleccionados;
+	}
+
+	public void setProductosSeleccionados(TreeNode[] productosSeleccionados) {
+		this.productosSeleccionados = productosSeleccionados;
+	}
+
+	public List<ProductoProveedor> getListaProductos() {
+		return listaProductos;
+	}
+
+	public void setListaProductos(List<ProductoProveedor> listaProductos) {
+		this.listaProductos = listaProductos;
+	}
+
+	public List<CatalogoDetalle> getVentasBrutas() {
+		return ventasBrutas;
+	}
+
+	public void setVentasBrutas(List<CatalogoDetalle> ventasBrutas) {
+		this.ventasBrutas = ventasBrutas;
+	}
+
+	public List<CatalogoDetalle> getNumeroTrabajadores() {
+		return numeroTrabajadores;
+	}
+
+	public void setNumeroTrabajadores(List<CatalogoDetalle> numeroTrabajadores) {
+		this.numeroTrabajadores = numeroTrabajadores;
 	}
 	
 }

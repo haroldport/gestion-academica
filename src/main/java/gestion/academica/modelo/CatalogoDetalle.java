@@ -1,8 +1,20 @@
 package gestion.academica.modelo;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * The persistent class for the catalogo_detalle database table.
@@ -62,6 +74,9 @@ public class CatalogoDetalle implements Serializable {
 	@JoinColumn(name = "id_catalogo_detalle_padre", referencedColumnName = "id_catalogo_detalle")
     @ManyToOne
     private CatalogoDetalle idCatalogoDetallePadre;
+	
+	@OneToMany(mappedBy = "idCatalogoDetallePadre", fetch = FetchType.EAGER)
+    private List<CatalogoDetalle> catalogoDetalleList;
 
 	public CatalogoDetalle() {
 	}
@@ -181,6 +196,15 @@ public class CatalogoDetalle implements Serializable {
 
 		return instructor;
 	}
+	
+	@XmlTransient
+    public List<CatalogoDetalle> getCatalogoDetalleList() {
+        return catalogoDetalleList;
+    }
+
+    public void setCatalogoDetalleList(List<CatalogoDetalle> catalogoDetalleList) {
+        this.catalogoDetalleList = catalogoDetalleList;
+    }
 
 	public List<Proceso> getProcesos() {
 		return this.procesos;
