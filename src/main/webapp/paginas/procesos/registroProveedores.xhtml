@@ -419,7 +419,8 @@
 									style="background: #E6E6E6; padding: 0.5em; height: 6em">
 									<p:inputText id="ruc"
 										value="#{registroPortalBean.nuevoProveedor.ruc}" size="30"
-										required="true" onkeypress="return aceptarNumeros(event);" maxlength="13"
+										required="true" onkeypress="return aceptarNumeros(event);"
+										maxlength="13"
 										requiredMessage="Este campo no puede estar vacío" />
 									<p:message for="ruc" />
 									<p
@@ -1381,7 +1382,8 @@
 									style="background: #E6E6E6; padding: 0.5em; height: 6em">
 									<p:inputText id="numId"
 										value="#{registroPortalBean.nuevoProveedor.numeroIdentificacionContacto}"
-										size="30" required="true" onkeypress="return aceptarNumeros(event);" maxlength="10"
+										size="30" required="true"
+										onkeypress="return aceptarNumeros(event);" maxlength="10"
 										requiredMessage="Este campo no puede estar vacío" />
 									<p:message for="numId" />
 									<p
@@ -1774,7 +1776,8 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 									<h:panelGrid columns="2">
 										<p:inputText id="porc"
 											value="#{registroPortalBean.nuevoProveedor.porcentajeExporta}"
-											size="30" required="true" onkeypress="return aceptarNumeros(event);" maxlength="3"
+											size="30" required="true"
+											onkeypress="return aceptarNumeros(event);" maxlength="3"
 											requiredMessage="Este campo no puede estar vacío" />
 										<h:outputLabel style="font-size: 11px;" value="%" />
 									</h:panelGrid>
@@ -1835,7 +1838,8 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 									<h:panelGrid columns="2">
 										<p:inputText id="act"
 											value="#{registroPortalBean.nuevoProveedor.activosTotales}"
-											size="30" required="true" onkeypress="return aceptarNumerosDecimales(event);"
+											size="30" required="true"
+											onkeypress="return aceptarNumerosDecimales(event);"
 											requiredMessage="Este campo no puede estar vacío" />
 									</h:panelGrid>
 									<p:message for="act" />
@@ -1863,7 +1867,8 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 									<h:panelGrid columns="2">
 										<p:inputText id="pas"
 											value="#{registroPortalBean.nuevoProveedor.pasivosTotales}"
-											size="30" required="true" onkeypress="return aceptarNumerosDecimales(event);"
+											size="30" required="true"
+											onkeypress="return aceptarNumerosDecimales(event);"
 											requiredMessage="Este campo no puede estar vacío" />
 									</h:panelGrid>
 									<p:message for="pas" />
@@ -1891,7 +1896,8 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 									<h:panelGrid columns="2">
 										<p:inputText id="pat"
 											value="#{registroPortalBean.nuevoProveedor.patrimonio}"
-											size="30" required="true" onkeypress="return aceptarNumerosDecimales(event);"
+											size="30" required="true"
+											onkeypress="return aceptarNumerosDecimales(event);"
 											requiredMessage="Este campo no puede estar vacío" />
 									</h:panelGrid>
 									<p:message for="pat" />
@@ -1918,7 +1924,8 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 									<h:panelGrid columns="2">
 										<p:inputText id="porcA"
 											value="#{registroPortalBean.nuevoProveedor.porcentajeAgregadoNacional}"
-											size="30" required="true" onkeypress="return aceptarNumeros(event);" maxlength="3"
+											size="30" required="true"
+											onkeypress="return aceptarNumeros(event);" maxlength="3"
 											requiredMessage="Este campo no puede estar vacío" />
 										<h:outputLabel style="font-size: 11px;" value="%" />
 									</h:panelGrid>
@@ -1943,8 +1950,7 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 								<p:outputPanel style="top: 0">
 									<h:outputLabel style="color: red" value="" />
 									<p:spacer height="5" width="6" />
-									<h:outputLabel styleClass="textoAzul12"
-										value="Año fiscal" />
+									<h:outputLabel styleClass="textoAzul12" value="Año fiscal" />
 									<p:spacer height="10" width="120" />
 								</p:outputPanel>
 								<p:outputPanel
@@ -1967,35 +1973,45 @@ Puede también navegar en el clasificador de productos para utilizarlo de clic e
 				</p:tab>
 
 				<p:tab id="paso8" titleStyleClass="menuPasoActivo"
-					title="Paso 8 Finalización de Registro">					
+					title="Paso 8 Finalización de Registro">
 					<p:outputPanel
 						style="border: 1px solid #00468C; width: 100%;margin-bottom: 1em">
-						<br /><br />
+						<br />
+						<br />
 						<div align="left" style="margin-left: 1em">
-							<p:outputPanel style="margin: 1em; background: #A9F5E1; padding: 1em">
+							<p:outputPanel
+								style="margin: 1em; background: #A9F5E1; padding: 1em">
 								<h:panelGrid columns="2">
-									<p:graphicImage style="margin-right: 20px" library="images" name="aviso.png" />
-									<h:outputLabel styleClass="textoAzul12;" value="Estimado Proveedor para completar el proceso de Registro y posterior Habilitación en el Sistema 
+									<p:graphicImage style="margin-right: 20px" library="images"
+										name="aviso.png" />
+									<h:outputLabel styleClass="textoAzul12;"
+										value="Estimado Proveedor para completar el proceso de Registro y posterior Habilitación en el Sistema 
 									Oficial de Contratación Pública, favor ingrese al sistema con su RUC, usuario y contraseña. Completa los pasos que le indica la herramienta, 
 									una vez que la información sea verificada y aprobada por el SERCOP se procederá con su habilitación." />
-								</h:panelGrid>							
-							</p:outputPanel>
-							<h1 style="font-size: 14px;margin-left: 1em" class="tituloAzul">Sus datos han sido registrados correctamente, si utilizó el procedimiento abreviado por favor imprima los siguientes documentos, caso contrario ingrese al sistema.</h1>
-						</div>
-						<br /><br />
-						<div align="right">
-							<p:outputPanel style="border: 1px solid #00468C; padding: 15px !important">
-								<h:panelGrid columns="4">
-									<p:commandLink target="_blank" value="Imprimir Requisitos" styleClass="btnClasi" 
-												   ajax="false" action="#{registroPortalBean.imprimirRequisitos}" />
-									<p:commandLink target="_blank" value="Imprimir Formulario" styleClass="btnClasi" 
-												   ajax="false" action="#{registroPortalBean.imprimirRequisitos}" />
-									<p:commandLink target="_blank" value="Acuerdo de Responsabilidad" styleClass="btnClasi" 
-												   ajax="false" action="#{registroPortalBean.imprimirRequisitos}" />
-									<p:commandLink target="_blank" value="Ingresar al Sistema" styleClass="btnClasi" 
-												   ajax="false" action="#{registroPortalBean.regresarLogin}" />
 								</h:panelGrid>
-							</p:outputPanel>						
+							</p:outputPanel>
+							<h1 style="font-size: 14px; margin-left: 1em" class="tituloAzul">Sus
+								datos han sido registrados correctamente, si utilizó el
+								procedimiento abreviado por favor imprima los siguientes
+								documentos, caso contrario ingrese al sistema.</h1>
+						</div>
+						<br />
+						<br />
+						<div align="right">
+							<h:panelGrid columns="4">
+								<p:commandLink target="_blank" value="Imprimir Requisitos"
+									styleClass="btnClasi" ajax="false"
+									action="#{registroPortalBean.imprimirReporte('requisitosProveedor')}" />
+								<p:commandLink target="_blank" value="Imprimir Formulario"
+									styleClass="btnClasi" ajax="false"
+									action="#{registroPortalBean.imprimirReporte('formularioDatos')}" />
+								<p:commandLink target="_blank"
+									value="Acuerdo de Responsabilidad" styleClass="btnClasi"
+									ajax="false"
+									action="#{registroPortalBean.imprimirReporte('acuerdoResponsabilidad')}" />
+								<p:commandLink alue="Ingresar al Sistema" styleClass="btnClasi"
+									action="#{registroPortalBean.regresarLogin}" />
+							</h:panelGrid>
 						</div>
 						<br />
 					</p:outputPanel>

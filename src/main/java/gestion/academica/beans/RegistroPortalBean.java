@@ -238,13 +238,15 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		}
 	}
 	
-	public void imprimirRequisitos() throws Exception{
+	public void imprimirReporte(String nombreReporte) throws Exception{
 		Map<String, Object> pars = new HashMap<>();
 		String filepathImage = getRequest().getSession().getServletContext().getRealPath("/resources/images/");
+		String fileSubreport = getRequest().getSession().getServletContext().getRealPath("/reportes/");		
 		pars.put("LOGO_DIR", filepathImage);
+		pars.put("SUBREPORT_DIR", fileSubreport);
 		List<Object> listaProveedor = new ArrayList<>();
 		listaProveedor.add(nuevoProveedor);
-		reporteBean.imprimirPDF(listaProveedor, "requisitosProveedor", pars);
+		reporteBean.imprimirPDF(listaProveedor, nombreReporte, pars);
 	}
 	
 	public void quitarProducto(ProductoProveedor producto){

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acuerdoResponsabilidad" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a5ae0851-f96e-42d2-9929-6d15ae49c7e7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="360"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="LOGO_DIR" class="java.lang.String"/>
 	<field name="primerApellido" class="java.lang.String"/>
 	<field name="segundoApellido" class="java.lang.String"/>
@@ -52,20 +52,17 @@
 		</band>
 	</title>
 	<detail>
-		<band height="802" splitType="Stretch">
+		<band height="600" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="17" width="555" height="133" uuid="4eb2a3da-87e9-499a-ba0e-4f9947d4a6c3"/>
+				<reportElement x="0" y="76" width="555" height="59" uuid="4eb2a3da-87e9-499a-ba0e-4f9947d4a6c3"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
 				<textElement textAlignment="Justified">
-					<font isBold="false"/>
+					<font size="9" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Los derechos de propiedad intelectual respecto de los servicios, contenidos, logotipos, signos distintivos y dominios del portal, así como los derechos de uso y explotación de los mismos, incluyendo su divulgación, publicación, reproducción, distribución y transformación, son propiedad exclusiva del Servicio Nacional de Contratación Pública (SERCOP).\n\n"+
-"Con la aprobación del SERCOP, de las condiciones generales y responsabilidades de uso del portal.\n\n" +
-
-"El Proveedor, " + $F{primerApellido} + " " + $F{segundoApellido} == null ? "" : $F{segundoApellido} + " " + $F{primerNombre} + " " + $F{segundoNombre} == null ? "" : $F{segundoNombre} + ", con RUC No. $F{ruc}, acepta las siguientes condiciones relacionadas a la utilización del Nombre de Usuario, Contraseña y Tecnología que tendrá acceso, para realizar transacciones comerciales con las Entidades del Estado a través del Portal."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{segundoApellido} == null && $F{segundoNombre} == null ? "El Proveedor, " + $F{primerApellido} + " " + $F{primerNombre} : "El Proveedor, " + $F{primerApellido} + " " + $F{segundoApellido} + " " + $F{primerNombre} + " " + $F{segundoNombre} + ", con RUC No. " + $F{ruc} + ", acepta las siguientes condiciones relacionadas a la utilización del Nombre de Usuario, Contraseña y Tecnología que tendrá acceso, para realizar transacciones comerciales con las Entidades del Estado a través del Portal."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="150" width="228" height="20" uuid="c827bebb-f0c5-46f5-9358-55f13cf72175"/>
+				<reportElement x="0" y="135" width="228" height="20" uuid="c827bebb-f0c5-46f5-9358-55f13cf72175"/>
 				<box leftPadding="5"/>
 				<textElement>
 					<font size="11" isBold="true"/>
@@ -73,8 +70,11 @@
 				<text><![CDATA[Responsabilidad del Proveedor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="170" width="555" height="318" uuid="ffb073ac-4bb5-4755-a9d2-9d59fe71d5ee"/>
+				<reportElement x="0" y="155" width="555" height="267" uuid="ffb073ac-4bb5-4755-a9d2-9d59fe71d5ee"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[El Proveedor asume la responsabilidad total del uso del portal y sus herramientas con el Nombre de Usuario y Contraseña, registrados por el Proveedor durante la inscripción en el Registro Único de Proveedores (RUP). Además se responsabiliza de la información registrada, la vigencia, veracidad y coherencia de la misma y de la participación en procesos de contratación de las Entidades que aparecen en el portal, junto con las obligaciones que generen la mencionada participación.
 De la responsabilidad que hoy se desprenden de la firma y rúbrica, según señala la “Ley de Comercio Electrónico, Firmas Electrónicas y Mensajes de Datos” y en base a la libertad tecnológica determinada en la Ley, las partes acuerdan que el Nombre de Usuario y Contraseña, surtirá los mismos efectos que una firma electrónica y se entenderá como una completa equivalencia funcional, técnica y jurídica. Por lo tanto, todas las transacciones que realizará el Proveedor en el portal se garantizarán y legalizarán con el Nombre de Usuario y Contraseña.
 El Proveedor será responsable de la veracidad, exactitud, consistencia y vigencia de la información de la propuesta u oferta anexada en los módulos del portal, en los cuales participe, y deberá entregar el respaldo físico de la información anexada, en el caso de requerirlo.
@@ -83,6 +83,106 @@ El Proveedor no adquiere ningún derecho de propiedad intelectual por el simple 
 El Proveedor autoriza al SERCOP a utilizar, publicar, reproducir, divulgar, comunicar públicamente y transmitir la información considerada como no confidencial.
 ]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="422" width="446" height="20" uuid="913d98b0-b8b1-4937-8294-f1bfb0452a83"/>
+				<box leftPadding="5"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABILIDAD DEL SERVICIO NACIONAL DE CONTRATACIÓN PÚBLICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="442" width="555" height="150" uuid="5b194906-ec63-421c-88bd-6d8082493752"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Justified">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[El SERCOP tendrá el derecho a negar, restringir o condicionar al Proveedor el acceso al portal, total o parcialmente, a su entera discreción, así como a modificar los servicios y contenidos del portal, en cualquier momento y sin necesidad de previo aviso.
+El SERCOP, no se hace responsable por errores, omisiones o caídas temporales del Sistema provocados por cualquier causa, propios o de terceros, ni por cualquier inexactitud en la información distribuida a través del mismo, sea por error u omisión, ni de la oportunidad y contenidos de los correos electrónicos que este Sistema genere. Se deja constancia que la información y contenido de los documentos publicados en COMPRASPUBLICAS son de responsabilidad del Proveedor que los publica y envía. Asimismo, no será responsable por la interrupción en la recepción de correos electrónicos, ofertas, publicaciones y tiempos de respuesta del Sistema debido a un mal servicio de los proveedores de Internet, únicamente es responsabilidad del SERCOP el correcto funcionamiento de sus servidores donde se encuentran alojadas sus aplicaciones.
+
+El SERCOP se obliga a mantener en confidencialidad la información que recibe del Proveedor con dicho carácter conforme a las disposiciones legales aplicables en la República del Ecuador.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="2" width="555" height="74" uuid="d92ef409-f321-4dfa-a9b8-614260ac872a"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Justified">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Los derechos de propiedad intelectual respecto de los servicios, contenidos, logotipos, signos distintivos y dominios del portal, así como los derechos de uso y explotación de los mismos, incluyendo su divulgación, publicación, reproducción, distribución y transformación, son propiedad exclusiva del Servicio Nacional de Contratación Pública (SERCOP).
+
+Con la aprobación del SERCOP, de las condiciones generales y responsabilidades de uso del portal.]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="595" width="100" height="1" uuid="50a83e1c-c9fe-4491-9492-3320955b97e7"/>
+			</break>
+		</band>
+		<band height="250">
+			<staticText>
+				<reportElement x="0" y="18" width="152" height="20" uuid="45e29383-ead3-4904-846b-b9c6c4e5d6ee"/>
+				<box leftPadding="5"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACEPTACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="38" width="555" height="71" uuid="de03b562-5daf-40ee-b953-6b21031b7612"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Los términos y condiciones están sujetos a las disposiciones contenidas en la Ley de Comercio Electrónico, Firmas Electrónicas y Mensajes de Datos.
+El Proveedor, acepta la validez de este acuerdo, así como la información que anexe en cualquiera de los módulos de COMPRASPUBLICAS.
+La suscripción de este acuerdo implicará la aceptación de todas y cada una de las disposiciones establecidas en este documento.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="109" width="38" height="20" uuid="d0d2bee1-7968-4246-9b1f-a6e784dff71d"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="38" y="109" width="100" height="20" uuid="27228a1e-35b8-4e86-afb1-50ba282d8440"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="8" y="161" width="250" height="1" uuid="d8bb036f-f3bd-4e9b-acfe-48e2a3a97255"/>
+			</line>
+			<staticText>
+				<reportElement x="8" y="162" width="220" height="20" uuid="054c8581-f517-47fd-bfd2-f00929d4a5c9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Firma Representante Legal Proveedor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="8" y="182" width="409" height="20" uuid="26a7ba6d-3a12-4cb0-a122-44e69427b671"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{segundoApellido} == null && $F{segundoNombre} == null ? "Nombre: " + $F{primerApellido} + " " + $F{primerNombre} : "Nombre: " + $F{primerApellido} + " " + $F{segundoApellido} + " " + $F{primerNombre} + " " + $F{segundoNombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="202" width="409" height="20" uuid="4779f5b6-f243-4400-91ab-e9131c41e078"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cédula/Pasaporte/Núm.Identificación: " + $F{ruc}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="233" width="555" height="2" forecolor="#999999" uuid="5e67aa35-8f86-4a86-9938-6ace73fdf864"/>
+			</line>
+			<line>
+				<reportElement x="0" y="240" width="555" height="2" forecolor="#999999" uuid="6b37b697-91c9-4128-941b-17122226d844"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>
