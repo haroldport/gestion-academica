@@ -1,5 +1,6 @@
 package gestion.academica.beans;
 
+import gestion.academica.dto.ProveedorDTO;
 import gestion.academica.enumerado.CatalogoEnum;
 import gestion.academica.enumerado.EstadoEnum;
 import gestion.academica.modelo.CatalogoDetalle;
@@ -66,6 +67,7 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
     private boolean mostrarClasificador;
     private List<ProductoProveedor> listaProductos;
     private ReporteBean reporteBean;
+    private ProveedorDTO proveedor;
 	
 	@PostConstruct
 	public void iniciar() {
@@ -74,6 +76,10 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 			opcion = 0;
 			obtenerCatalogos();
 			setearValoresProveedor();
+			Proveedor proveedorTmp = proveedorServicio.obtenerPorId(11);
+			List<Telefono> telefonosTmp = proveedorServicio.obtenerTelefonosPorIdProveedor(proveedorTmp.getIdProveedor());
+			List<ProductoProveedor> productosTmp = proveedorServicio.obtenerProductosPorIdProveedor(proveedorTmp.getIdProveedor());
+			setProveedor(new ProveedorDTO(proveedorTmp, null, productosTmp));
 		} catch (Exception ex) {
 			LOGGER.log(Level.SEVERE, null, ex);
 		}
@@ -180,7 +186,20 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
         		opcion = 0;
         	}
         	if(event.getNewStep().equals("paso8")){
+        		nuevoProveedor.setIdEstadoCivil(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdEstadoCivil().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdNivelEducacion(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdNivelEducacion().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdAreaEspecialidad(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdAreaEspecialidad().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdProvincia(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdProvincia().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdCanton(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdCanton().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdParroquia(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdParroquia().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdEstadoCivilContacto(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdEstadoCivilContacto().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdDocumentoContacto(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdDocumentoContacto().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdCargoContacto(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdCargoContacto().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdNivelEducacionContacto(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdNivelEducacionContacto().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdAreaOcupacionalContacto(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdAreaOcupacionalContacto().getIdCatalogoDetalle()));
+        		nuevoProveedor.setIdNumeroTrabajadores(catalogoDetalleServicio.obtenerPorId(nuevoProveedor.getIdNumeroTrabajadores().getIdCatalogoDetalle()));
         		proveedorServicio.crearProveedorConTelefonoYProductos(nuevoProveedor, listadoTelefonos, listaProductos);
+        		proveedor = new ProveedorDTO(nuevoProveedor, listadoTelefonos, listaProductos);
         		skip = true;
         		return "paso8";
         	}
@@ -244,8 +263,8 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		String fileSubreport = getRequest().getSession().getServletContext().getRealPath("/reportes/");		
 		pars.put("LOGO_DIR", filepathImage);
 		pars.put("SUBREPORT_DIR", fileSubreport);
-		List<Object> listaProveedor = new ArrayList<>();
-		listaProveedor.add(nuevoProveedor);
+		List<Object> listaProveedor = new ArrayList<>();		
+		listaProveedor.add(proveedor);
 		reporteBean.imprimirPDF(listaProveedor, nombreReporte, pars);
 	}
 	
@@ -468,6 +487,14 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 
 	public void setReporteBean(ReporteBean reporteBean) {
 		this.reporteBean = reporteBean;
+	}
+
+	public ProveedorDTO getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(ProveedorDTO proveedor) {
+		this.proveedor = proveedor;
 	}
 	
 }

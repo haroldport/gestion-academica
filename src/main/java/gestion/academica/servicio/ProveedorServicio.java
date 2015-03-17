@@ -72,5 +72,32 @@ public class ProveedorServicio {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+     * Obtener por idProveedor
+     * @param idProveedor
+     * @return
+     */
+	public List<Telefono> obtenerTelefonosPorIdProveedor(Integer idProveedor) {
+    	return telefonoDao.obtenerPorIdProveedor(idProveedor);
+    }
+	
+	/**
+     * Obtener por idProveedor
+     * @param idProveedor
+     * @return
+     */
+	public List<ProductoProveedor> obtenerProductosPorIdProveedor(Integer idProveedor) {
+    	return productoProveedorDao.obtenerPorIdProveedor(idProveedor);
+    }
+	
+	/**
+     * Obtener por id
+     * @param idProveedor
+     * @return
+     */
+	public Proveedor obtenerPorId(Integer idProveedor) {
+		return proveedorDao.obtenerPorId(idProveedor);
+	}
 
 }

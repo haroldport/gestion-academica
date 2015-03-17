@@ -46,7 +46,7 @@ public class ReporteBean extends Utilitario implements Serializable {
                     response.getOutputStream());
 
             response.setHeader("Content-disposition",
-                    "attachment; filename=temario.pdf");
+                    "attachment; filename=reporte.pdf");
             response.setContentLength(bites.length);
             facesContext.getCurrentInstance().responseComplete();
         } catch (Exception e) {

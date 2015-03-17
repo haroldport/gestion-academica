@@ -2,13 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acuerdoResponsabilidad" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a5ae0851-f96e-42d2-9929-6d15ae49c7e7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="168"/>
 	<parameter name="LOGO_DIR" class="java.lang.String"/>
-	<field name="primerApellido" class="java.lang.String"/>
-	<field name="segundoApellido" class="java.lang.String"/>
-	<field name="primerNombre" class="java.lang.String"/>
-	<field name="segundoNombre" class="java.lang.String"/>
-	<field name="ruc" class="java.lang.String"/>
+	<field name="proveedor" class="java.lang.Object"/>
 	<title>
 		<band height="150" splitType="Stretch">
 			<image>
@@ -59,7 +55,7 @@
 				<textElement textAlignment="Justified">
 					<font size="9" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{segundoApellido} == null && $F{segundoNombre} == null ? "El Proveedor, " + $F{primerApellido} + " " + $F{primerNombre} : "El Proveedor, " + $F{primerApellido} + " " + $F{segundoApellido} + " " + $F{primerNombre} + " " + $F{segundoNombre} + ", con RUC No. " + $F{ruc} + ", acepta las siguientes condiciones relacionadas a la utilización del Nombre de Usuario, Contraseña y Tecnología que tendrá acceso, para realizar transacciones comerciales con las Entidades del Estado a través del Portal."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{proveedor}.segundoApellido == null && $F{proveedor}.segundoNombre == null ? "El Proveedor, " + $F{proveedor}.primerApellido + " " + $F{proveedor}.primerNombre : "El Proveedor, " + $F{proveedor}.primerApellido + " " + $F{proveedor}.segundoApellido + " " + $F{proveedor}.primerNombre + " " + $F{proveedor}.segundoNombre + ", con RUC No. " + $F{proveedor}.ruc + ", acepta las siguientes condiciones relacionadas a la utilización del Nombre de Usuario, Contraseña y Tecnología que tendrá acceso, para realizar transacciones comerciales con las Entidades del Estado a través del Portal."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="135" width="228" height="20" uuid="c827bebb-f0c5-46f5-9358-55f13cf72175"/>
@@ -168,14 +164,14 @@ La suscripción de este acuerdo implicará la aceptación de todas y cada una de
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{segundoApellido} == null && $F{segundoNombre} == null ? "Nombre: " + $F{primerApellido} + " " + $F{primerNombre} : "Nombre: " + $F{primerApellido} + " " + $F{segundoApellido} + " " + $F{primerNombre} + " " + $F{segundoNombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{proveedor}.segundoApellido == null && $F{proveedor}.segundoNombre == null ? "Nombre: " + $F{proveedor}.primerApellido + " " + $F{proveedor}.primerNombre : "Nombre: " + $F{proveedor}.primerApellido + " " + $F{proveedor}.segundoApellido + " " + $F{proveedor}.primerNombre + " " + $F{proveedor}.segundoNombre]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="8" y="202" width="409" height="20" uuid="4779f5b6-f243-4400-91ab-e9131c41e078"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Cédula/Pasaporte/Núm.Identificación: " + $F{ruc}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Cédula/Pasaporte/Núm.Identificación: " + $F{proveedor}.ruc]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="233" width="555" height="2" forecolor="#999999" uuid="5e67aa35-8f86-4a86-9938-6ace73fdf864"/>

@@ -2,12 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="requisitosProveedor" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ca23d13-b0e8-4a5f-969d-ea325375b574">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="11"/>
 	<parameter name="LOGO_DIR" class="java.lang.String"/>
-	<field name="usuario" class="java.lang.String"/>
-	<field name="correo" class="java.lang.String"/>
-	<field name="idTipoPersona" class="java.lang.Object"/>
-	<field name="idOrigen" class="java.lang.Object"/>
+	<field name="proveedor" class="java.lang.Object"/>
 	<title>
 		<band height="75" splitType="Stretch">
 			<image>
@@ -68,14 +65,14 @@
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{proveedor}.usuario]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="127" y="59" width="303" height="20" uuid="8623c223-d58f-401e-a1d3-11639de3d6d0"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{proveedor}.correo]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="127" y="79" width="20" height="20" uuid="4e2e8ce0-0920-458d-8317-8851a33d9da4"/>
@@ -140,25 +137,25 @@
 			</staticText>
 			<image>
 				<reportElement x="129" y="81" width="17" height="18" uuid="e86b962b-a5d2-4544-9b98-11522e78fa3e">
-					<printWhenExpression><![CDATA[$F{idTipoPersona}.idCatalogoDetalle == 19]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{proveedor}.idTipoPersona.idCatalogoDetalle == 19]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="248" y="81" width="17" height="18" uuid="2c4902f6-c101-4223-b63b-29752acebd5f">
-					<printWhenExpression><![CDATA[$F{idTipoPersona}.idCatalogoDetalle == 20]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{proveedor}.idTipoPersona.idCatalogoDetalle == 20]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="129" y="101" width="17" height="18" uuid="84ed59d7-44eb-4580-9ff8-32e6c5844f08">
-					<printWhenExpression><![CDATA[$F{idOrigen}.idCatalogoDetalle == 21]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{proveedor}.idOrigen.idCatalogoDetalle == 21]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="249" y="101" width="17" height="18" uuid="e50c9e58-bb22-4723-a078-f76a25841112">
-					<printWhenExpression><![CDATA[$F{idOrigen}.idCatalogoDetalle == 22]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{proveedor}.idOrigen.idCatalogoDetalle == 22]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{LOGO_DIR} + "//visto.png"]]></imageExpression>
 			</image>

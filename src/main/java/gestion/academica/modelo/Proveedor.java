@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -167,9 +166,9 @@ public class Proveedor implements Serializable {
     private CatalogoDetalle idOrigen;
     @Transient
     private String confirmarClave;
-    @OneToMany(mappedBy = "idProveedor", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "idProveedor")
     private List<Telefono> telefonoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedor", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedor")
     private List<ProductoProveedor> productoProveedorList;
 
     public Proveedor() {

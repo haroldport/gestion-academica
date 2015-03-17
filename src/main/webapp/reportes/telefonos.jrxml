@@ -3,10 +3,12 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<field name="idTipoTelefono" class="java.lang.Object"/>
 	<field name="numeroTelefono" class="java.lang.String"/>
 	<field name="observaciones" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
