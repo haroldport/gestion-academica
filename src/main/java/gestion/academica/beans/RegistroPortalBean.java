@@ -76,10 +76,6 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 			opcion = 0;
 			obtenerCatalogos();
 			setearValoresProveedor();
-			Proveedor proveedorTmp = proveedorServicio.obtenerPorId(11);
-			List<Telefono> telefonosTmp = proveedorServicio.obtenerTelefonosPorIdProveedor(proveedorTmp.getIdProveedor());
-			List<ProductoProveedor> productosTmp = proveedorServicio.obtenerProductosPorIdProveedor(proveedorTmp.getIdProveedor());
-			setProveedor(new ProveedorDTO(proveedorTmp, null, productosTmp));
 		} catch (Exception ex) {
 			LOGGER.log(Level.SEVERE, null, ex);
 		}
