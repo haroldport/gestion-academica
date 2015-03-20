@@ -158,14 +158,14 @@
 								<p>Ingrese los datos para el acceso al sistema</p>
 								<p>&nbsp;</p>
 								<label>RUC: <span>Número Identificación</span></label><br />
-								<p:inputText style="margin-bottom: 12px" size="45"
+								<p:inputText value="#{loguinIncopBean.ruc}" style="margin-bottom: 12px" size="45"
 									maxlength="100" styleClass="box" />
 								<br /> <label>Usuario: <span>Nombre de Usuario</span></label><br />
-								<p:inputText style="margin-bottom: 12px" size="45"
+								<p:inputText value="#{loguinIncopBean.username}" style="margin-bottom: 12px" size="45"
 									maxlength="100" styleClass="box" />
 								<br /> <label>Contraseña: <span>Su contraseña de
 										compras públicas.</span></label><br />
-								<p:inputText style="margin-bottom: 12px" size="45"
+								<p:password value="#{loguinIncopBean.clave}" style="margin-bottom: 12px" size="45"
 									maxlength="100" styleClass="box" />
 								<label for="chkRecordar"><span class="chkRecordar">Recordarme
 										en este computador</span></label><br />
@@ -173,7 +173,7 @@
 								<a href="#" class="chkOlvido"><span> ¿Olvidó su
 										contraseña?</span></a>
 								<div align="center">
-									<p:commandButton style="color: white !important" value="Entrar"
+									<p:commandButton action="#{loguinIncopBean.ingresoPortal}" style="color: white !important" value="Entrar"
 										styleClass="btnEntrar" />
 								</div>
 								<input name="txtVerifica" type="hidden" id="txtVerifica"
@@ -193,7 +193,7 @@
 									<h:panelGrid columns="2">
 										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
 											name="ic-mhp_r1.png" />
-										<h:commandLink id="page" style="text-decoration: none" action="#{registroPortalBean.verRegistroProveedores}">
+										<h:commandLink id="page" style="text-decoration: none" action="#{loguinIncopBean.verRegistroProveedores}">
 											<h:outputText styleClass="itemColor" style="font-size: 10px"
 												value="Como proveedor del estado" />
 										</h:commandLink>

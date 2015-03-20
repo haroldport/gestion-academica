@@ -42,5 +42,28 @@ public class ProveedorDao extends Generico<Proveedor> {
             return null;
         }
     }
+	
+	/**
+	 * Datos para loguin
+	 * @param ruc
+	 * @param username
+	 * @param clave
+	 * @return
+	 */
+	public Proveedor obtenerPorRucUserYClave(String ruc, String username, String clave) {
+        try {
+            String sql = "SELECT p FROM Proveedor p WHERE p.ruc = :ruc "
+            		+ "AND p.usuario = :username AND p.clave = :clave";
+            Query query = getEntityManager().createQuery(sql);
+            query.setParameter("ruc", ruc);
+            query.setParameter("username", username);
+            query.setParameter("clave", clave);
+            Proveedor proveedor = query.getResultList() != null && !query.getResultList().isEmpty() ? (Proveedor) query.getResultList().get(0) : null;
+            return proveedor;
+        } catch (Exception e) {
+            Logger.getLogger(ProveedorDao.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
 
 }

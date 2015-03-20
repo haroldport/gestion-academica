@@ -343,3 +343,48 @@ div#footer {
     border:1px solid #c2e1ef;
     color:#336699 !important;
 }
+
+.cerrar{
+	text-decoration: underline;
+    color: #006;
+}
+
+.cerrar:hover{
+	text-decoration: none;
+    color: #C60000;
+}
+
+.menuProceso{
+	color: blue;
+	position: static;
+	z-index: 5;
+	margin: 10px 0 10px 0;
+	padding: 0;
+	clear: both;
+	background: #1d1060;
+	border-bottom: 3px solid #ffc525;
+	text-align: center;
+}
+
+.ui-menu .ui-menuitem-link{
+	color: white;
+	border: none;	
+}
+
+ul.ui-menu-child
+{
+  	border-bottom: 1px solid #2683C6;
+  	background-color: #AEC5E5;
+  	text-align: left;
+}
+
+ul li.ui-menuitem-active>a{	
+    background-image: none !important;
+    background-color:transparent !important;    
+}
+
+li ul li.ui-menuitem-active>a{
+	color: blue !important;
+    background-image: none !important;
+    background-color: #AEC5E5 !important;    
+}

@@ -99,5 +99,16 @@ public class ProveedorServicio {
 	public Proveedor obtenerPorId(Integer idProveedor) {
 		return proveedorDao.obtenerPorId(idProveedor);
 	}
+	
+	/**
+	 * Datos para loguin
+	 * @param ruc
+	 * @param username
+	 * @param clave
+	 * @return
+	 */
+	public Proveedor obtenerPorRucUserYClave(String ruc, String username, String clave) {
+		return proveedorDao.obtenerPorRucUserYClave(ruc, username, clave);
+	}
 
 }

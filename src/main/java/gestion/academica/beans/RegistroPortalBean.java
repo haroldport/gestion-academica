@@ -67,7 +67,7 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
     private boolean mostrarClasificador;
     private List<ProductoProveedor> listaProductos;
     private ReporteBean reporteBean;
-    private ProveedorDTO proveedor;
+    private ProveedorDTO proveedor;   
 	
 	@PostConstruct
 	public void iniciar() {
@@ -166,10 +166,6 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
 		}
 		provincias = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.PROVINCIA.getNemonico());
 		tiposTelefono = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_TELEFONO.getNemonico());
-	}
-	
-	public String verRegistroProveedores(){
-		return "/faces/paginas/procesos/registroProveedores.xhtml?faces-redirect=true";
 	}
 	
 	public String onFlowProcess(FlowEvent event) {		

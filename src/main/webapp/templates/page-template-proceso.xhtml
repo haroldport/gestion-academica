@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html" locale="es">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title">Sistema del Registro de Proveedores o Empresas</ui:insert></title>
+		<h:outputStylesheet library="css" name="normalize.css" />
+		<h:outputStylesheet library="css" name="proceso.css" />
+		<h:outputScript library="js" name="validador.js" />
+		<link REL="shortcut icon"
+			href="#{request.contextPath}/resources/images/favicon.ico" />
+	</h:head>
+
+	<h:body>
+		<p:idleMonitor onactive="sessionTimeOutDialog.show();"
+			timeout="#{session.maxInactiveInterval * 1000}" />
+		<p:dialog header="#{msgs['error.sessionTimeOut.header']}"
+			widgetVar="sessionTimeOutDialog" modal="true" closable="false"
+			width="400" visible="false">
+			<h:outputText value="Sesión caducada" style="font-size: 0.8em" />
+			<input id="confirmBackToLogin" type="button" style="font-size: 0.8em"
+				value="Su sesión ha caducado, por favor vuelve a ingresar al sistema"
+				onclick="window.location='#{facesContext.externalContext.requestContextPath}/faces/index.xhtml';" />
+		</p:dialog>
+
+		<div class="principal">
+			<center>
+				<div class="footerT">
+					<h:form>
+						<div>
+							<p>Powered by JRivera Consulting</p>
+							<p>Este sistema de Emulación de Procesos es de Propiedad
+								Intelectual de JRivera Consulting</p>
+						</div>
+						<p:commandLink id="page" action="#{indexBean.inicio}">
+							<p:graphicImage styleClass="Header-imageT" library="images"
+								name="logo.jpg" />
+						</p:commandLink>
+					</h:form>
+				</div>
+				<div id="header">
+					<div class="main">
+						<h:panelGrid columns="3" style="margin-top: 20px">
+							<h:graphicImage library="images" name="logo-cp.png" />
+							<h1>Sistema Oficial de Contratación Pública</h1>
+							<h:graphicImage library="images" name="logo-ec.png" />
+						</h:panelGrid>
+					</div>
+					<br />
+					<div align="left">
+						<h:form>
+							<h:panelGrid columns="3">
+								<p:clock pattern="dd MMM yyyy HH:mm:ss" />
+								<p:spacer height="5" width="400" />
+								<p:outputPanel>
+									<h:panelGrid columns="9">
+										<h:outputLabel style="font-weight: bold; margin-right: 5px"
+											value="RUC:" />
+										<h:outputLabel
+											style="border-right: 1px solid black; padding-right: 10px; margin-right: 10px"
+											value="#{loguinIncopBean.proveedorLogueado.ruc}" />
+										<h:outputLabel style="font-weight: bold; margin-right: 5px"
+											value="Empresa:" />
+										<h:outputLabel
+											style="border-right: 1px solid black; padding-right: 10px; margin-right: 10px"
+											value="#{loguinIncopBean.proveedorLogueado.primerApellido} 
+									#{loguinIncopBean.proveedorLogueado.segundoApellido} #{loguinIncopBean.proveedorLogueado.primerNombre} #{loguinIncopBean.proveedorLogueado.segundoNombre}" />
+										<h:outputLabel style="font-weight: bold; margin-right: 5px"
+											value="Usuario" />
+										<h:outputLabel
+											style="border-right: 1px solid black; padding-right: 10px; margin-right: 10px"
+											value="#{loguinIncopBean.proveedorLogueado.usuario}" />
+										<h:outputLabel style="font-weight: bold; margin-right: 5px"
+											value="VAE Empresarial:" />
+										<h:outputLabel
+											style="border-right: 1px solid black; padding-right: 10px; margin-right: 10px"
+											value="0%" />
+										<h:commandLink styleClass="cerrar"
+											action="#{loguinIncopBean.regresarLogin}"
+											value="[ Cerrar Sesión ]" />
+									</h:panelGrid>
+								</p:outputPanel>
+							</h:panelGrid>
+						</h:form>
+					</div>
+					<br />
+					<h:form>
+						<p:menubar styleClass="menuProceso">
+							<p:submenu label="Inicio">
+								<p:menuitem value="Principal" url="#" />
+							</p:submenu>
+							<p:submenu label="Datos Generales">
+								<p:menuitem value="Resumen General" url="#" />
+								<p:menuitem value="Datos de la empresa" url="#" />
+								<p:menuitem value="Info Usuario" url="#" />
+								<p:menuitem value="Mi CPC" url="#" />
+								<p:menuitem value="Gremios afiliados" url="#" />
+								<p:menuitem value="Imprimir RUP" url="#" />
+							</p:submenu>
+							<p:submenu label="Consultar">
+								<p:menuitem value="Invitaciones recibidas" url="#" />
+								<p:menuitem value="Proceso de contratación" url="#" />
+								<p:menuitem value="Mis procesos" url="#" />
+								<p:menuitem value="CPC" url="#" />
+								<p:menuitem value="PAC" url="#" />
+								<p:menuitem value="Régimen Especial" url="#" />
+								<p:menuitem value="Procedimientos Especiales" url="#" />
+							</p:submenu>
+							<p:submenu label="Administración">
+								<p:submenu label="Usuarios">
+									<p:menuitem value="Crear usuario" url="#" />
+									<p:menuitem value="Reseteo Contraseña" url="#" />
+								</p:submenu>
+								<p:menuitem value="Contactos" url="#" />
+							</p:submenu>
+							<p:submenu label="Mi Catálogo">
+								<p:menuitem value="Órdenes de Compra" url="#" />
+								<p:menuitem value="Convenios Adjudicados" url="#" />
+								<p:menuitem value="Catálogo Electrónico" url="#" />
+							</p:submenu>							
+						</p:menubar>
+					</h:form>
+				</div>
+				<br />
+
+				<div id="contenido">
+					<ui:insert name="contenido" />
+				</div>
+
+				<div id="footer">
+					<div class="main">Copyright © 2008 - 2015 Servicio Nacional
+						de Contratación Pública.</div>
+				</div>
+			</center>
+
+		</div>
+
+
+	</h:body>
+</f:view>
+</html>
