@@ -25,7 +25,7 @@
 						<p>Este sistema de Emulación de Procesos es de Propiedad
 							Intelectual de JRivera Consulting</p>
 					</div>
-					<p:commandLink id="page" action="#{indexBean.inicio}">
+					<p:commandLink immediate="true" id="page" action="#{indexBean.inicio}">
 						<p:graphicImage styleClass="Header-imageT" library="images"
 							name="logo.jpg" />
 					</p:commandLink>
@@ -158,22 +158,25 @@
 								<p>Ingrese los datos para el acceso al sistema</p>
 								<p>&nbsp;</p>
 								<label>RUC: <span>Número Identificación</span></label><br />
-								<p:inputText value="#{loguinIncopBean.ruc}" style="margin-bottom: 12px" size="45"
-									maxlength="100" styleClass="box" />
+								<p:inputText id="ruc" value="#{loguinIncopBean.ruc}" style="margin-bottom: 12px" size="45"
+									maxlength="100" styleClass="box" required="true" requiredMessage="Este campo no puede estar vacío" />
+								<p:message for="ruc" />
 								<br /> <label>Usuario: <span>Nombre de Usuario</span></label><br />
-								<p:inputText value="#{loguinIncopBean.username}" style="margin-bottom: 12px" size="45"
-									maxlength="100" styleClass="box" />
+								<p:inputText id="usuario" value="#{loguinIncopBean.username}" style="margin-bottom: 12px" size="45"
+									maxlength="100" styleClass="box" required="true" requiredMessage="Este campo no puede estar vacío" />
+								<p:message for="usuario" />
 								<br /> <label>Contraseña: <span>Su contraseña de
 										compras públicas.</span></label><br />
-								<p:password value="#{loguinIncopBean.clave}" style="margin-bottom: 12px" size="45"
-									maxlength="100" styleClass="box" />
+								<p:password id="clave" value="#{loguinIncopBean.clave}" style="margin-bottom: 12px" size="45"
+									maxlength="100" styleClass="box" required="true" requiredMessage="Este campo no puede estar vacío" />
+								<p:message for="clave" />
 								<label for="chkRecordar"><span class="chkRecordar">Recordarme
 										en este computador</span></label><br />
 								<p>&nbsp;</p>
 								<a href="#" class="chkOlvido"><span> ¿Olvidó su
 										contraseña?</span></a>
 								<div align="center">
-									<p:commandButton action="#{loguinIncopBean.ingresoPortal}" style="color: white !important" value="Entrar"
+									<p:commandButton update="@form" action="#{loguinIncopBean.ingresoPortal}" style="color: white !important" value="Entrar"
 										styleClass="btnEntrar" />
 								</div>
 								<input name="txtVerifica" type="hidden" id="txtVerifica"
@@ -193,7 +196,7 @@
 									<h:panelGrid columns="2">
 										<h:graphicImage style="margin: 0 1em 0 2em" library="images"
 											name="ic-mhp_r1.png" />
-										<h:commandLink id="page" style="text-decoration: none" action="#{loguinIncopBean.verRegistroProveedores}">
+										<h:commandLink immediate="true" id="page" style="text-decoration: none" action="#{loguinIncopBean.verRegistroProveedores}">
 											<h:outputText styleClass="itemColor" style="font-size: 10px"
 												value="Como proveedor del estado" />
 										</h:commandLink>

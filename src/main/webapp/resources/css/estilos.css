@@ -378,3 +378,136 @@
    font-size: 16px !important;
    margin-bottom: 0.5em;
 }
+
+
+/*Normativa*/
+.banner{
+	background: #eff2e7;
+  	cursor: pointer;
+  	padding: 34px 0;
+}
+
+.banner-content{
+  display: inline-block;
+  min-height: 75px;
+  padding-left: 150px;
+  position: relative;
+  vertical-align: top;
+}
+
+.banner-label{
+	background: #ff4842;
+	color: #fff;
+	display: inline-block;
+	letter-spacing: 2px;
+	font-size: 14px;
+	padding: 6px 10px;
+	text-transform: uppercase;
+}
+
+.banner-badge{
+	position: absolute;
+  	left: 70px;
+  	top: 0;
+  	height: 65px;
+  	width: 65px;
+}
+
+.banner-title{
+	color: #16210b;
+  	font-size: 24px;
+  	margin-top: 10px;
+}
+
+.resoluciones{
+	padding: 25px 0;
+  	text-align: center;
+}
+
+.resoluciones-title{
+	display: block;
+  	font-size: 23px;
+  	text-align: center;
+}
+
+.resoluciones-titleBar{
+	border-bottom: 1px solid #8d8d8d;
+  	padding-bottom: 7px;
+}
+
+.normativa-list{
+	display: block;
+    padding: 0.5em;
+    text-align: left;
+}
+
+.normativa-container{
+	display: block;
+  	position: relative;
+  	left: -15px;
+  	font-size: 0;
+}
+
+.normativa-item{
+	border-bottom: 1px solid #8d8d8d;
+  	-webkit-box-sizing: border-box;
+  	-moz-box-sizing: border-box;
+  	box-sizing: border-box;
+  	display: inline-block;
+  	margin-left: 30px;
+  	margin-bottom: 10px;
+  	max-width: 30%;
+ 	padding: 55px 0;
+  	position: relative;
+  	vertical-align: top;
+  	width: 100%;
+}
+
+.u-clearfix {
+  zoom: 1;
+}
+
+.normativa-link{
+	position: absolute;
+  	left: 0;
+  	top: 0;
+  	right: 0;
+ 	bottom: 0;
+ 	text-decoration: none;
+}
+
+.normativa-itemData{
+	float: left;
+  	font-size: 13px;
+  	font-weight: bold;
+  	text-align: center;
+  	text-transform: uppercase;
+  	width: 100px;
+}
+
+.normativa-itemInfo{
+	text-align: left;
+  	margin-left: 105px;
+}
+
+.normativa-itemTitle{
+	color: #16210b;
+  	font-size: 17px;
+  	font-weight: bold;
+  	margin-bottom: 15px;
+  	text-decoration: none;
+}
+
+.normativa-itemLink{
+	display: block;
+  	color: #ff4842 !important;
+  	font-size: 13px;
+  	font-weight: bold;
+  	text-decoration: underline !important;
+}
+
+.normativa-itemBadge{
+	height: 80px;
+  	width: 80px;
+}
+
