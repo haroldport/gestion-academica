@@ -78,10 +78,6 @@ public class Estado implements Serializable {
 	@OneToMany(mappedBy="estado")
 	private List<Preinscripcion> preinscripcions;
 
-	//bi-directional many-to-one association to Proceso
-	@OneToMany(mappedBy="estado")
-	private List<Proceso> procesos;
-
 	//bi-directional many-to-one association to Rol
 	@OneToMany(mappedBy="estado")
 	private List<Rol> rols;
@@ -409,28 +405,6 @@ public class Estado implements Serializable {
 		preinscripcion.setEstado(null);
 
 		return preinscripcion;
-	}
-
-	public List<Proceso> getProcesos() {
-		return this.procesos;
-	}
-
-	public void setProcesos(List<Proceso> procesos) {
-		this.procesos = procesos;
-	}
-
-	public Proceso addProceso(Proceso proceso) {
-		getProcesos().add(proceso);
-		proceso.setEstado(this);
-
-		return proceso;
-	}
-
-	public Proceso removeProceso(Proceso proceso) {
-		getProcesos().remove(proceso);
-		proceso.setEstado(null);
-
-		return proceso;
 	}
 
 	public List<Rol> getRols() {

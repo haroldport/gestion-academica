@@ -17,7 +17,7 @@ public enum CatalogoEnum {
     /**
      * Tipo de proceso.
      */
-    TIPO_PROCESO("TIPPR"),
+    TIPO_PROCESO("TIPRO"),
     /**
      * Tipo de persona 2.
      */
@@ -40,7 +40,13 @@ public enum CatalogoEnum {
     CARGO("CARGO"),
     PRODUCTOS("PRODU"),
     VENTAS_BRUTAS("VENBR"),
-    NUMERO_TRABAJADORES("NUMTR");
+    NUMERO_TRABAJADORES("NUMTR"),
+    TIPO_COMPRA("TIPCO"),
+    PARTIDA_PRESUPUESTARIA("PARPR"),
+    SALDO("SALDO"),
+    ENCARGADO_PROCESO("ENCPR");
+    
+    
     
     private String nemonico;
 

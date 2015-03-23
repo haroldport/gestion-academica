@@ -3,6 +3,7 @@ package gestion.academica.modelo;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -63,10 +64,6 @@ public class CatalogoDetalle implements Serializable {
 	@OneToMany(mappedBy = "catalogoDetalle")
 	private List<Instructor> instructors;
 
-	// bi-directional many-to-one association to Proceso
-	@OneToMany(mappedBy = "catalogoDetalle")
-	private List<Proceso> procesos;
-
 	// bi-directional many-to-one association to SitioCurso
 	@OneToMany(mappedBy = "ciudad")
 	private List<SitioCurso> sitioCursoCiudad;
@@ -77,6 +74,9 @@ public class CatalogoDetalle implements Serializable {
 	
 	@OneToMany(mappedBy = "idCatalogoDetallePadre", fetch = FetchType.EAGER)
     private List<CatalogoDetalle> catalogoDetalleList;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
+    private List<ProductoProceso> productoProcesoList;
 
 	public CatalogoDetalle() {
 	}
@@ -205,15 +205,6 @@ public class CatalogoDetalle implements Serializable {
     public void setCatalogoDetalleList(List<CatalogoDetalle> catalogoDetalleList) {
         this.catalogoDetalleList = catalogoDetalleList;
     }
-
-	public List<Proceso> getProcesos() {
-		return this.procesos;
-	}
-
-	public void setProcesos(List<Proceso> procesos) {
-		this.procesos = procesos;
-	}
-	
 	public CatalogoDetalle getIdCatalogoDetallePadre() {
         return idCatalogoDetallePadre;
     }
@@ -221,19 +212,4 @@ public class CatalogoDetalle implements Serializable {
     public void setIdCatalogoDetallePadre(CatalogoDetalle idCatalogoDetallePadre) {
         this.idCatalogoDetallePadre = idCatalogoDetallePadre;
     }
-
-	public Proceso addProceso(Proceso proceso) {
-		getProcesos().add(proceso);
-		proceso.setCatalogoDetalle(this);
-
-		return proceso;
-	}
-
-	public Proceso removeProceso(Proceso proceso) {
-		getProcesos().remove(proceso);
-		proceso.setCatalogoDetalle(null);
-
-		return proceso;
-	}
-
 }
