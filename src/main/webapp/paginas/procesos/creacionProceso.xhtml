@@ -6,7 +6,7 @@
 	xmlns:pou="http://primefaces.org/ui">
 <ui:composition template="/templates/page-template-proceso.xhtml">
 	<ui:define name="contenido">
-		<h:form id="formProceso" target="_blank">
+		<h:form id="formProceso" enctype="multipart/form-data">
 			<p:wizard flowListener="#{procesoBean.onFlowProcess}"
 				widgetVar="registroP" backLabel="Regresar" nextLabel="Continuar">
 				<p:tab id="paso1" title="Información Básica">
@@ -84,7 +84,9 @@
 									<p:inputText id="codigoProceso"
 										value="#{procesoBean.nuevoProceso.codigoProceso}" size="30"
 										required="true"
-										requiredMessage="Este campo no puede estar vacío" />
+										requiredMessage="Este campo no puede estar vacío">
+										<f:validator validatorId="codigoValidator" />
+									</p:inputText>
 									<p:message for="codigoProceso" />
 								</p:outputPanel>
 								<p:outputPanel
@@ -106,7 +108,7 @@
 								</p:outputPanel>
 								<p:outputPanel
 									style="background: #E6E6E6; padding: 0.5em; height: 7em">
-									<p:inputTextarea id="objetoProceso"
+									<p:inputTextarea id="objetoProceso" maxlength="150"
 										value="#{procesoBean.nuevoProceso.objetoProceso}"
 										required="true" cols="30" rows="3"
 										requiredMessage="Este campo no puede estar vacío" />
@@ -183,6 +185,7 @@
 										<f:selectItems value="#{procesoBean.tiposCompra}" var="tipCom"
 											itemLabel="#{tipCom.nombre}"
 											itemValue="#{tipCom.idCatalogoDetalle}" />
+										<p:ajax event="change" update="tipoCompra" process="@this tipoCompra" />
 									</p:selectOneMenu>
 									<p:message for="tipoCompra" />
 								</p:outputPanel>
@@ -235,6 +238,7 @@
 										<f:selectItems value="#{procesoBean.tiposProceso}"
 											var="tipCon" itemLabel="#{tipCon.nombre}"
 											itemValue="#{tipCon.idCatalogoDetalle}" />
+										<p:ajax event="change" update="tipoContra" process="@this tipoContra" />
 									</p:selectOneMenu>
 									<p:message for="tipoContra" />
 								</p:outputPanel>
@@ -264,9 +268,13 @@
 									style="background: #E6E6E6; padding: 0.5em; height: 5em">
 									<p:inputText id="presu"
 										value="#{procesoBean.nuevoProceso.presupuestoReferencial}"
-										size="30" required="true"
+										size="30" required="true" validatorMessage="Debe seleccionar el tipo de contratación correcto"
 										onkeypress="return aceptarNumerosDecimales(event);"
-										requiredMessage="Este campo no puede estar vacío" />
+										requiredMessage="Este campo no puede estar vacío">
+										<f:validateDoubleRange minimum="#{procesoBean.nuevoProceso.idTipoProceso.idCatalogoDetalle eq 237 ? '6860.14' : '0'}" 
+											maximum="10000000" />
+										<f:convertNumber pattern="#,###,##0.00"/>
+									</p:inputText>
 									<p:message for="presu" />
 								</p:outputPanel>
 								<p:outputPanel
@@ -317,7 +325,9 @@
 									<p:inputText id="antic"
 										value="#{procesoBean.nuevoProceso.anticipo}" size="5"
 										required="true" onkeypress="return aceptarNumeros(event);"
-										requiredMessage="Este campo no puede estar vacío" />
+										requiredMessage="Este campo no puede estar vacío" validatorMessage="El anticipo máximo es del 70%">
+										<f:validateLongRange minimum="0" maximum="#{procesoBean.nuevoProceso.idTipoCompra.idCatalogoDetalle eq 243 ? '70' : '100'}" />
+									</p:inputText>
 									<h:outputLabel value="%" style="font-size: 10px" />
 									<br />
 									<h:outputLabel value="Saldo a: " style="font-size: 10px" />
@@ -453,7 +463,21 @@
 					<p:outputPanel
 						style="border-top: 1px solid #00468C; 
 						border-bottom: 1px solid #00468C;margin-bottom: 1em">
-						<div align="left" style="margin-left: 5em"></div>
+						<div align="left" style="margin-left: 5em">
+							<h:outputText value="Presupuesto Referencial: $" 
+								style="font-size: 18px; font-weight: bold; color: #8A0808" />
+							<h:outputText value="#{procesoBean.nuevoProceso.presupuestoReferencial}" 
+								style="font-size: 18px; font-weight: bold; color: #8A0808">
+								<f:convertNumber pattern="#,###,##0.00"/>
+							</h:outputText>
+							<br />
+							<p:outputPanel style="background: #CEECF5">
+								<h:panelGrid columns="6">
+								
+								</h:panelGrid>							
+							</p:outputPanel>
+						
+						</div>						
 					</p:outputPanel>
 				</p:tab>
 
@@ -492,9 +516,6 @@
 							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
 						</p:inputText>
 						<br />
-						<p:messages id="messages" showDetail="true" autoUpdate="true"
-							closable="true" />
-						<br />
 						<center>
 							<h:panelGrid columns="3" styleClass="top-aligned-columns"
 								cellpadding="5" style="display:block" cellspacing="5">
@@ -513,8 +534,7 @@
 										required="true" navigator="true" pattern="yyyy-MM-dd HH:mm:ss"
 										showOn="button"
 										requiredMessage="Este campo no puede estar vacío">
-										<p:ajax event="dateSelect"
-											listener="#{procesoBean.validarFechaPublicacion}" />
+										<f:validator validatorId="fechaValidator" />
 									</p:calendar>
 									<p:message for="fechaPub" />
 								</p:outputPanel>
@@ -787,11 +807,48 @@
 										   jpeg,png,gif,gz,tar,bz2,dwg"
 										style="font-size: 12px" />
 								</p:outputPanel>
+								<h:panelGrid columns="4">
+									<h:outputText value="Descripción: " />
+									<p:inputText size="35" id="descPliego"
+										value="#{procesoBean.nuevoArchivoProceso.descripcion}" />
+									<p:fileUpload value="#{procesoBean.file}" mode="simple"
+										skinSimple="true" id="filePli" />
+									<p:commandButton value="Subir" ajax="false"
+										update=":formProceso:pnlArchivos" process="@this descPliego, filePli"
+										actionListener="#{procesoBean.upload}" />
+								</h:panelGrid>
+								<br />
+								<p:outputPanel id="pnlArchivos">
+									<p:dataTable var="archivo" rowIndexVar="indice"
+										value="#{procesoBean.listaArchivosProceso}"
+										rendered="#{procesoBean.listaArchivosProceso.size() > 0}">
+										<p:column headerText="NRO.">
+											<h:outputText value="#{indice+1}" />
+										</p:column>
+										<p:column headerText="DESCRIPCIÓN">
+											<h:outputText value="#{archivo.descripcion}" />
+										</p:column>
+										<p:column headerText="NOMBRE DEL ARCHIVO">
+											<h:outputText value="#{archivo.nombreArchivo}" />
+										</p:column>
+										<p:column headerText="FECHA REGISTRO">
+											<h:outputText value="#{archivo.fechaRegistro}">
+												<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="ELIMINAR">
+											<p:commandLink value="Eliminar"
+												action="#{procesoBean.quitarArchivo(archivo)}"
+												update=":formProceso:pnlArchivos"
+												process="@this :formProceso:pnlArchivos">
+											</p:commandLink>
+										</p:column>
+									</p:dataTable>
+								</p:outputPanel>
 							</p:outputPanel>
 							<br />
 							<p:outputPanel style="background: #E6E6E6">
-								<h:outputLabel
-									value=".::ARCHIVO OPCIONAL"
+								<h:outputLabel value=".::ARCHIVO OPCIONAL"
 									styleClass="tituloAzul"
 									style="font-size: 12px; font-weight: bold" />
 							</p:outputPanel>
@@ -803,6 +860,49 @@
 										   jpeg,png,gif,gz,tar,bz2,dwg"
 									style="font-size: 12px" />
 							</p:outputPanel>
+							<br />
+							<h:panelGrid columns="4">
+								<h:outputText value="Descripción: " />
+								<p:inputText size="35" id="descOpcional"
+									value="#{procesoBean.nuevoArchivoProcesoOpcional.descripcion}" />
+								<p:fileUpload id="fileOpc"
+									value="#{procesoBean.fileOpcional}" mode="simple"
+									skinSimple="true" />
+								<p:commandButton value="Subir" ajax="false"
+									update=":formProceso:pnlArchivosOpc" process="@this descOpcional, fileOpc"
+									actionListener="#{procesoBean.uploadOpcional}" />
+							</h:panelGrid>
+							<br /> <br />
+							<p:outputPanel id="pnlArchivosOpc">
+								<p:dataTable var="archivoOpc" rowIndexVar="indice"
+									value="#{procesoBean.listaArchivosProcesoOpcional}"
+									rendered="#{procesoBean.listaArchivosProcesoOpcional.size() > 0}">
+									<p:column headerText="NRO.">
+										<h:outputText value="#{indice+1}" />
+									</p:column>
+									<p:column headerText="DESCRIPCIÓN">
+										<h:outputText value="#{archivoOpc.descripcion}" />
+									</p:column>
+									<p:column headerText="NOMBRE DEL ARCHIVO">
+										<h:outputText value="#{archivoOpc.nombreArchivo}" />
+									</p:column>
+									<p:column headerText="FECHA REGISTRO">
+										<h:outputText value="#{archivoOpc.fechaRegistro}">
+											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="ELIMINAR">
+										<p:commandLink value="Eliminar"
+											action="#{procesoBean.quitarArchivoOpcional(archivoOpc)}"
+											update=":formProceso:pnlArchivosOpc"
+											process="@this :formProceso:pnlArchivosOpc">
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+							<br />
+							<br />
+							<br />
 						</div>
 					</p:outputPanel>
 				</p:tab>

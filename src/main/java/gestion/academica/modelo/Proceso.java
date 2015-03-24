@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Jorge
  */
 @Entity
-@Table(name = "proceso")
+@Table(name = "proceso", schema = "gestion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Proceso.findAll", query = "SELECT p FROM Proceso p")})
@@ -124,6 +124,8 @@ public class Proceso implements Serializable {
     @JoinColumn(name = "id_tipo_proceso", referencedColumnName = "id_catalogo_detalle")
     @ManyToOne
     private CatalogoDetalle idTipoProceso;
+    @OneToMany(mappedBy = "idProceso")
+    private List<ArchivoProceso> archivoProcesoList;
 
     public Proceso() {
     }
@@ -384,6 +386,15 @@ public class Proceso implements Serializable {
 
     public void setIdTipoProceso(CatalogoDetalle idTipoProceso) {
         this.idTipoProceso = idTipoProceso;
+    }
+    
+    @XmlTransient
+    public List<ArchivoProceso> getArchivoProcesoList() {
+        return archivoProcesoList;
+    }
+
+    public void setArchivoProcesoList(List<ArchivoProceso> archivoProcesoList) {
+        this.archivoProcesoList = archivoProcesoList;
     }
 
     @Override

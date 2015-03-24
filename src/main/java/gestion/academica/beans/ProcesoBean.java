@@ -1,12 +1,14 @@
 package gestion.academica.beans;
 
 import gestion.academica.enumerado.CatalogoEnum;
+import gestion.academica.modelo.ArchivoProceso;
 import gestion.academica.modelo.CatalogoDetalle;
 import gestion.academica.modelo.Proceso;
 import gestion.academica.servicio.CatalogoDetalleServicio;
 import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @ViewScoped
@@ -37,12 +40,20 @@ public class ProcesoBean extends Utilitario implements Serializable {
 	private List<CatalogoDetalle> tiposProceso;
 	private Proceso nuevoProceso;
 	private Date fechaActual;
+	private ArchivoProceso nuevoArchivoProceso;
+	private List<ArchivoProceso> listaArchivosProceso;
+	private ArchivoProceso nuevoArchivoProcesoOpcional;
+	private List<ArchivoProceso> listaArchivosProcesoOpcional;
+	private UploadedFile file;
+	private UploadedFile fileOpcional;
 	
 	@PostConstruct
 	public void iniciar() {
 		try {
 			obtenerCatalogos();
 			setearValoresProceso();
+			setearValoresArchivo();
+			setearValoresArchivoOpcional();
 		} catch (Exception ex) {
 			LOGGER.log(Level.SEVERE, null, ex);
 		}
@@ -77,7 +88,11 @@ public class ProcesoBean extends Utilitario implements Serializable {
 		nuevoProceso.setIdPartidaPresupuestaria(new CatalogoDetalle());
 		nuevoProceso.setIdSaldo(new CatalogoDetalle());
 		nuevoProceso.setIdTipoCompra(new CatalogoDetalle());
+		nuevoProceso.getIdTipoCompra().setIdCatalogoDetalle(243);
 		nuevoProceso.setIdTipoProceso(new CatalogoDetalle());
+		nuevoProceso.getIdTipoProceso().setIdCatalogoDetalle(237);
+		listaArchivosProceso = new ArrayList<>();
+		listaArchivosProcesoOpcional = new ArrayList<>();
 	}
 	
 	public void limpiarFechas(){
@@ -93,10 +108,40 @@ public class ProcesoBean extends Utilitario implements Serializable {
 		nuevoProceso.setFechaPublicacion(null);
 	}
 	
-	public void validarFechaPublicacion(){
-		if(nuevoProceso.getFechaPublicacion().before(fechaActual)){
-			ponerMensajeInfo("La fecha de publicación debe ser posterior a la fecha actual", "");
-		}
+	public void setearValoresArchivo(){
+		nuevoArchivoProceso = new ArchivoProceso();
+		nuevoArchivoProceso.setIdProceso(new Proceso());
+	}
+	
+	public void setearValoresArchivoOpcional(){
+		nuevoArchivoProcesoOpcional = new ArchivoProceso();
+		nuevoArchivoProcesoOpcional.setIdProceso(new Proceso());
+	}
+	
+	public void upload() {		
+        if(file != null) {
+        	nuevoArchivoProceso.setNombreArchivo(file.getFileName());        	
+        	nuevoArchivoProceso.setFechaRegistro(new Date());
+        	listaArchivosProceso.add(nuevoArchivoProceso);
+            setearValoresArchivo();
+        }
+    }
+	
+	public void uploadOpcional() {		
+        if(fileOpcional != null) {
+        	nuevoArchivoProcesoOpcional.setNombreArchivo(fileOpcional.getFileName());
+        	nuevoArchivoProcesoOpcional.setFechaRegistro(new Date());
+        	listaArchivosProcesoOpcional.add(nuevoArchivoProcesoOpcional);
+            setearValoresArchivoOpcional();
+        }
+    }
+	
+	public void quitarArchivo(ArchivoProceso archivo){
+		listaArchivosProceso.remove(archivo);
+	}
+	
+	public void quitarArchivoOpcional(ArchivoProceso archivo){
+		listaArchivosProcesoOpcional.remove(archivo);
 	}
 
 	public boolean isSkip() {
@@ -161,6 +206,56 @@ public class ProcesoBean extends Utilitario implements Serializable {
 
 	public void setFechaActual(Date fechaActual) {
 		this.fechaActual = fechaActual;
+	}
+
+	public ArchivoProceso getNuevoArchivoProceso() {
+		return nuevoArchivoProceso;
+	}
+
+	public void setNuevoArchivoProceso(ArchivoProceso nuevoArchivoProceso) {
+		this.nuevoArchivoProceso = nuevoArchivoProceso;
+	}
+
+	public List<ArchivoProceso> getListaArchivosProceso() {
+		return listaArchivosProceso;
+	}
+
+	public void setListaArchivosProceso(List<ArchivoProceso> listaArchivosProceso) {
+		this.listaArchivosProceso = listaArchivosProceso;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
+	public UploadedFile getFileOpcional() {
+		return fileOpcional;
+	}
+
+	public void setFileOpcional(UploadedFile fileOpcional) {
+		this.fileOpcional = fileOpcional;
+	}
+
+	public ArchivoProceso getNuevoArchivoProcesoOpcional() {
+		return nuevoArchivoProcesoOpcional;
+	}
+
+	public void setNuevoArchivoProcesoOpcional(
+			ArchivoProceso nuevoArchivoProcesoOpcional) {
+		this.nuevoArchivoProcesoOpcional = nuevoArchivoProcesoOpcional;
+	}
+
+	public List<ArchivoProceso> getListaArchivosProcesoOpcional() {
+		return listaArchivosProcesoOpcional;
+	}
+
+	public void setListaArchivosProcesoOpcional(
+			List<ArchivoProceso> listaArchivosProcesoOpcional) {
+		this.listaArchivosProcesoOpcional = listaArchivosProcesoOpcional;
 	}
 	
 }
