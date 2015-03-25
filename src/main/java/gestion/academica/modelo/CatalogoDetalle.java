@@ -3,7 +3,6 @@ package gestion.academica.modelo;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -74,9 +73,6 @@ public class CatalogoDetalle implements Serializable {
 	
 	@OneToMany(mappedBy = "idCatalogoDetallePadre", fetch = FetchType.EAGER)
     private List<CatalogoDetalle> catalogoDetalleList;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
-    private List<ProductoProceso> productoProcesoList;
 
 	public CatalogoDetalle() {
 	}

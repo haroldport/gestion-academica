@@ -185,7 +185,8 @@
 										<f:selectItems value="#{procesoBean.tiposCompra}" var="tipCom"
 											itemLabel="#{tipCom.nombre}"
 											itemValue="#{tipCom.idCatalogoDetalle}" />
-										<p:ajax event="change" update="tipoCompra" process="@this tipoCompra" />
+										<p:ajax event="change" update="tipoCompra"
+											process="@this tipoCompra" />
 									</p:selectOneMenu>
 									<p:message for="tipoCompra" />
 								</p:outputPanel>
@@ -238,7 +239,8 @@
 										<f:selectItems value="#{procesoBean.tiposProceso}"
 											var="tipCon" itemLabel="#{tipCon.nombre}"
 											itemValue="#{tipCon.idCatalogoDetalle}" />
-										<p:ajax event="change" update="tipoContra" process="@this tipoContra" />
+										<p:ajax event="change" update="tipoContra"
+											process="@this tipoContra" />
 									</p:selectOneMenu>
 									<p:message for="tipoContra" />
 								</p:outputPanel>
@@ -268,12 +270,14 @@
 									style="background: #E6E6E6; padding: 0.5em; height: 5em">
 									<p:inputText id="presu"
 										value="#{procesoBean.nuevoProceso.presupuestoReferencial}"
-										size="30" required="true" validatorMessage="Debe seleccionar el tipo de contratación correcto"
+										size="30" required="true"
+										validatorMessage="Debe seleccionar el tipo de contratación correcto"
 										onkeypress="return aceptarNumerosDecimales(event);"
 										requiredMessage="Este campo no puede estar vacío">
-										<f:validateDoubleRange minimum="#{procesoBean.nuevoProceso.idTipoProceso.idCatalogoDetalle eq 237 ? '6860.14' : '0'}" 
+										<f:validateDoubleRange
+											minimum="#{procesoBean.nuevoProceso.idTipoProceso.idCatalogoDetalle eq 237 ? '6860.14' : '0'}"
 											maximum="10000000" />
-										<f:convertNumber pattern="#,###,##0.00"/>
+										<f:convertNumber pattern="#,###,##0.00" />
 									</p:inputText>
 									<p:message for="presu" />
 								</p:outputPanel>
@@ -325,8 +329,10 @@
 									<p:inputText id="antic"
 										value="#{procesoBean.nuevoProceso.anticipo}" size="5"
 										required="true" onkeypress="return aceptarNumeros(event);"
-										requiredMessage="Este campo no puede estar vacío" validatorMessage="El anticipo máximo es del 70%">
-										<f:validateLongRange minimum="0" maximum="#{procesoBean.nuevoProceso.idTipoCompra.idCatalogoDetalle eq 243 ? '70' : '100'}" />
+										requiredMessage="Este campo no puede estar vacío"
+										validatorMessage="El anticipo máximo es del 70%">
+										<f:validateLongRange minimum="0"
+											maximum="#{procesoBean.nuevoProceso.idTipoCompra.idCatalogoDetalle eq 243 ? '70' : '100'}" />
 									</p:inputText>
 									<h:outputLabel value="%" style="font-size: 10px" />
 									<br />
@@ -463,21 +469,45 @@
 					<p:outputPanel
 						style="border-top: 1px solid #00468C; 
 						border-bottom: 1px solid #00468C;margin-bottom: 1em">
-						<div align="left" style="margin-left: 5em">
-							<h:outputText value="Presupuesto Referencial: $" 
+						<div align="left" style="margin-left: 5em; margin-bottom: 2em">
+							<h:outputText value="Presupuesto Referencial: $"
 								style="font-size: 18px; font-weight: bold; color: #8A0808" />
-							<h:outputText value="#{procesoBean.nuevoProceso.presupuestoReferencial}" 
+							<h:outputText
+								value="#{procesoBean.nuevoProceso.presupuestoReferencial}"
 								style="font-size: 18px; font-weight: bold; color: #8A0808">
-								<f:convertNumber pattern="#,###,##0.00"/>
+								<f:convertNumber pattern="#,###,##0.00" />
 							</h:outputText>
-							<br />
-							<p:outputPanel style="background: #CEECF5">
+							<br /> <br />
+							<p:outputPanel style="background: #EFFBF8">
 								<h:panelGrid columns="6">
-								
-								</h:panelGrid>							
+									<h:outputLabel value="Descripción del lote:"
+										style="font-size: 14px;" styleClass="tituloAzul" />
+									<p:inputText size="30"
+										value="#{procesoBean.loteSeleccionado.descripcion}" />
+									<h:outputLabel value="Ingrese el CPC del lote:"
+										style="font-size: 14px;" styleClass="tituloAzul" />
+									<p:inputText size="30"
+										value="#{procesoBean.loteSeleccionado.codigo}" />
+									<p:commandLink onclick="PF('dlgCodigos').show();" update=":formProductos"
+										immediate="true" action="#{procesoBean.inicializarBusquedaLote}">
+										<h:graphicImage library="images" name="buscarCodigo.png" />
+									</p:commandLink>
+									<p:commandLink>
+										<h:graphicImage library="images" name="agregarCodigo.png" />
+									</p:commandLink>
+								</h:panelGrid>
+								<br />
+								<center>
+									<h:outputText value="TOTAL LOTES: $"
+										style="font-size: 18px; font-weight: bold; color: #8A0808" />
+									<h:outputText value="#{procesoBean.totalLotes}"
+										style="font-size: 18px; font-weight: bold; color: #8A0808">
+										<f:convertNumber pattern="#,###,##0.00" />
+									</h:outputText>
+								</center>
 							</p:outputPanel>
-						
-						</div>						
+						</div>
+
 					</p:outputPanel>
 				</p:tab>
 
@@ -814,7 +844,8 @@
 									<p:fileUpload value="#{procesoBean.file}" mode="simple"
 										skinSimple="true" id="filePli" />
 									<p:commandButton value="Subir" ajax="false"
-										update=":formProceso:pnlArchivos" process="@this descPliego, filePli"
+										update=":formProceso:pnlArchivos"
+										process="@this descPliego, filePli"
 										actionListener="#{procesoBean.upload}" />
 								</h:panelGrid>
 								<br />
@@ -865,11 +896,11 @@
 								<h:outputText value="Descripción: " />
 								<p:inputText size="35" id="descOpcional"
 									value="#{procesoBean.nuevoArchivoProcesoOpcional.descripcion}" />
-								<p:fileUpload id="fileOpc"
-									value="#{procesoBean.fileOpcional}" mode="simple"
-									skinSimple="true" />
+								<p:fileUpload id="fileOpc" value="#{procesoBean.fileOpcional}"
+									mode="simple" skinSimple="true" />
 								<p:commandButton value="Subir" ajax="false"
-									update=":formProceso:pnlArchivosOpc" process="@this descOpcional, fileOpc"
+									update=":formProceso:pnlArchivosOpc"
+									process="@this descOpcional, fileOpc"
 									actionListener="#{procesoBean.uploadOpcional}" />
 							</h:panelGrid>
 							<br /> <br />
@@ -900,15 +931,39 @@
 									</p:column>
 								</p:dataTable>
 							</p:outputPanel>
-							<br />
-							<br />
-							<br />
+							<br /> <br /> <br />
 						</div>
 					</p:outputPanel>
 				</p:tab>
 				<br />
 			</p:wizard>
 		</h:form>
+		<p:dialog id="dlgCod" widgetVar="dlgCodigos"
+			header="Selección de Producto" width="800" resizable="false"
+			showEffect="explode" hideEffect="bounce" position="center middle">
+			<h:form id="formProductos">
+				<div align="left">
+					<br />
+					<h:outputLabel style="font-weight: bold"
+						value="MODO DE USO: Para comenzar usted puede ingresar una palabra clave o Código y se le mostrarán las categorías de productos existentes, marque la que desea agregar." />
+					<br /><br />
+					<p:outputPanel style="background: #F5F6CE; padding: 1em">
+						<h:panelGrid columns="7">
+							<h:outputLabel value="Palabra Clave:" style="font-size: 11px;" />
+							<p:inputText size="30"
+								value="#{procesoBean.palabraclave}" />
+							<h:commandButton value="Buscar" />
+							<p:spacer height="10" width="15" />
+							<h:outputLabel value="Código:" style="font-size: 11px;" />
+							<p:inputText size="30"
+								value="#{procesoBean.codigoDeLote}" />
+							<h:commandButton value="Buscar" />
+						</h:panelGrid>
+					</p:outputPanel>
+					<br /><br />
+				</div>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

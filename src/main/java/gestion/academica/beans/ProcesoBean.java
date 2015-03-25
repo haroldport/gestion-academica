@@ -3,6 +3,7 @@ package gestion.academica.beans;
 import gestion.academica.enumerado.CatalogoEnum;
 import gestion.academica.modelo.ArchivoProceso;
 import gestion.academica.modelo.CatalogoDetalle;
+import gestion.academica.modelo.CodigosSercop;
 import gestion.academica.modelo.Proceso;
 import gestion.academica.servicio.CatalogoDetalleServicio;
 import gestion.academica.utilitario.Utilitario;
@@ -46,6 +47,10 @@ public class ProcesoBean extends Utilitario implements Serializable {
 	private List<ArchivoProceso> listaArchivosProcesoOpcional;
 	private UploadedFile file;
 	private UploadedFile fileOpcional;
+	private CodigosSercop loteSeleccionado;
+	private Double totalLotes;
+	private String palabraclave;
+	private String codigoDeLote;
 	
 	@PostConstruct
 	public void iniciar() {
@@ -74,6 +79,11 @@ public class ProcesoBean extends Utilitario implements Serializable {
         }
     }
 	
+	public void inicializarBusquedaLote(){
+		setPalabraclave("");
+		setCodigoDeLote("");
+	}
+	
 	private void obtenerCatalogos(){
 		tiposCompra = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_COMPRA.getNemonico());
 		partidas = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.PARTIDA_PRESUPUESTARIA.getNemonico());
@@ -93,6 +103,8 @@ public class ProcesoBean extends Utilitario implements Serializable {
 		nuevoProceso.getIdTipoProceso().setIdCatalogoDetalle(237);
 		listaArchivosProceso = new ArrayList<>();
 		listaArchivosProcesoOpcional = new ArrayList<>();
+		loteSeleccionado = new CodigosSercop();
+		totalLotes = 0.0;
 	}
 	
 	public void limpiarFechas(){
@@ -256,6 +268,38 @@ public class ProcesoBean extends Utilitario implements Serializable {
 	public void setListaArchivosProcesoOpcional(
 			List<ArchivoProceso> listaArchivosProcesoOpcional) {
 		this.listaArchivosProcesoOpcional = listaArchivosProcesoOpcional;
+	}
+
+	public CodigosSercop getLoteSeleccionado() {
+		return loteSeleccionado;
+	}
+
+	public void setLoteSeleccionado(CodigosSercop loteSeleccionado) {
+		this.loteSeleccionado = loteSeleccionado;
+	}
+
+	public Double getTotalLotes() {
+		return totalLotes;
+	}
+
+	public void setTotalLotes(Double totalLotes) {
+		this.totalLotes = totalLotes;
+	}
+
+	public String getPalabraclave() {
+		return palabraclave;
+	}
+
+	public void setPalabraclave(String palabraclave) {
+		this.palabraclave = palabraclave;
+	}
+
+	public String getCodigoDeLote() {
+		return codigoDeLote;
+	}
+
+	public void setCodigoDeLote(String codigoDeLote) {
+		this.codigoDeLote = codigoDeLote;
 	}
 	
 }

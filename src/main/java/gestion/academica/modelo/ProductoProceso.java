@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gestion.academica.modelo;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,14 +13,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author hportocarrero
+ * @author Jorge
  */
 @Entity
-@Table(name = "producto_proceso")
+@Table(name = "producto_proceso", schema = "gestion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProductoProceso.findAll", query = "SELECT p FROM ProductoProceso p")})
@@ -35,12 +32,24 @@ public class ProductoProceso implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_producto_proceso")
     private Integer idProductoProceso;
+    @Column(name = "id_unidad")
+    private BigInteger idUnidad;
+    @Column(name = "cantidad")
+    private Integer cantidad;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "precio_unitario")
+    private Double precioUnitario;
+    @Column(name = "subtotal")
+    private Double subtotal;
+    @Size(max = 300)
+    @Column(name = "caracteristicas_adicionales")
+    private String caracteristicasAdicionales;
     @JoinColumn(name = "id_proceso", referencedColumnName = "id_proceso")
     @ManyToOne(optional = false)
     private Proceso idProceso;
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_catalogo_detalle")
-    @ManyToOne(optional = false)
-    private CatalogoDetalle idProducto;
+    @JoinColumn(name = "codigo", referencedColumnName = "codigo")
+    @ManyToOne
+    private CodigosSercop codigo;
 
     public ProductoProceso() {
     }
@@ -57,6 +66,46 @@ public class ProductoProceso implements Serializable {
         this.idProductoProceso = idProductoProceso;
     }
 
+    public BigInteger getIdUnidad() {
+        return idUnidad;
+    }
+
+    public void setIdUnidad(BigInteger idUnidad) {
+        this.idUnidad = idUnidad;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public String getCaracteristicasAdicionales() {
+        return caracteristicasAdicionales;
+    }
+
+    public void setCaracteristicasAdicionales(String caracteristicasAdicionales) {
+        this.caracteristicasAdicionales = caracteristicasAdicionales;
+    }
+
     public Proceso getIdProceso() {
         return idProceso;
     }
@@ -65,12 +114,12 @@ public class ProductoProceso implements Serializable {
         this.idProceso = idProceso;
     }
 
-    public CatalogoDetalle getIdProducto() {
-        return idProducto;
+    public CodigosSercop getCodigo() {
+        return codigo;
     }
 
-    public void setIdProducto(CatalogoDetalle idProducto) {
-        this.idProducto = idProducto;
+    public void setCodigo(CodigosSercop codigo) {
+        this.codigo = codigo;
     }
 
     @Override
