@@ -12,6 +12,7 @@
 		<title><ui:insert name="title">Ingreso al Sistema - Compras Públicas</ui:insert></title>
 		<h:outputStylesheet library="css" name="normalize.css" />
 		<h:outputStylesheet library="css" name="proceso.css" />
+		<h:outputScript library="js" name="validador.js" />
 		<link REL="shortcut icon"
 			href="#{request.contextPath}/resources/images/favicon.ico" />
 	</h:head>
@@ -159,7 +160,8 @@
 								<p>&nbsp;</p>
 								<label>RUC: <span>Número Identificación</span></label><br />
 								<p:inputText id="ruc" value="#{loguinIncopBean.ruc}" style="margin-bottom: 12px" size="45"
-									maxlength="100" styleClass="box" required="true" requiredMessage="Este campo no puede estar vacío" />
+									onkeypress="return aceptarNumeros(event);"
+									maxlength="13" styleClass="box" required="true" requiredMessage="Este campo no puede estar vacío" />
 								<p:message for="ruc" />
 								<br /> <label>Usuario: <span>Nombre de Usuario</span></label><br />
 								<p:inputText id="usuario" value="#{loguinIncopBean.username}" style="margin-bottom: 12px" size="45"

@@ -5,12 +5,16 @@ import gestion.academica.modelo.ArchivoProceso;
 import gestion.academica.modelo.CatalogoDetalle;
 import gestion.academica.modelo.CodigosSercop;
 import gestion.academica.modelo.Proceso;
+import gestion.academica.modelo.ProductoProceso;
 import gestion.academica.servicio.CatalogoDetalleServicio;
+import gestion.academica.servicio.CodigosSercopServicio;
+import gestion.academica.servicio.ProcesoServicio;
 import gestion.academica.utilitario.Utilitario;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +25,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FlowEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
@@ -32,6 +37,10 @@ public class ProcesoBean extends Utilitario implements Serializable {
 	
 	@EJB
 	private CatalogoDetalleServicio catalogoDetalleServicio;
+	@EJB
+	private CodigosSercopServicio codigosSercopServicio;
+	@EJB
+	private ProcesoServicio procesoServicio;
 	
 	private boolean skip;
 	private List<CatalogoDetalle> tiposCompra;
@@ -51,6 +60,15 @@ public class ProcesoBean extends Utilitario implements Serializable {
 	private Double totalLotes;
 	private String palabraclave;
 	private String codigoDeLote;
+	private List<CodigosSercop> listadoCodigosPadres;
+	private boolean mostrarLote;
+	private ProductoProceso nuevoProductoProceso;
+	private ProductoProceso nuevoProductoProcesoTmp;
+	private List<ProductoProceso> listaProductosProceso;
+	private CodigosSercop productoSeleccionado;
+	private List<CodigosSercop> listaCodigosHijos;
+	private boolean editarProductoProceso;
+	private Double subtotalTmp;
 	
 	@PostConstruct
 	public void iniciar() {
@@ -75,13 +93,21 @@ public class ProcesoBean extends Utilitario implements Serializable {
         		nuevoProceso.setIdTipoCompra(catalogoDetalleServicio.obtenerPorId(nuevoProceso.getIdTipoCompra().getIdCatalogoDetalle()));
         		nuevoProceso.setIdTipoProceso(catalogoDetalleServicio.obtenerPorId(nuevoProceso.getIdTipoProceso().getIdCatalogoDetalle()));
         	}
-        	return event.getNewStep();
+        	if(event.getOldStep().equals("paso2") && !verificarTotal()){
+        		skip = false;
+        		return "paso2";
+        	}else{
+        		return event.getNewStep();
+        	}
         }
     }
 	
 	public void inicializarBusquedaLote(){
+		loteSeleccionado = new CodigosSercop();
 		setPalabraclave("");
 		setCodigoDeLote("");
+		listadoCodigosPadres = new ArrayList<>();
+		setMostrarLote(Boolean.FALSE);
 	}
 	
 	private void obtenerCatalogos(){
@@ -149,11 +175,152 @@ public class ProcesoBean extends Utilitario implements Serializable {
     }
 	
 	public void quitarArchivo(ArchivoProceso archivo){
-		listaArchivosProceso.remove(archivo);
+		Iterator<ArchivoProceso> it = listaArchivosProceso.iterator();
+        while (it.hasNext()) {
+        	ArchivoProceso ap = (ArchivoProceso) it.next();
+        	if(ap.getFechaRegistro().equals(archivo.getFechaRegistro())){
+        		it.remove();
+        	}
+        }
 	}
 	
 	public void quitarArchivoOpcional(ArchivoProceso archivo){
-		listaArchivosProcesoOpcional.remove(archivo);
+		Iterator<ArchivoProceso> it = listaArchivosProcesoOpcional.iterator();
+        while (it.hasNext()) {
+        	ArchivoProceso ap = (ArchivoProceso) it.next();
+        	if(ap.getFechaRegistro().equals(archivo.getFechaRegistro())){
+        		it.remove();
+        	}
+        }
+	}
+	
+	public void buscarPorPalabraClave(){
+		try {
+			listadoCodigosPadres = codigosSercopServicio.buscarPorPalabraClave(palabraclave);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void buscarPorCodigoLote(){
+		try {
+			listadoCodigosPadres = codigosSercopServicio.buscarPorCodigoLote(codigoDeLote);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void seleccionarLote(SelectEvent event) {
+		loteSeleccionado = (CodigosSercop) event.getObject();
+    }
+	
+	private void iniciarProductoProceso(){
+		nuevoProductoProceso = new ProductoProceso();
+		nuevoProductoProceso.setCodigo(new CodigosSercop());
+		nuevoProductoProceso.setIdProceso(new Proceso());
+		nuevoProductoProcesoTmp = new ProductoProceso();
+		nuevoProductoProcesoTmp.setCodigo(new CodigosSercop());
+		nuevoProductoProcesoTmp.setIdProceso(new Proceso());
+		setSubtotalTmp(0.0);
+	}
+	
+	public void mostrarLoteSeleccionado(){
+		if(loteSeleccionado != null){
+			setTotalLotes(0.0);
+			listaProductosProceso = new ArrayList<>();
+			iniciarProductoProceso();
+			setListaCodigosHijos(loteSeleccionado.getCodigosSercopList());
+			setMostrarLote(Boolean.TRUE);
+		}
+	}
+	
+	public void seleccionarProducto(SelectEvent event){
+		productoSeleccionado = (CodigosSercop) event.getObject();
+		boolean existe = false;
+		if(listaProductosProceso.size() > 0){
+			for(ProductoProceso pr : listaProductosProceso){
+				if(pr.getCodigo().getCodigo().equals(productoSeleccionado.getCodigo())){
+					existe = true;
+					break;
+				}
+			}
+			if(existe){
+				ponerMensajeError("El producto ya fue seleccionado", "");
+			}else{
+				nuevoProductoProceso.setCodigo(productoSeleccionado);
+			}
+		}else{
+			nuevoProductoProceso.setCodigo(productoSeleccionado);
+		}	
+		setEditarProductoProceso(Boolean.FALSE);
+	}
+	
+	public void calcularSubtotal(){
+		if(nuevoProductoProceso.getPrecioUnitario() != null && nuevoProductoProceso.getCantidad() != null){
+			nuevoProductoProceso.setSubtotal(nuevoProductoProceso.getPrecioUnitario() * 
+					nuevoProductoProceso.getCantidad());
+		}		
+	}
+	
+	public void agregarProducto(){
+		listaProductosProceso.add(nuevoProductoProceso);
+		setTotalLotes(getTotalLotes() + nuevoProductoProceso.getSubtotal());
+		iniciarProductoProceso();
+	}
+	
+	public String editarProductoProceso(ProductoProceso producto) {
+		setEditarProductoProceso(Boolean.TRUE);
+		setSubtotalTmp(producto.getSubtotal());
+		setNuevoProductoProceso(producto);
+		setNuevoProductoProcesoTmp(producto);
+		return "";
+	}
+	
+	public void editarProductoProceso(){
+		setEditarProductoProceso(Boolean.FALSE);
+		for(ProductoProceso pr : listaProductosProceso){
+			if(pr.equals(nuevoProductoProcesoTmp)){
+				pr = nuevoProductoProceso;
+			}
+		}
+		setTotalLotes((getTotalLotes() - subtotalTmp) + nuevoProductoProceso.getSubtotal());
+		iniciarProductoProceso();
+	}
+	
+	public String eliminarProductoProceso(ProductoProceso producto) {
+		Iterator<ProductoProceso> it = listaProductosProceso.iterator();
+		Double subtotal = 0.0;
+        while (it.hasNext()) {
+        	ProductoProceso pr = (ProductoProceso) it.next();
+        	if(pr.getCodigo().getCodigo().equals(producto.getCodigo().getCodigo())){
+        		subtotal = pr.getSubtotal();
+        		it.remove();
+        	}
+        }
+		setTotalLotes(getTotalLotes() - subtotal);
+		return "";
+	}
+	
+	public boolean verificarTotal(){
+		boolean result = true;
+		if( totalLotes > nuevoProceso.getPresupuestoReferencial() || totalLotes < nuevoProceso.getPresupuestoReferencial()){
+			result = false;
+		}
+		return result;
+	}
+	
+	public void finalizarProceso(){
+		if(nuevoProceso.getIdProceso() == null){
+			nuevoProceso.setIdUsuario(this.getUsuario());
+			if(listaArchivosProcesoOpcional.size() > 0){
+				listaArchivosProceso.addAll(listaArchivosProcesoOpcional);
+			}
+			procesoServicio.guardarProceso(nuevoProceso, listaArchivosProceso, listaProductosProceso);
+			ponerMensajeInfo("El proceso fue creado correctamente", "");
+			setSkip(Boolean.TRUE);
+		}else{
+			ponerMensajeError("El proceso YA fue creado", "");
+		}		
 	}
 
 	public boolean isSkip() {
@@ -300,6 +467,78 @@ public class ProcesoBean extends Utilitario implements Serializable {
 
 	public void setCodigoDeLote(String codigoDeLote) {
 		this.codigoDeLote = codigoDeLote;
+	}
+
+	public List<CodigosSercop> getListadoCodigosPadres() {
+		return listadoCodigosPadres;
+	}
+
+	public void setListadoCodigosPadres(List<CodigosSercop> listadoCodigosPadres) {
+		this.listadoCodigosPadres = listadoCodigosPadres;
+	}
+
+	public boolean isMostrarLote() {
+		return mostrarLote;
+	}
+
+	public void setMostrarLote(boolean mostrarLote) {
+		this.mostrarLote = mostrarLote;
+	}
+
+	public ProductoProceso getNuevoProductoProceso() {
+		return nuevoProductoProceso;
+	}
+
+	public void setNuevoProductoProceso(ProductoProceso nuevoProductoProceso) {
+		this.nuevoProductoProceso = nuevoProductoProceso;
+	}
+
+	public List<ProductoProceso> getListaProductosProceso() {
+		return listaProductosProceso;
+	}
+
+	public void setListaProductosProceso(List<ProductoProceso> listaProductosProceso) {
+		this.listaProductosProceso = listaProductosProceso;
+	}
+
+	public CodigosSercop getProductoSeleccionado() {
+		return productoSeleccionado;
+	}
+
+	public void setProductoSeleccionado(CodigosSercop productoSeleccionado) {
+		this.productoSeleccionado = productoSeleccionado;
+	}
+
+	public List<CodigosSercop> getListaCodigosHijos() {
+		return listaCodigosHijos;
+	}
+
+	public void setListaCodigosHijos(List<CodigosSercop> listaCodigosHijos) {
+		this.listaCodigosHijos = listaCodigosHijos;
+	}
+
+	public boolean isEditarProductoProceso() {
+		return editarProductoProceso;
+	}
+
+	public void setEditarProductoProceso(boolean editarProductoProceso) {
+		this.editarProductoProceso = editarProductoProceso;
+	}
+
+	public ProductoProceso getNuevoProductoProcesoTmp() {
+		return nuevoProductoProcesoTmp;
+	}
+
+	public void setNuevoProductoProcesoTmp(ProductoProceso nuevoProductoProcesoTmp) {
+		this.nuevoProductoProcesoTmp = nuevoProductoProcesoTmp;
+	}
+
+	public Double getSubtotalTmp() {
+		return subtotalTmp;
+	}
+
+	public void setSubtotalTmp(Double subtotalTmp) {
+		this.subtotalTmp = subtotalTmp;
 	}
 	
 }

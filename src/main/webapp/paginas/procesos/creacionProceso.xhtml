@@ -469,6 +469,7 @@
 					<p:outputPanel
 						style="border-top: 1px solid #00468C; 
 						border-bottom: 1px solid #00468C;margin-bottom: 1em">
+						<p:messages id="messages" autoUpdate="true" closable="true" />
 						<div align="left" style="margin-left: 5em; margin-bottom: 2em">
 							<h:outputText value="Presupuesto Referencial: $"
 								style="font-size: 18px; font-weight: bold; color: #8A0808" />
@@ -478,7 +479,7 @@
 								<f:convertNumber pattern="#,###,##0.00" />
 							</h:outputText>
 							<br /> <br />
-							<p:outputPanel style="background: #EFFBF8">
+							<p:outputPanel id="pnlLoteSelec" style="background: #EFFBF8">
 								<h:panelGrid columns="6">
 									<h:outputLabel value="Descripción del lote:"
 										style="font-size: 14px;" styleClass="tituloAzul" />
@@ -488,22 +489,217 @@
 										style="font-size: 14px;" styleClass="tituloAzul" />
 									<p:inputText size="30"
 										value="#{procesoBean.loteSeleccionado.codigo}" />
-									<p:commandLink onclick="PF('dlgCodigos').show();" update=":formProductos"
-										immediate="true" action="#{procesoBean.inicializarBusquedaLote}">
+									<p:commandLink onclick="PF('dlgCodigos').show();"
+										update=":formProductos,:formProceso:pnlLoteSelec"
+										immediate="true"
+										action="#{procesoBean.inicializarBusquedaLote}">
 										<h:graphicImage library="images" name="buscarCodigo.png" />
 									</p:commandLink>
-									<p:commandLink>
+									<p:commandLink update=":formProceso:pnlLotesSeleccionados"
+										immediate="true"
+										action="#{procesoBean.mostrarLoteSeleccionado}">
 										<h:graphicImage library="images" name="agregarCodigo.png" />
 									</p:commandLink>
 								</h:panelGrid>
 								<br />
+								<p:outputPanel id="pnlLotesSeleccionados">
+									<center>
+										<h:outputText value="LOTES SELECCIONADOS"
+											rendered="#{procesoBean.mostrarLote}" style="font-size: 16px"
+											styleClass="tituloAzul" />
+									</center>
+									<p:outputPanel rendered="#{procesoBean.mostrarLote}"
+										style="background: #fff; padding: 0.5em; border: 1px solid #585858"></p:outputPanel>
+									<br />
+									<h:panelGrid columns="4" rendered="#{procesoBean.mostrarLote}">
+										<h:graphicImage library="images" name="error.png" />
+										<h:outputText
+											value="LOTE 1: #{procesoBean.loteSeleccionado.descripcion}"
+											style="font-size: 16px" styleClass="tituloAzul" />
+										<p:spacer height="10" width="20" />
+										<h:outputText
+											value="CPC: #{procesoBean.loteSeleccionado.codigo}"
+											style="font-size: 16px" styleClass="tituloAzul" />
+									</h:panelGrid>
+									<br />
+									<p:panelGrid columns="9" rendered="#{procesoBean.mostrarLote}">
+										<h:outputText value="GUARDAR" style="font-size: 11px"
+											styleClass="tituloAzul" />
+										<h:outputText value="MODIFICAR" style="font-size: 11px"
+											styleClass="tituloAzul" />
+										<h:outputText value="CÓDIGO CPC" style="font-size: 11px"
+											styleClass="tituloAzul" />
+										<h:outputText value="DESCRIPCIÓN" style="font-size: 11px"
+											styleClass="tituloAzul" />
+										<h:outputText value="UNIDAD" style="font-size: 11px"
+											styleClass="tituloAzul" />
+										<h:outputText value="CANTIDAD" style="font-size: 11px"
+											styleClass="tituloAzul" />
+										<h:outputText value="PRECIO UNITARIO (USD)"
+											style="font-size: 11px" styleClass="tituloAzul" />
+										<h:outputText value="SUBTOTAL (USD)" style="font-size: 11px"
+											styleClass="tituloAzul" />
+										<h:outputText value="CARACTERÍSTICAS ADICIONALES"
+											style="font-size: 11px" styleClass="tituloAzul" />
+										<p:outputPanel id="pnlAgreProd">
+											<center>
+												<p:commandLink action="#{procesoBean.agregarProducto}"
+													disabled="#{procesoBean.editarProductoProceso}"
+													update=":formProceso:pnlListaProd, :formProceso:pnlCodProd, 
+															:formProceso:pnlDesProd, :formProceso:pnlCantidad, 
+															:formProceso:pnlPrecioUni, :formProceso:pnlSubtotal,
+															:formProceso:pnlCarac, :formProceso:pnlTotalLotes">
+													<h:graphicImage library="images" name="guardarProd.png" />
+												</p:commandLink>
+											</center>
+										</p:outputPanel>
+										<p:outputPanel id="pnlEditProd">
+											<center>
+												<p:commandLink action="#{procesoBean.editarProductoProceso}"
+													disabled="#{!procesoBean.editarProductoProceso}"
+													update=":formProceso:pnlListaProd, :formProceso:pnlCodProd, 
+															:formProceso:pnlDesProd, :formProceso:pnlCantidad, 
+															:formProceso:pnlPrecioUni, :formProceso:pnlSubtotal,
+															:formProceso:pnlCarac, :formProceso:pnlTotalLotes, 
+															:formProceso:pnlAgreProd, :formProceso:pnlEditProd">
+													<h:graphicImage library="images" name="editarProd.png" />
+												</p:commandLink>
+											</center>
+										</p:outputPanel>
+										<h:panelGrid columns="2">
+											<p:outputPanel id="pnlCodProd">
+												<p:inputText
+													value="#{procesoBean.nuevoProductoProceso.codigo.codigo}" />
+											</p:outputPanel>
+											<p:commandLink onclick="PF('dlgProducto').show();"
+												update=":formProductoHijo" immediate="true">
+												<h:graphicImage library="images" name="buscarProducto.png" />
+											</p:commandLink>
+										</h:panelGrid>
+										<p:outputPanel id="pnlDesProd">
+											<p:inputText
+												value="#{procesoBean.nuevoProductoProceso.codigo.descripcion}"
+												size="15" />
+										</p:outputPanel>
+										<p:selectOneMenu
+											value="#{procesoBean.nuevoProductoProceso.idUnidad}">
+											<f:selectItem itemLabel="Unidad" itemValue="1" />
+										</p:selectOneMenu>
+										<p:outputPanel id="pnlCantidad">
+											<p:inputText onkeypress="return aceptarNumeros(event);"
+												value="#{procesoBean.nuevoProductoProceso.cantidad}"
+												size="10">
+												<p:ajax event="blur"
+													listener="#{procesoBean.calcularSubtotal}"
+													update=":formProceso:pnlSubtotal" />
+											</p:inputText>
+										</p:outputPanel>
+										<p:outputPanel id="pnlPrecioUni">
+											<p:inputText
+												onkeypress="return aceptarNumerosDecimales(event);"
+												value="#{procesoBean.nuevoProductoProceso.precioUnitario}"
+												size="10">
+												<p:ajax event="blur"
+													listener="#{procesoBean.calcularSubtotal}"
+													update=":formProceso:pnlSubtotal" />
+											</p:inputText>
+										</p:outputPanel>
+										<p:outputPanel id="pnlSubtotal">
+											<p:inputText
+												onkeypress="return aceptarNumerosDecimales(event);"
+												value="#{procesoBean.nuevoProductoProceso.subtotal}"
+												size="10" />
+										</p:outputPanel>
+										<p:outputPanel id="pnlCarac">
+											<p:inputText
+												value="#{procesoBean.nuevoProductoProceso.caracteristicasAdicionales}"
+												size="15" />
+										</p:outputPanel>
+									</p:panelGrid>
+									<br />
+									<p:outputPanel id="pnlListaProd">
+										<p:dataTable var="produc" rowIndexVar="indice"
+											value="#{procesoBean.listaProductosProceso}"
+											rendered="#{procesoBean.listaProductosProceso.size() > 0 and procesoBean.mostrarLote}">
+											<p:column headerText="No.">
+												<h:outputText value="#{indice+1}" />
+											</p:column>
+											<p:column headerText="GUARDAR">
+												<center>
+													<p:commandLink disabled="true">
+														<h:graphicImage library="images" name="guardarProd.png" />
+													</p:commandLink>
+												</center>
+											</p:column>
+											<p:column headerText="MODIFICAR">
+												<center>
+													<p:commandLink
+														action="#{procesoBean.editarProductoProceso(produc)}"
+														update=":formProceso:pnlListaProd, :formProceso:pnlCodProd, 
+																:formProceso:pnlDesProd, :formProceso:pnlCantidad, 
+																:formProceso:pnlPrecioUni, :formProceso:pnlSubtotal,
+																:formProceso:pnlCarac, :formProceso:pnlTotalLotes, 
+																:formProceso:pnlAgreProd, :formProceso:pnlEditProd">
+														<h:graphicImage library="images" name="editarProd.png" />
+													</p:commandLink>
+												</center>
+											</p:column>
+											<p:column headerText="ELIMINAR">
+												<center>
+													<p:commandLink
+														action="#{procesoBean.eliminarProductoProceso(produc)}"
+														update=":formProceso:pnlListaProd, :formProceso:pnlCodProd, 
+																:formProceso:pnlDesProd, :formProceso:pnlCantidad, 
+																:formProceso:pnlPrecioUni, :formProceso:pnlSubtotal,
+																:formProceso:pnlCarac, :formProceso:pnlTotalLotes">
+														<h:graphicImage library="images" name="eliminarProd.png" />
+													</p:commandLink>
+												</center>
+											</p:column>
+											<p:column headerText="CÓDIGO CPC">
+												<h:outputText value="#{produc.codigo.codigo}" />
+											</p:column>
+											<p:column headerText="DESCRIPCIÓN">
+												<h:outputText value="#{produc.codigo.descripcion}" />
+											</p:column>
+											<p:column headerText="UNIDAD">
+												<h:outputText
+													value="#{produc.idUnidad eq 1 ? 'Unidad' : ''}" />
+											</p:column>
+											<p:column headerText="CANTIDAD">
+												<h:outputText value="#{produc.cantidad}" />
+											</p:column>
+											<p:column headerText="PRECIO UNITARIO (USD)">
+												<h:outputText value="#{produc.precioUnitario}" />
+											</p:column>
+											<p:column headerText="SUBTOTAL (USD)">
+												<h:outputText value="#{produc.subtotal}" />
+											</p:column>
+											<p:column headerText="CARACTERÍSTICAS ADICIONALES">
+												<h:outputText value="#{produc.caracteristicasAdicionales}" />
+											</p:column>
+										</p:dataTable>
+									</p:outputPanel>
+									<br />
+								</p:outputPanel>
+								<br />
 								<center>
-									<h:outputText value="TOTAL LOTES: $"
-										style="font-size: 18px; font-weight: bold; color: #8A0808" />
-									<h:outputText value="#{procesoBean.totalLotes}"
-										style="font-size: 18px; font-weight: bold; color: #8A0808">
-										<f:convertNumber pattern="#,###,##0.00" />
-									</h:outputText>
+									<p:outputPanel id="pnlTotalLotes">
+										<h:outputText value="TOTAL LOTES: $"
+											style="font-size: 18px; font-weight: bold; color: #8A0808" />
+										<h:outputText value="#{procesoBean.totalLotes}"
+											style="font-size: 18px; font-weight: bold; color: #8A0808">
+											<f:convertNumber pattern="#,###,##0.00" />
+										</h:outputText>
+										<br />
+										<br />
+										<p:outputPanel id="pnlValida">
+											<h:outputText
+												rendered="#{procesoBean.verificarTotal() ? false : true}"
+												value="El total de lotes debe ser igual al presupuesto referencial"
+												style="font-size: 12px; font-weight: bold; color: #8A0808" />
+										</p:outputPanel>
+									</p:outputPanel>
 								</center>
 							</p:outputPanel>
 						</div>
@@ -526,6 +722,57 @@
 							<h:outputLabel
 								value="Ingrese correctamente las fechas requeridas"
 								style="font-size: 12px" />
+							<br />
+							<h:panelGrid columns="3" styleClass="top-aligned-columns"
+								cellpadding="5" style="display:block" cellspacing="5">
+								<p:outputPanel style="border-top: 1px solid #848484" />
+								<p:outputPanel style="border-top: 1px solid #848484" />
+								<p:outputPanel style="border-top: 1px solid #848484" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="font-size: 11px; font-weight: bold"
+										value="Vigencia de la oferta" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<h:panelGrid columns="2">
+										<p:inputText id="vigencia" value="#{procesoBean.nuevoProceso.vigenciaOferta}" 
+												required="true" requiredMessage="Este campo no puede estar vacío" />
+										<h:outputLabel style="font-size: 11px;" value="días Límite" />
+									</h:panelGrid>
+									<p:message for="vigencia" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #FFFFD9; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.8em">Días en que la oferta deberá estar vigente. 
+										Incluir hasta la suscripción del contrato.</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #848484" />
+								<p:outputPanel style="border-bottom: 1px solid #848484" />
+								<p:outputPanel style="border-bottom: 1px solid #848484" />
+								<p:outputPanel style="top: 0">
+									<h:outputLabel style="font-size: 11px; font-weight: bold"
+										value="Plazo de Entrega" />
+									<p:spacer height="10" width="120" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #E6E6E6; padding: 0.5em; height: 4em">
+									<h:panelGrid columns="2">
+										<p:inputText id="plazoEn" value="#{procesoBean.nuevoProceso.plazoEntrega}" 
+												required="true" requiredMessage="Este campo no puede estar vacío" />
+										<h:outputLabel style="font-size: 11px;" value="días" />
+									</h:panelGrid>
+									<p:message for="plazoEn" />
+								</p:outputPanel>
+								<p:outputPanel
+									style="background: #FFFFD9; padding: 0.5em; height: 4em">
+									<p style="text-align: justify; font-size: 0.8em">Días Límite para entrega del objeto del proceso desde la firma del 
+									contrato (El valor 'CERO' ejemplifica la entrega inmediata).</p>
+								</p:outputPanel>
+								<p:outputPanel style="border-bottom: 1px solid #848484" />
+								<p:outputPanel style="border-bottom: 1px solid #848484" />
+								<p:outputPanel style="border-bottom: 1px solid #848484" />
+							</h:panelGrid>
 						</div>
 						<br />
 						<h:outputLabel value="Fechas del Proceso de Contratación"
@@ -933,35 +1180,241 @@
 							</p:outputPanel>
 							<br /> <br /> <br />
 						</div>
+						<p:commandButton value="Finalizar"
+							action="#{procesoBean.finalizarProceso}" />
+						<br />
+						<p:messages id="messagesPr" autoUpdate="true" closable="true" />
 					</p:outputPanel>
 				</p:tab>
 				<br />
 			</p:wizard>
 		</h:form>
 		<p:dialog id="dlgCod" widgetVar="dlgCodigos"
-			header="Selección de Producto" width="800" resizable="false"
-			showEffect="explode" hideEffect="bounce" position="center middle">
+			header="Selección de Producto" width="800" height="500px"
+			resizable="false" showEffect="explode" hideEffect="bounce"
+			position="center top">
 			<h:form id="formProductos">
-				<div align="left">
-					<br />
-					<h:outputLabel style="font-weight: bold"
-						value="MODO DE USO: Para comenzar usted puede ingresar una palabra clave o Código y se le mostrarán las categorías de productos existentes, marque la que desea agregar." />
-					<br /><br />
-					<p:outputPanel style="background: #F5F6CE; padding: 1em">
-						<h:panelGrid columns="7">
-							<h:outputLabel value="Palabra Clave:" style="font-size: 11px;" />
-							<p:inputText size="30"
-								value="#{procesoBean.palabraclave}" />
-							<h:commandButton value="Buscar" />
-							<p:spacer height="10" width="15" />
-							<h:outputLabel value="Código:" style="font-size: 11px;" />
-							<p:inputText size="30"
-								value="#{procesoBean.codigoDeLote}" />
-							<h:commandButton value="Buscar" />
-						</h:panelGrid>
-					</p:outputPanel>
-					<br /><br />
-				</div>
+				<p:ajaxStatus onstart="statusDialog.show();"
+					onsuccess="statusDialog.hide();" />
+				<p:dialog modal="true" widgetVar="statusDialog" header="Espere"
+					resizable="false" draggable="false" closable="false">
+					<p:graphicImage value="/resources/images/ajaxloadingbar.gif" />
+				</p:dialog>
+				<p:scrollPanel mode="native" style="width:780px;height:500px">
+					<div align="left">
+						<br />
+						<h:outputLabel style="font-weight: bold"
+							value="MODO DE USO: Para comenzar usted puede ingresar una palabra clave o Código y se le mostrarán las categorías de productos existentes, marque la que desea agregar." />
+						<br /> <br />
+						<p:outputPanel style="background: #F5F6CE; padding: 1em">
+							<h:panelGrid columns="7">
+								<h:outputLabel value="Palabra Clave:" style="font-size: 11px;" />
+								<p:inputText size="30" value="#{procesoBean.palabraclave}" />
+								<p:commandButton update=":formProductos:pnlCodigosPadres"
+									value="Buscar" action="#{procesoBean.buscarPorPalabraClave}" />
+								<p:spacer height="10" width="15" />
+								<h:outputLabel value="Código:" style="font-size: 11px;" />
+								<p:inputText size="30" value="#{procesoBean.codigoDeLote}" />
+								<p:commandButton update=":formProductos:pnlCodigosPadres"
+									value="Buscar" action="#{procesoBean.buscarPorCodigoLote}" />
+							</h:panelGrid>
+						</p:outputPanel>
+						<br /> <br />
+						<p:outputPanel id="pnlCodigosPadres">
+							<p:dataTable var="codigo" selectionMode="single"
+								selection="#{procesoBean.loteSeleccionado}"
+								rowKey="#{codigo.codigo}"
+								value="#{procesoBean.listadoCodigosPadres}"
+								rendered="#{procesoBean.listadoCodigosPadres.size() > 0}">
+								<p:ajax event="rowSelect" oncomplete="PF('dlgCodigos').hide();"
+									listener="#{procesoBean.seleccionarLote}"
+									update=":formProceso:pnlLoteSelec" />
+								<p:column>
+									<h:outputText styleClass="tituloAzul" style="font-size: 11px"
+										value="[#{codigo.codigo}] #{codigo.descripcion}" />
+									<br />
+									<p:dataTable var="codigoHijo"
+										value="#{codigo.codigosSercopList}"
+										rendered="#{codigo.codigosSercopList.size() > 0}">
+										<p:column>
+											<h:outputText style="font-size: 11px"
+												value="[#{codigoHijo.codigo}] #{codigoHijo.descripcion}" />
+											<br />
+											<p:dataTable var="codigoHijo1"
+												value="#{codigoHijo.codigosSercopList}"
+												rendered="#{codigoHijo.codigosSercopList.size() > 0}">
+												<p:column>
+													<h:outputText style="font-size: 11px"
+														value="[#{codigoHijo1.codigo}] #{codigoHijo1.descripcion}" />
+													<br />
+													<p:dataTable var="codigoHijo2"
+														value="#{codigoHijo1.codigosSercopList}"
+														rendered="#{codigoHijo1.codigosSercopList.size() > 0}">
+														<p:column>
+															<h:outputText style="font-size: 11px"
+																value="[#{codigoHijo2.codigo}] #{codigoHijo2.descripcion}" />
+															<br />
+															<p:dataTable var="codigoHijo3"
+																value="#{codigoHijo2.codigosSercopList}"
+																rendered="#{codigoHijo2.codigosSercopList.size() > 0}">
+																<p:column>
+																	<h:outputText style="font-size: 11px"
+																		value="[#{codigoHijo3.codigo}] #{codigoHijo3.descripcion}" />
+																	<br />
+																	<p:dataTable var="codigoHijo4"
+																		value="#{codigoHijo3.codigosSercopList}"
+																		rendered="#{codigoHijo3.codigosSercopList.size() > 0}">
+																		<p:column>
+																			<h:outputText style="font-size: 11px"
+																				value="[#{codigoHijo4.codigo}] #{codigoHijo4.descripcion}" />
+																			<br />
+																			<p:dataTable var="codigoHijo5"
+																				value="#{codigoHijo4.codigosSercopList}"
+																				rendered="#{codigoHijo4.codigosSercopList.size() > 0}">
+																				<p:column>
+																					<h:outputText style="font-size: 11px"
+																						value="[#{codigoHijo5.codigo}] #{codigoHijo5.descripcion}" />
+																				</p:column>
+																			</p:dataTable>
+																		</p:column>
+																	</p:dataTable>
+																</p:column>
+															</p:dataTable>
+														</p:column>
+													</p:dataTable>
+												</p:column>
+											</p:dataTable>
+										</p:column>
+									</p:dataTable>
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</div>
+				</p:scrollPanel>
+			</h:form>
+		</p:dialog>
+		<p:dialog id="dlgProd" widgetVar="dlgProducto"
+			header="Selección de Producto" width="800" height="500px"
+			resizable="false" showEffect="explode" hideEffect="bounce"
+			position="center top">
+			<h:form id="formProductoHijo">
+				<p:scrollPanel mode="native" style="width:780px;height:500px">
+					<div align="left">
+						<h:outputLabel styleClass="tituloAzul" style="font-size: 12px"
+							value="CPC Lote elegido: #{procesoBean.loteSeleccionado.codigo}" />
+						<br />
+						<p:outputPanel style="background: #A9F5E1; padding: 1em">
+							<h:panelGrid columns="2">
+								<p:graphicImage style="margin-right: 20px" library="images"
+									name="aviso.png" />
+								<h:outputLabel styleClass="textoAzul12;"
+									value="MODO DE USO: A continuación se presentan las categorías de productos existentes, 
+										   marque el producto que desea agregar." />
+							</h:panelGrid>
+						</p:outputPanel>
+						<br />
+						<p:outputPanel id="pnlCodigosHijos">
+							<p:dataTable var="codigo"
+								value="#{procesoBean.listaCodigosHijos}"
+								rendered="#{procesoBean.listaCodigosHijos.size() > 0}">
+								<p:column style="background: #F2F2F2">
+									<h:outputText styleClass="tituloAzul" style="font-size: 11px;"
+										value=".:[#{codigo.codigo}] #{codigo.descripcion}" />
+									<br />
+									<p:dataTable var="codigoHijo" selectionMode="single"
+										selection="#{procesoBean.productoSeleccionado}"
+										rowKey="#{codigoHijo.codigo}"
+										value="#{codigo.codigosSercopList}"
+										rendered="#{codigo.codigosSercopList.size() > 0}">
+										<p:ajax event="rowSelect"
+											oncomplete="PF('dlgProducto').hide();"
+											listener="#{procesoBean.seleccionarProducto}"
+											update=":formProceso:pnlCodProd,:formProceso:pnlDesProd" />
+										<p:column>
+											<h:outputText style="font-size: 11px"
+												value="[#{codigoHijo.codigo}] #{codigoHijo.descripcion}" />
+											<br />
+											<p:dataTable var="codigoHijo1" selectionMode="single"
+												selection="#{procesoBean.productoSeleccionado}"
+												rowKey="#{codigoHijo1.codigo}"
+												value="#{codigoHijo.codigosSercopList}"
+												rendered="#{codigoHijo.codigosSercopList.size() > 0}">
+												<p:ajax event="rowSelect"
+													oncomplete="PF('dlgProducto').hide();"
+													listener="#{procesoBean.seleccionarProducto}"
+													update=":formProceso:pnlCodProd,:formProceso:pnlDesProd" />
+												<p:column>
+													<h:outputText style="font-size: 11px"
+														value="[#{codigoHijo1.codigo}] #{codigoHijo1.descripcion}" />
+													<br />
+													<p:dataTable var="codigoHijo2" selectionMode="single"
+														selection="#{procesoBean.productoSeleccionado}"
+														rowKey="#{codigoHijo2.codigo}"
+														value="#{codigoHijo1.codigosSercopList}"
+														rendered="#{codigoHijo1.codigosSercopList.size() > 0}">
+														<p:ajax event="rowSelect"
+															oncomplete="PF('dlgProducto').hide();"
+															listener="#{procesoBean.seleccionarProducto}"
+															update=":formProceso:pnlCodProd,:formProceso:pnlDesProd" />
+														<p:column>
+															<h:outputText style="font-size: 11px"
+																value="[#{codigoHijo2.codigo}] #{codigoHijo2.descripcion}" />
+															<br />
+															<p:dataTable var="codigoHijo3" selectionMode="single"
+																selection="#{procesoBean.productoSeleccionado}"
+																rowKey="#{codigoHijo3.codigo}"
+																value="#{codigoHijo2.codigosSercopList}"
+																rendered="#{codigoHijo2.codigosSercopList.size() > 0}">
+																<p:ajax event="rowSelect"
+																	oncomplete="PF('dlgProducto').hide();"
+																	listener="#{procesoBean.seleccionarProducto}"
+																	update=":formProceso:pnlCodProd,:formProceso:pnlDesProd" />
+																<p:column>
+																	<h:outputText style="font-size: 11px"
+																		value="[#{codigoHijo3.codigo}] #{codigoHijo3.descripcion}" />
+																	<br />
+																	<p:dataTable var="codigoHijo4" selectionMode="single"
+																		selection="#{procesoBean.productoSeleccionado}"
+																		rowKey="#{codigoHijo4.codigo}"
+																		value="#{codigoHijo3.codigosSercopList}"
+																		rendered="#{codigoHijo3.codigosSercopList.size() > 0}">
+																		<p:ajax event="rowSelect"
+																			oncomplete="PF('dlgProducto').hide();"
+																			listener="#{procesoBean.seleccionarProducto}"
+																			update=":formProceso:pnlCodProd,:formProceso:pnlDesProd" />
+																		<p:column>
+																			<h:outputText style="font-size: 11px"
+																				value="[#{codigoHijo4.codigo}] #{codigoHijo4.descripcion}" />
+																			<br />
+																			<p:dataTable var="codigoHijo5" selectionMode="single"
+																				selection="#{procesoBean.productoSeleccionado}"
+																				rowKey="#{codigoHijo5.codigo}"
+																				value="#{codigoHijo4.codigosSercopList}"
+																				rendered="#{codigoHijo4.codigosSercopList.size() > 0}">
+																				<p:ajax event="rowSelect"
+																					oncomplete="PF('dlgProducto').hide();"
+																					listener="#{procesoBean.seleccionarProducto}"
+																					update=":formProceso:pnlCodProd,:formProceso:pnlDesProd" />
+																				<p:column>
+																					<h:outputText style="font-size: 11px"
+																						value="[#{codigoHijo5.codigo}] #{codigoHijo5.descripcion}" />
+																				</p:column>
+																			</p:dataTable>
+																		</p:column>
+																	</p:dataTable>
+																</p:column>
+															</p:dataTable>
+														</p:column>
+													</p:dataTable>
+												</p:column>
+											</p:dataTable>
+										</p:column>
+									</p:dataTable>
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</div>
+				</p:scrollPanel>
 			</h:form>
 		</p:dialog>
 	</ui:define>

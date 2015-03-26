@@ -7,9 +7,10 @@ package gestion.academica.modelo;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -34,9 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class CodigosSercop implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "codigo")
     private String codigo;
     @Size(max = 1000)
@@ -46,7 +43,7 @@ public class CodigosSercop implements Serializable {
     private Integer nivel;
     @OneToMany(mappedBy = "codigo")
     private List<ProductoProceso> productoProcesoList;
-    @OneToMany(mappedBy = "codigoPadre")
+    @OneToMany(mappedBy = "codigoPadre", fetch = FetchType.EAGER)
     private List<CodigosSercop> codigosSercopList;
     @JoinColumn(name = "codigo_padre", referencedColumnName = "codigo")
     @ManyToOne

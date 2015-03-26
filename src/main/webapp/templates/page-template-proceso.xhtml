@@ -67,11 +67,13 @@
 											value="#{loguinIncopBean.proveedorLogueado != null ? loguinIncopBean.proveedorLogueado.ruc : loguinIncopBean.cliente.numeroDocumento.concat('001')}" />
 										<h:outputLabel style="font-weight: bold; margin-right: 5px"
 											value="Empresa:" />
-										<h:outputLabel rendered="#{loguinIncopBean.proveedorLogueado != null}"
+										<h:outputLabel
+											rendered="#{loguinIncopBean.proveedorLogueado != null}"
 											style="border-right: 1px solid black; padding-right: 10px; margin-right: 10px"
 											value="#{loguinIncopBean.proveedorLogueado.primerApellido} 
 									#{loguinIncopBean.proveedorLogueado.segundoApellido} #{loguinIncopBean.proveedorLogueado.primerNombre} #{loguinIncopBean.proveedorLogueado.segundoNombre}" />
-										<h:outputLabel rendered="#{loguinIncopBean.proveedorLogueado == null}"
+										<h:outputLabel
+											rendered="#{loguinIncopBean.proveedorLogueado == null}"
 											style="border-right: 1px solid black; padding-right: 10px; margin-right: 10px"
 											value="#{loguinIncopBean.cliente.nombres}" />
 										<h:outputLabel style="font-weight: bold; margin-right: 5px"
@@ -92,7 +94,8 @@
 							</h:panelGrid>
 						</h:form>
 					</div>
-					<br /><br />
+					<br />
+					<br />
 					<h:form>
 						<p:menubar styleClass="menuProceso">
 							<p:submenu label="Inicio">
@@ -115,9 +118,11 @@
 								<p:menuitem value="Régimen Especial" url="#" />
 								<p:menuitem value="Procedimientos Especiales" url="#" />
 							</p:submenu>
-							<p:submenu label="Entidad Contratante" rendered="#{loguinIncopBean.proveedorLogueado == null}">
+							<p:submenu label="Entidad Contratante"
+								rendered="#{loguinIncopBean.proveedorLogueado == null}">
 								<p:menuitem value="Nueva Contratación (Ushay)" url="#" />
-								<p:menuitem value="Nueva Contratación" action="#{loguinIncopBean.crearProceso}" />
+								<p:menuitem value="Nueva Contratación"
+									action="#{loguinIncopBean.crearProceso}" />
 								<p:menuitem value="Plan de Contratación" url="#" />
 								<p:menuitem value="Verificación P. Nacional" url="#" />
 								<p:menuitem value="Publicar Emergencia" url="#" />
@@ -137,15 +142,16 @@
 								</p:submenu>
 								<p:menuitem value="Contactos" url="#" />
 							</p:submenu>
-							<p:submenu label="Mi Catálogo" rendered="#{loguinIncopBean.proveedorLogueado != null}">
+							<p:submenu label="Mi Catálogo"
+								rendered="#{loguinIncopBean.proveedorLogueado != null}">
 								<p:menuitem value="Órdenes de Compra" url="#" />
 								<p:menuitem value="Convenios Adjudicados" url="#" />
 								<p:menuitem value="Catálogo Electrónico" url="#" />
-							</p:submenu>							
+							</p:submenu>
 						</p:menubar>
 					</h:form>
 				</div>
-				<br />
+				<br />		
 
 				<div id="contenido">
 					<ui:insert name="contenido" />

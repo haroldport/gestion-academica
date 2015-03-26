@@ -199,6 +199,10 @@ public class RegistroPortalBean extends Utilitario implements Serializable {
         		RequestContext.getCurrentInstance().execute("PF('dlgRegresar').show();");
         		skip = false;
         		return "paso1";
+        	}else if(event.getOldStep().equals("paso2") && !nuevoProveedor.getClave().equals(nuevoProveedor.getConfirmarClave())){
+        		skip = false;
+        		ponerMensajeError("Las claves no coinciden", "");
+        		return "paso2";
         	}else{
         		return event.getNewStep();
         	}            

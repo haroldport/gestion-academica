@@ -1,7 +1,7 @@
 package gestion.academica.modelo;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +33,7 @@ public class ProductoProceso implements Serializable {
     @Column(name = "id_producto_proceso")
     private Integer idProductoProceso;
     @Column(name = "id_unidad")
-    private BigInteger idUnidad;
+    private Integer idUnidad;
     @Column(name = "cantidad")
     private Integer cantidad;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -66,11 +66,11 @@ public class ProductoProceso implements Serializable {
         this.idProductoProceso = idProductoProceso;
     }
 
-    public BigInteger getIdUnidad() {
+    public Integer getIdUnidad() {
         return idUnidad;
     }
 
-    public void setIdUnidad(BigInteger idUnidad) {
+    public void setIdUnidad(Integer idUnidad) {
         this.idUnidad = idUnidad;
     }
 
@@ -122,7 +122,7 @@ public class ProductoProceso implements Serializable {
         this.codigo = codigo;
     }
 
-    @Override
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idProductoProceso != null ? idProductoProceso.hashCode() : 0);
