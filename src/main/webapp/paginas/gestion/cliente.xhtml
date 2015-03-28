@@ -1,0 +1,206 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formCliente">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab" style="font-size: 14px">
+				<p:tab title="Administración de clientes">
+					<center>
+						<p:outputPanel>
+							<h:panelGrid columns="4">
+								<h:outputLabel styleClass="label" value="Tipo de persona:" />
+								<p:outputPanel>
+									<p:selectOneMenu id="tipoPersona" style="width: 220px;"
+										value="#{clienteBean.nuevoCliente.tipoPersona.idCatalogoDetalle}"
+										required="true"
+										requiredMessage="El campo Tipo de persona es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{clienteBean.tiposPersona}"
+											var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
+											itemLabel="#{tipo.nombre}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="Tipo de documento:" />
+								<p:outputPanel>
+									<p:selectOneMenu id="tipo" style="width: 220px;"
+										value="#{clienteBean.nuevoCliente.catalogoDetalle.idCatalogoDetalle}"
+										required="true"
+										requiredMessage="El campo Tipo de documento es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{clienteBean.tiposDocumento}"
+											var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
+											itemLabel="#{tipo.nombre}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="No. Documento: " />
+								<p:outputPanel>
+									<p:inputText id="num" styleClass="Login-input" size="24"
+										value="#{clienteBean.nuevoCliente.numeroDocumento}"
+										required="true"
+										requiredMessage="El campo No. Documento es requerido!"
+										onkeypress="return aceptarNumeros(event);" maxlength="15" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="Nombres: " />
+								<p:outputPanel>
+									<p:inputText id="nombre" styleClass="Login-input" size="24"
+										value="#{clienteBean.nuevoCliente.nombres}"
+										required="true"
+										requiredMessage="El campo Nombres es requerido!"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="Ciudad:" />
+								<p:outputPanel>
+									<p:selectOneMenu id="ciudad" style="width: 220px;"
+										value="#{clienteBean.nuevoCliente.ciudad.idCatalogoDetalle}"
+										required="true"
+										requiredMessage="El campo Ciudad es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{clienteBean.ciudades}"
+											var="ciudad" itemValue="#{ciudad.idCatalogoDetalle}"
+											itemLabel="#{ciudad.nombre}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="Dirección: " />
+								<p:outputPanel>
+									<p:inputText id="direccion" styleClass="Login-input" size="24"
+										value="#{clienteBean.nuevoCliente.direccion}"
+										style="text-transform: uppercase" onchange="toUpperCase(this)" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="Email: " />
+								<p:outputPanel>
+									<p:inputText id="email" styleClass="Login-input" size="24"
+										value="#{clienteBean.nuevoCliente.email}"
+										required="true" validatorMessage="Ingrese un correo válido"
+										requiredMessage="El campo Email es requerido!">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</p:inputText>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="Teléfono: " />
+								<p:outputPanel>
+									<p:inputText id="telefono" styleClass="Login-input" size="24"
+										value="#{clienteBean.nuevoCliente.telefono}"
+										required="true"
+										requiredMessage="El campo Teléfono es requerido!" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								<h:outputLabel styleClass="label" value="Celular: " />
+								<p:outputPanel>
+									<p:inputText id="celular" styleClass="Login-input" size="24"
+										value="#{clienteBean.nuevoCliente.celular}"
+										onkeypress="return aceptarNumeros(event);" maxlength="10" />
+								</p:outputPanel>
+							</h:panelGrid>
+							<br />
+							<p:commandButton value="Editar"
+								action="#{clienteBean.editarCliente()}"
+								rendered="#{clienteBean.editarCliente}"
+								update=":formCliente:tab" process="@all" styleClass="btnClic" />
+							<p:commandButton value="Guardar"
+								action="#{clienteBean.guardar}" update=":formCliente:tab"
+								process="@all" styleClass="btnClic"
+								rendered="#{!clienteBean.editarCliente}" />
+							<p:commandButton value="Cancelar" process="@this"
+								action="#{clienteBean.iniciar}" update=":formCliente:tab"
+								styleClass="btnClic" />
+							<br />
+							<br />
+						</p:outputPanel>
+						<div class="footerTabla">
+							<p:outputPanel id="panelTabla">
+								<p:dataTable value="#{clienteBean.listadoClientes}"
+									var="cliente" rendered="#{clienteBean.listadoClientes.size() > 0}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorPosition="bottom" rows="5" paginator="true"
+									rowsPerPageTemplate="5,10,15,20,25,30"
+									tableStyle="table-layout:auto;width:100%;">
+									
+									<p:column styleClass="wrap" headerText="Tipo de persona">
+										<h:outputText value="#{cliente.tipoPersona.nombre}" />
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Ciudad">
+										<h:outputText value="#{cliente.ciudad.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Tipo de documento">
+										<h:outputText value="#{cliente.catalogoDetalle.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="No. de documento">
+										<h:outputText value="#{cliente.numeroDocumento}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Nombres">
+										<h:outputText value="#{cliente.nombres}" />
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Dirección">
+										<h:outputText value="#{cliente.direccion}" />
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Email">
+										<h:outputText value="#{cliente.email}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Teléfono">
+										<h:outputText value="#{cliente.telefono}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Celular">
+										<h:outputText value="#{cliente.celular}" />
+									</p:column>
+
+									<p:column headerText="Editar" styleClass="classBtn">
+										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
+											update=":formCliente" process="@this"
+											action="#{clienteBean.editarCliente(cliente)}" />
+										<p:tooltip for="cbEditar" value="Editar #{cliente.nombres}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+
+									<p:column headerText="Eliminar" styleClass="classBtn">
+										<p:commandButton id="cbEliminar" icon="ui-icon-trash"
+											update=":formCliente" process="@this"
+											actionListener="#{clienteBean.seleccionarCliente(cliente)}"
+											oncomplete="dlgEliminar.show()" />
+										<p:tooltip for="cbEliminar"
+											value="Eliminar #{cliente.nombres}" showEffect="fade"
+											hideEffect="fade" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+						</div>
+					</center>
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
+				message="Desea eliminar el cliente: #{clienteBean.eliminarCliente.nombres}?"
+				header="Eliminar #{clienteBean.eliminarCliente.nombres}"
+				severity="alert" widgetVar="dlgEliminar">
+				<p:commandButton value="Si" update=":formCliente"
+					oncomplete="dlgEliminar.hide()" process="@this"
+					actionListener="#{clienteBean.eliminar()}" />
+				<p:commandButton value="No" update=":formCliente"
+					onclick="dlgEliminar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

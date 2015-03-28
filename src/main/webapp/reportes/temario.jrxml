@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="temario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b76b155c-e672-4a3f-9018-ab22a1be1733">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<field name="nombreCurso" class="java.lang.String"/>
+	<field name="objetivoCurso" class="java.lang.String"/>
+	<field name="temas" class="java.lang.Object"/>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="236" y="0" width="99" height="20" uuid="f68dec64-b5e3-4022-b590-e1486e5f404b"/>
+				<textElement>
+					<font size="15" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TEMARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="94" height="20" uuid="151cadca-f2a5-40a3-b7d1-2f8867f7db2c"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Curso:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="29" width="448" height="20" uuid="7db90380-8981-473d-a40f-3fe4b274b952"/>
+				<textFieldExpression><![CDATA[$F{nombreCurso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="49" width="94" height="20" uuid="8adae604-206b-46eb-abdf-dc7b26dda958"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Objetivo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="49" width="448" height="40" uuid="8987caab-f45c-4be2-910c-d141d070f0c3"/>
+				<textFieldExpression><![CDATA[$F{objetivoCurso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="41" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="6e4be2fa-0bdf-410e-8348-96da59e657b2">
+					<printWhenExpression><![CDATA[$F{temas}.size() > 0]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{temas})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/detalleTemas.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="956a2fc6-f7cd-45ed-b590-2eac50db5df8"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="0" width="80" height="20" uuid="035c8ca8-f1c9-42b3-8750-b91f0e6fa703"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

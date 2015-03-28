@@ -21,17 +21,22 @@
 		<p:dialog header="#{msgs['error.sessionTimeOut.header']}"
 			widgetVar="sessionTimeOutDialog" modal="true" closable="false"
 			width="400" visible="false">
-			<h:outputText value="#{msgs['error.sessionTimeOut.text']}" />
-			<input id="confirmBackToLogin" type="button"
-				value="#{msgs['error.sessionTimeOut.button']}"
+			<h:outputText value="Sesión caducada" style="font-size: 0.8em" />
+			<input id="confirmBackToLogin" type="button" style="font-size: 0.8em"
+				value="Su sesión ha caducado, por favor vuelve a ingresar al sistema"
 				onclick="window.location='#{facesContext.externalContext.requestContextPath}/faces/index.xhtml';" />
 		</p:dialog>
 		<div id="nosotros" class="HeaderT">
 			<div class="MainMenu">
 				<h:form id="formPrincipal">
 					<ul class="MainMenu-list">
-						<li class="MainMenu-title"><h1>Sistema de Gestión
-								Académica</h1></li>
+						<li class="MainMenu-title">
+							<h1>
+								<p:commandLink id="page" style="color: #00DBFF !important; font-size: 0.9em !important; text-decoration: none"
+									action="#{indexBean.inicio}"
+									value="Sistema de Gestión Académica" />
+							</h1>
+						</li>
 						<li class="MainMenu-item"><p:commandLink
 								rendered="#{indexBean.usuario.username == null}"
 								onclick="PF('dlg').show();"

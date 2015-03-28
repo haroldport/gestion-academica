@@ -20,42 +20,43 @@
 		<p:dialog header="#{msgs['error.sessionTimeOut.header']}"
 			widgetVar="sessionTimeOutDialog" modal="true" closable="false"
 			width="400" visible="false">
-			<h:outputText value="#{msgs['error.sessionTimeOut.text']}" />
-			<input id="confirmBackToLogin" type="button"
-				value="#{msgs['error.sessionTimeOut.button']}"
+			<h:outputText value="Sesión caducada" style="font-size: 0.8em" />
+			<input id="confirmBackToLogin" type="button" style="font-size: 0.8em"
+				value="Su sesión ha caducado, por favor vuelve a ingresar al sistema"
 				onclick="window.location='#{facesContext.externalContext.requestContextPath}/faces/index.xhtml';" />
 		</p:dialog>
 		<div id="nosotros" class="HeaderT">
 			<div class="MainMenu">
 				<h:form id="formPrincipal">
 					<ul class="MainMenu-list">
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#nosotros">Nosotros</a></li>
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#perfil">Perfil</a></li>
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#cursos">Cursos</a></li>
-						<li class="MainMenu-item"><a class="MainMenu-link"
-							href="index.xhtml#contacto">Contacto</a></li>
+						<li class="MainMenu-title">
+							<h1>
+								<p:commandLink id="page" style="color: #00DBFF !important; font-size: 0.9em !important; text-decoration: none"
+									action="#{indexBean.inicio}"
+									value="Sistema de Gestión Académica" />
+							</h1>
+						</li>
 						<li class="MainMenu-item"><p:commandLink
 								rendered="#{indexBean.usuario.username == null}"
 								onclick="PF('dlg').show();"
 								styleClass="icon-login MainMenu-link2" value="Login" /> <p:commandLink
 								rendered="#{indexBean.usuario.username != null}" id="user"
 								styleClass="MainMenu-user" action="#{indexBean.verPrincipal}"
-								value="Bienvenid@ #{indexBean.usuario.username}!" /> 
-								<p:contextMenu for="user">
-									<p:menuitem value="Cambiar clave"
-									update=":formPrincipal, :formClave" icon="ui-icon-transferthick-e-w"
+								value="Bienvenid@ #{indexBean.usuario.username}!" /> <p:contextMenu
+								for="user">
+								<p:menuitem value="Cambiar clave"
+									update=":formPrincipal, :formClave"
+									icon="ui-icon-transferthick-e-w"
 									onclick="PF('dlgClave').show();" />
-								</p:contextMenu>
-								<p:outputPanel
-								styleClass="MainMenu-panel"
+							</p:contextMenu> <p:outputPanel styleClass="MainMenu-panel"
 								rendered="#{indexBean.usuario.username != null}">
 								<a class="MainMenu-user"
 									href="#{facesContext.externalContext.requestContextPath}/logout">
 									Cerrar sesión </a>
 							</p:outputPanel></li>
+							<li class="MainMenu-item"><p:commandLink
+								onclick="PF('dlg1').show();" rendered="#{indexBean.usuario.username == null}"
+								styleClass="icon-login MainMenu-link2" value="Registro" /></li>
 					</ul>
 				</h:form>
 			</div>
@@ -70,35 +71,187 @@
 			<ui:insert name="contenido" />
 		</div>
 		<div class="footerT">
-			<div>			
-				<p>Powered by JRivera Consulting</p>			
-				<p>Todos los derechos reservados - 2014</p>
+			<div>
+				<p>Powered by JRivera Consulting</p>
+				<p>Este sistema de Emulación de Procesos es de Propiedad Intelectual de JRivera Consulting</p>
 			</div>
-			<p:graphicImage styleClass="Header-imageT" library="images" name="logo.jpg" />
+			<p:graphicImage styleClass="Header-imageT" library="images"
+				name="logo.jpg" />
 		</div>
 		<p:dialog id="dlgPass" widgetVar="dlgClave" header="Cambio de clave"
-		width="600" resizable="false" showEffect="explode" hideEffect="bounce" position="center top">
+			width="600" resizable="false" showEffect="explode"
+			hideEffect="bounce" position="center top">
 			<h:form id="formClave">
 				<p:growl id="growl" life="5000" autoUpdate="true" />
 				<h:panelGrid columns="2">
 					<h:outputText value="Clave anterior: " />
-					<p:password size="35" value="#{indexBean.claveAnterior}" feedback="true" promptLabel="Ingrese la clave anterior"
-							required="true" requiredMessage="La clave anterior es requerida!"
-							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
-							strongLabel="Seguridad fuerte" />
+					<p:password size="35" value="#{indexBean.claveAnterior}"
+						feedback="true" promptLabel="Ingrese la clave anterior"
+						required="true" requiredMessage="La clave anterior es requerida!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
 					<h:outputText value="Nueva clave: " />
-					<p:password size="35" value="#{indexBean.claveActual}" feedback="true" promptLabel="Ingrese la clave actual"
-							required="true" requiredMessage="La clave actual es requerida!"
+					<p:password size="35" value="#{indexBean.claveActual}"
+						feedback="true" promptLabel="Ingrese la clave actual"
+						required="true" requiredMessage="La clave actual es requerida!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
+					<h:outputText value="Confirmar nueva clave: " />
+					<p:password size="35" value="#{indexBean.claveActualRepetida}"
+						feedback="true" promptLabel="Repita la clave actual"
+						required="true"
+						requiredMessage="Repetir la clave actual es requerido!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
+					<p:columnGroup />
+					<p:commandButton value="Cambiar clave"
+						action="#{indexBean.cambiarClave}"
+						oncomplete="handleLoginRequest(xhr, status, args)"
+						styleClass="btnClic" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		<p:dialog styleClass="Login-dialogo" id="dlgLogin" widgetVar="dlg"
+			header="¡Inicia sesión y empieza a aprender con los mejores!"
+			width="480" resizable="false" showEffect="clip" hideEffect="clip">
+			<h:form id="formLogin">
+				<p:growl id="messages" showDetail="false" life="5000"
+					autoUpdate="true" />
+				<p class="Profile-description">Si no tienes un usuario aún,
+					regístrate!</p>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Usuario:" />
+					<p:inputText value="#{indexBean.username}" required="true"
+						requiredMessage="El usuario es requerido!"
+						styleClass="Login-input" />
+					<h:outputLabel value="Password:" />
+					<p:password styleClass="Login-input" feedback="true"
+						value="#{indexBean.password}" promptLabel="Ingrese su clave"
+						required="true" requiredMessage="La clave es requerida!"
+						weakLabel="Seguridad baja" goodLabel="Seguridad buena"
+						strongLabel="Seguridad fuerte" />
+					<p:columnGroup />
+					<p:commandButton action="#{indexBean.login}" value="Ingresar"
+						styleClass="Footer-button" update=":formLogin, :formPrincipal" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog styleClass="Login-dialogo" id="dlgRegistro" widgetVar="dlg1"
+			header="¡Regístrate, te llevará poco tiempo!" width="480"
+			resizable="false" showEffect="clip" hideEffect="clip">
+			<h:form id="formRegistro">
+				<p class="Profile-description">Al registrarte, puedes acceder
+					inmediatamente a información de interés en lo que respecta a
+					procesos de contratación pública.</p>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Tipo de persona:" />
+					<p:outputPanel>
+						<p:selectOneMenu id="tipoPersona" style="width: 220px;"
+							value="#{indexBean.clienteBean.nuevoCliente.tipoPersona.idCatalogoDetalle}"
+							required="true"
+							requiredMessage="El campo Tipo de persona es requerido!">
+							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+							<f:selectItems value="#{indexBean.clienteBean.tiposPersona}"
+								var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
+								itemLabel="#{tipo.nombre}" />
+						</p:selectOneMenu>
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Tipo de documento:" />
+					<p:outputPanel>
+						<p:selectOneMenu id="tipo" style="width: 220px;"
+							value="#{indexBean.clienteBean.nuevoCliente.catalogoDetalle.idCatalogoDetalle}"
+							required="true"
+							requiredMessage="El campo Tipo de documento es requerido!">
+							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+							<f:selectItems value="#{indexBean.clienteBean.tiposDocumento}"
+								var="tipo" itemValue="#{tipo.idCatalogoDetalle}"
+								itemLabel="#{tipo.nombre}" />
+						</p:selectOneMenu>
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="No. Documento: " />
+					<p:outputPanel>
+						<p:inputText id="num" styleClass="Login-input" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.numeroDocumento}"
+							required="true"
+							requiredMessage="El campo No. Documento es requerido!"
+							onkeypress="return aceptarNumeros(event);" maxlength="15" />
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Nombres: " />
+					<p:outputPanel>
+						<p:inputText id="nombre" styleClass="Login-input" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.nombres}"
+							required="true" requiredMessage="El campo Nombres es requerido!"
+							style="text-transform: uppercase" onchange="toUpperCase(this)" />
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Ciudad:" />
+					<p:outputPanel>
+						<p:selectOneMenu id="ciudad" style="width: 220px;"
+							value="#{indexBean.clienteBean.nuevoCliente.ciudad.idCatalogoDetalle}"
+							required="true" requiredMessage="El campo Ciudad es requerido!">
+							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+							<f:selectItems value="#{indexBean.clienteBean.ciudades}"
+								var="ciudad" itemValue="#{ciudad.idCatalogoDetalle}"
+								itemLabel="#{ciudad.nombre}" />
+						</p:selectOneMenu>
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Dirección: " />
+					<p:outputPanel>
+						<p:inputText id="direccion" styleClass="Login-input" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.direccion}"
+							style="text-transform: uppercase" onchange="toUpperCase(this)" />
+					</p:outputPanel>
+					<h:outputLabel value="Email: " />
+					<p:outputPanel>
+						<p:inputText id="email" styleClass="Login-input" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.email}"
+							required="true" validatorMessage="Ingrese un correo válido"
+							requiredMessage="El campo Email es requerido!">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Teléfono: " />
+					<p:outputPanel>
+						<p:inputText id="telefono" styleClass="Login-input" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.telefono}"
+							required="true" requiredMessage="El campo Teléfono es requerido!" />
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Celular: " />
+					<p:outputPanel>
+						<p:inputText id="celular" styleClass="Login-input" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.celular}"
+							onkeypress="return aceptarNumeros(event);" maxlength="10" />
+					</p:outputPanel>
+					<h:outputLabel value="Username: " />
+					<p:outputPanel>
+						<p:inputText id="username" styleClass="Login-input" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.usuario.username}"
+							required="true" requiredMessage="El campo Username es requerido!" />
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
+					<h:outputLabel value="Password:" />
+					<p:outputPanel>
+						<p:password styleClass="Login-input" feedback="true" size="24"
+							value="#{indexBean.clienteBean.nuevoCliente.usuario.clave}"
+							promptLabel="Ingrese su clave" required="true"
+							requiredMessage="La clave es requerida!"
 							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
 							strongLabel="Seguridad fuerte" />
-					<h:outputText value="Confirmar nueva clave: " />
-					<p:password size="35" value="#{indexBean.claveActualRepetida}" feedback="true" promptLabel="Repita la clave actual"
-							required="true" requiredMessage="Repetir la clave actual es requerido!"
-							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
-							strongLabel="Seguridad fuerte"/>
+						<h:outputText value=" *" style="color: red" />
+					</p:outputPanel>
 					<p:columnGroup />
-					<p:commandButton value="Cambiar clave" action="#{indexBean.cambiarClave}"
-									 oncomplete="handleLoginRequest(xhr, status, args)" styleClass="btnClic" />
+					<p:commandButton action="#{indexBean.registrar}"
+						update=":formRegistro, :formPrincipal"
+						oncomplete="verificarRegistro(xhr, status, args)"
+						value="Registrarse" styleClass="Footer-button" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -112,6 +265,15 @@
 					dlgClave.hide();
 				}
 			}
+			function verificarRegistro(xhr, status, args) {
+				if (args.validationFailed || !args.registro) {
+					dlg1.jq.effect("shake", {
+						times : 5
+					}, 100);
+				} else {
+					dlg1.hide();
+				}
+			}	
 		</script>
 	</h:body>
 </f:view>

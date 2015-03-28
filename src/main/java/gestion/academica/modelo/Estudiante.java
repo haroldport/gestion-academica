@@ -43,11 +43,17 @@ public class Estudiante implements Serializable {
 	@OneToMany(mappedBy="estudiante")
 	private List<Matricula> matriculas;
 
-	//bi-directional many-to-one association to Proceso
-	@OneToMany(mappedBy="estudiante")
-	private List<Proceso> procesos;
-
 	public Estudiante() {
+	}
+	
+	public Estudiante(String email, String nombres, String numeroDocumento,
+			Estado estado, Usuario usuario) {
+		super();
+		this.email = email;
+		this.nombres = nombres;
+		this.numeroDocumento = numeroDocumento;
+		this.estado = estado;
+		this.usuario = usuario;
 	}
 
 	public Integer getIdEstudiante() {
@@ -118,28 +124,6 @@ public class Estudiante implements Serializable {
 		matricula.setEstudiante(null);
 
 		return matricula;
-	}
-
-	public List<Proceso> getProcesos() {
-		return this.procesos;
-	}
-
-	public void setProcesos(List<Proceso> procesos) {
-		this.procesos = procesos;
-	}
-
-	public Proceso addProceso(Proceso proceso) {
-		getProcesos().add(proceso);
-		proceso.setEstudiante(this);
-
-		return proceso;
-	}
-
-	public Proceso removeProceso(Proceso proceso) {
-		getProcesos().remove(proceso);
-		proceso.setEstudiante(null);
-
-		return proceso;
 	}
 
 }

@@ -47,7 +47,7 @@
 									Cerrar sesión </a>
 							</p:outputPanel></li>
 						<li class="MainMenu-item"><p:commandLink
-								onclick="PF('dlg1').show();"
+								onclick="PF('dlg1').show();" rendered="#{indexBean.usuario.username == null}"
 								styleClass="icon-login MainMenu-link2" value="Registro" /></li>
 					</ul>
 				</h:form>
@@ -94,7 +94,7 @@
 		</div>
 
 		<div id="cursos" class="Curso">
-			<h:form>
+			<h:form id="formCurso">
 				<h2 class="Curso-title u-title">Cursos</h2>
 				<p class="Profile-description">
 					Si quieres obtener información relevante acerca de Normativa,
@@ -104,32 +104,24 @@
 						en cualquiera--</em> de nuestros cursos podrás tener acceso a una
 					plataforma de emulación de procesos.
 				</p>
-				<div class="Curso-item">
-					<div class="Curso-imageContainer">
-						<p:graphicImage styleClass="Curso-image" library="images"
-							name="oferta.jpg" />
-						<div class="Curso-imageDescription">Curso de manejo del
-							portal de Compras Públicas</div>
-						<a class="Profile-link" href="#">Preinscripción</a>
+				<p:dataGrid id="verCurso" var="curso" styleClass="curso-panel"
+					emptyMessage="No hay cursos disponibles en este momento"
+					value="#{indexBean.listaCursos}" columns="3">
+					<div class="Curso-item">
+						<p:outputPanel rendered="#{indexBean.dentroDeRango(curso.fechaFin)}">
+							<div class="Curso-imageContainer">
+								<p:graphicImage id="image" styleClass="Curso-image"
+									rendered="#{curso.informacionCurso.imagen.idImagen > 0}"
+									url="/image?id=#{curso.informacionCurso.imagen.idImagen}" />
+							</div>
+							<div class="Curso-imageDescription">#{curso.informacionCurso.nombre}</div>
+							<p:commandLink id="linkCurso" style="font-size: 1em"
+								action="#{indexBean.masInfoCurso(curso)}"
+								styleClass="Profile-link" process="@this :formCurso"
+								update=":formCurso" value="Más información" />
+						</p:outputPanel>
 					</div>
-				</div>
-				<div class="Curso-item">
-					<div class="Curso-imageContainer">
-						<p:graphicImage styleClass="Curso-image" library="images"
-							name="oferta.jpg" />
-						<div class="Curso-imageDescription">Curso de Oferta Técnica</div>
-						<a class="Profile-link" href="#">Preinscripción</a>
-					</div>
-				</div>
-				<div class="Curso-item">
-					<div class="Curso-imageContainer">
-						<p:graphicImage styleClass="Curso-image" library="images"
-							name="oferta.jpg" />
-						<div class="Curso-imageDescription">Curso de elaboración de
-							pliegos</div>
-						<a class="Profile-link" href="#">Preinscripción</a>
-					</div>
-				</div>
+				</p:dataGrid>
 			</h:form>
 		</div>
 
@@ -187,7 +179,7 @@
 				<p class="Profile-description">Al registrarte, puedes acceder
 					inmediatamente a información de interés en lo que respecta a
 					procesos de contratación pública.</p>
-				<h:panelGrid columns="2">					
+				<h:panelGrid columns="2">
 					<h:outputLabel value="Tipo de persona:" />
 					<p:outputPanel>
 						<p:selectOneMenu id="tipoPersona" style="width: 220px;"
@@ -235,8 +227,7 @@
 					<p:outputPanel>
 						<p:selectOneMenu id="ciudad" style="width: 220px;"
 							value="#{indexBean.clienteBean.nuevoCliente.ciudad.idCatalogoDetalle}"
-							required="true"
-							requiredMessage="El campo Ciudad es requerido!">
+							required="true" requiredMessage="El campo Ciudad es requerido!">
 							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
 							<f:selectItems value="#{indexBean.clienteBean.ciudades}"
 								var="ciudad" itemValue="#{ciudad.idCatalogoDetalle}"
@@ -284,8 +275,9 @@
 					<h:outputLabel value="Password:" />
 					<p:outputPanel>
 						<p:password styleClass="Login-input" feedback="true" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.usuario.clave}" promptLabel="Ingrese su clave"
-							required="true" requiredMessage="La clave es requerida!"
+							value="#{indexBean.clienteBean.nuevoCliente.usuario.clave}"
+							promptLabel="Ingrese su clave" required="true"
+							requiredMessage="La clave es requerida!"
 							weakLabel="Seguridad baja" goodLabel="Seguridad buena"
 							strongLabel="Seguridad fuerte" />
 						<h:outputText value=" *" style="color: red" />

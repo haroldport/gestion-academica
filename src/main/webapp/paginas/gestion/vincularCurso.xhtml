@@ -1,0 +1,195 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formCurso">
+			<p:growl id="messages" showDetail="false" life="5000"
+				autoUpdate="true" />
+			<br />
+			<br />
+			<p:tabView id="tab" style="font-size: 14px">
+				<p:tab title="Vinculación y publicación de cursos">
+					<center>
+						<p:outputPanel>
+							<h:panelGrid columns="4">
+								<h:outputLabel class="label" value="Curso" />
+								<p:outputPanel>
+									<p:selectOneMenu id="curso" style="width: 380px;"
+										value="#{cursoBean.nuevoCurso.informacionCurso.idInformacionCurso}"
+										required="true" requiredMessage="El campo Curso es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{cursoBean.informacionCursos}"
+											var="curso" itemValue="#{curso.idInformacionCurso}"
+											itemLabel="#{curso.nombre}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Instructor" />
+								<p:outputPanel>
+									<p:selectOneMenu id="instructor" style="width: 380px;"
+										value="#{cursoBean.nuevoCurso.instructor.idInstructor}"
+										required="true"
+										requiredMessage="El campo Instructor es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{cursoBean.instructores}"
+											var="instructor" itemValue="#{instructor.idInstructor}"
+											itemLabel="#{instructor.nombres}" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Horario" />
+								<p:outputPanel>
+									<p:selectOneMenu id="horario" style="width: 380px;"
+										value="#{cursoBean.nuevoCurso.horario.idHorario}"
+										required="true"
+										requiredMessage="El campo Horario es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{cursoBean.horarios}" var="horario"
+											itemValue="#{horario.idHorario}"
+											itemLabel="#{horario.dias} (#{horario.horas})" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Sitio" />
+								<p:outputPanel>
+									<p:selectOneMenu id="sitio" style="width: 380px;"
+										value="#{cursoBean.nuevoCurso.sitioCurso.idSitioCurso}"
+										required="true" requiredMessage="El campo Sitio es requerido!">
+										<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
+										<f:selectItems value="#{cursoBean.sitios}" var="sitio"
+											itemValue="#{sitio.idSitioCurso}"
+											itemLabel="#{sitio.nombre} - (#{sitio.ciudad.nombre} - #{sitio.direccion})" />
+									</p:selectOneMenu>
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel styleClass="label" value="Fecha inicio curso:" />
+								<p:outputPanel>
+									<p:calendar id="fechaInicio" size="24"
+										value="#{cursoBean.nuevoCurso.fechaInicio}"
+										required="true" navigator="true" pattern="yyyy-MM-dd HH:mm:ss"
+										showOn="button"
+										requiredMessage="El campo Fecha inicio curso es requerido!" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+								
+								<h:outputLabel styleClass="label" value="Fecha fin curso:" />
+								<p:outputPanel>
+									<p:calendar id="fechaFin" size="24"
+										value="#{cursoBean.nuevoCurso.fechaFin}"
+										required="true"
+										requiredMessage="El campo Fecha fin curso es requerido!"
+										navigator="true" pattern="yyyy-MM-dd HH:mm:ss" showOn="button" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+
+								<h:outputLabel class="label" value="Cupo " />
+								<p:outputPanel>
+									<p:inputText id="cupo" size="28"
+										value="#{cursoBean.nuevoCurso.cupo}" maxlength="4"
+										required="true" onkeypress="return aceptarNumeros(event);"
+										requiredMessage="El campo Cupo es requerido!" />
+									<h:outputText value=" *" style="color: red" />
+								</p:outputPanel>
+							</h:panelGrid>
+							<br />
+							<p:commandButton value="Editar"
+								action="#{cursoBean.editarCurso()}"
+								rendered="#{cursoBean.editarCurso}"
+								update=":formCurso:tab" process="@all" styleClass="btnClic" />
+							<p:commandButton value="Guardar"
+								action="#{cursoBean.guardar()}" update=":formCurso:tab"
+								process="@all" styleClass="btnClic"
+								rendered="#{!cursoBean.editarCurso}" />
+							<p:commandButton value="Cancelar" process="@this"
+								action="#{cursoBean.iniciar()}" update=":formCurso:tab"
+								styleClass="btnClic" />
+							<br />
+							<br />
+						</p:outputPanel>
+						<div class="footerTabla">
+							<p:outputPanel id="panelTabla">
+								<p:dataTable value="#{cursoBean.listaCursos}" var="curso"
+									rendered="#{cursoBean.listaCursos.size() > 0}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorPosition="bottom" rows="5" paginator="true"
+									rowsPerPageTemplate="5,10,15,20,25,30"
+									tableStyle="table-layout:auto;width:100%;">
+
+									<p:column styleClass="wrap" headerText="Nombre">
+										<h:outputText value="#{curso.informacionCurso.nombre}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Instructor">
+										<h:outputText value="#{curso.instructor.nombres}" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Horario">
+										<h:outputText value="#{curso.horario.dias} (#{curso.horario.horas})" />
+									</p:column>
+
+									<p:column styleClass="wrap" headerText="Sitio">
+										<h:outputText value="#{curso.sitioCurso.nombre} (#{curso.sitioCurso.ciudad.nombre} - #{curso.sitioCurso.direccion})" />
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Fecha inicio curso">
+										<h:outputText value="#{curso.fechaInicio}">
+											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Fecha fin curso">
+										<h:outputText value="#{curso.fechaFin}">
+											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Cupo">
+										<h:outputText value="#{curso.cupo}" />
+									</p:column>
+
+									<p:column headerText="Editar" styleClass="classBtn">
+										<p:commandButton id="cbEditar" icon="ui-icon-pencil"
+											update=":formCurso" process="@this"
+											action="#{cursoBean.editarCurso(curso)}" />
+										<p:tooltip for="cbEditar" value="Editar #{curso.informacionCurso.nombre}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+
+									<p:column headerText="Eliminar" styleClass="classBtn">
+										<p:commandButton id="cbEliminar" icon="ui-icon-trash"
+											update=":formCurso" process="@this"
+											actionListener="#{cursoBean.seleccionarCurso(curso)}"
+											oncomplete="dlgEliminar.show()" />
+										<p:tooltip for="cbEliminar" value="Eliminar #{curso.informacionCurso.nombre}"
+											showEffect="fade" hideEffect="fade" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+						</div>
+					</center>
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:confirmDialog id="cdEliminar" styleClass="cajaEspecial"
+				message="Desea eliminar el curso: #{cursoBean.eliminarCurso.informacionCurso.nombre}?"
+				header="Eliminar #{cursoBean.eliminarCurso.informacionCurso.nombre}"
+				severity="alert" widgetVar="dlgEliminar">
+				<p:commandButton value="Si" update=":formCurso"
+					oncomplete="dlgEliminar.hide()" process="@this"
+					actionListener="#{cursoBean.eliminar()}" />
+				<p:commandButton value="No" update=":formCurso"
+					onclick="dlgEliminar.hide()" type="button" process="@this" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

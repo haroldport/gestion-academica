@@ -1,22 +1,124 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:pou="http://primefaces.org/ui">
-    <ui:composition template="/templates/page-template-menu.xhtml">
-        <ui:define name="contenido">
-            <h:form>
-                <p:outputPanel>
-                    <center>
-                    	<br /><br /><br /><br /><br /><br /><br />
-                        <h:outputLabel style="font-size: 2.5em;color: #5E5F5F;" value="INFORMACIÓN DE NORMATIVA" />
-                        <br /><br /><br /><br /><br /><br /><br />
-                    </center>
-                </p:outputPanel>
-                <br/>                
-            </h:form>
-        </ui:define>
-    </ui:composition>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pou="http://primefaces.org/ui">
+<ui:composition template="/templates/page-template-menu.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+			<div class="banner">
+				<div class="banner-content">
+					<h:graphicImage library="images" name="normativa.png"
+						styleClass="banner-badge" />
+					<strong class="banner-label">Beneficio Exclusivo por
+						registrarte en nuestra página!!!</strong>
+					<h2 class="banner-title">En esta sección encontrarás
+						información de reglamentos, resoluciones, tips y mucho más...</h2>
+				</div>
+			</div>
+
+			<div class="resoluciones">
+				<h2 class="resoluciones-title">
+					<span class="resoluciones-titleBar">Normativas, Reglamentos, Resoluciones</span>
+				</h2>
+
+				<ul class="normativa-list">
+					<div class="normativa-container">
+						<li class="normativa-item u-clearfix">
+							<h:commandLink action="#{loguinIncopBean.descargarArchivo('ReglamentoContratacionPublica.pdf')}" target="_blank"
+								styleClass="normativa-link">
+								<div class="normativa-itemData">
+									<h:graphicImage library="images" name="pdf-icon.png"
+										alt="Reglamento Ley Orgánica" height="80" width="80"
+										styleClass="normativa-itemBadge" />
+								</div>
+								<div class="normativa-itemInfo">
+									<h3 class="normativa-itemTitle">Reglamento Ley Orgánica</h3>
+									<span class="normativa-itemLink">Reglamento General de
+										la Ley Orgánica del Sistema Nacional de Contratación Pública</span>
+								</div>
+							</h:commandLink>
+						</li>
+						<li class="normativa-item u-clearfix">
+							<h:commandLink action="#{loguinIncopBean.descargarArchivo('resolucion_sercop_2015_231.pdf')}" target="_blank"
+								styleClass="normativa-link">
+								<div class="normativa-itemData">
+									<h:graphicImage library="images" name="pdf-icon.png"
+										alt="RESOLUCIÓN SERCOP No. 023-2015" height="80" width="80"
+										styleClass="normativa-itemBadge" />
+								</div>
+								<div class="normativa-itemInfo">
+									<h3 class="normativa-itemTitle">Resolución No. 023-2015</h3>
+									<span class="normativa-itemLink">Expedir las disposiciones para los procedimientos de selección de 
+									proveedores</span>
+								</div>
+							</h:commandLink>
+						</li>						
+						<li class="normativa-item u-clearfix">
+							<h:commandLink action="#{loguinIncopBean.descargarArchivo('resolucion_sercop_2015_24.pdf')}" target="_blank"
+								styleClass="normativa-link">
+								<div class="normativa-itemData">
+									<h:graphicImage library="images" name="pdf-icon.png"
+										alt="RESOLUCIÓN SERCOP No. 023-2015" height="80" width="80"
+										styleClass="normativa-itemBadge" />
+								</div>
+								<div class="normativa-itemInfo">
+									<h3 class="normativa-itemTitle">Resolución No. 024-2015</h3>
+									<span class="normativa-itemLink">Expedir la Normativa para la Adquisición de Bienes y Servicios a través de 
+									Catálogo Electrónico</span>
+								</div>
+							</h:commandLink>
+						</li>
+						<li class="normativa-item u-clearfix">
+							<h:commandLink action="#{loguinIncopBean.descargarArchivo('resolucion_sercop_25_2015.pdf')}" target="_blank"
+								styleClass="normativa-link">
+								<div class="normativa-itemData">
+									<h:graphicImage library="images" name="pdf-icon.png"
+										alt="RESOLUCIÓN SERCOP No. 023-2015" height="80" width="80"
+										styleClass="normativa-itemBadge" />
+								</div>
+								<div class="normativa-itemInfo">
+									<h3 class="normativa-itemTitle">Resolución No. 025-2015</h3>
+									<span class="normativa-itemLink">Expedir el Reglamento de Ferias Inclusivas y de Catálogo Dinámico Inclusivo</span>
+								</div>
+							</h:commandLink>
+						</li>
+						<li class="normativa-item u-clearfix">
+							<h:commandLink action="#{loguinIncopBean.descargarArchivo('resolucion_re_sercop_26_2015.pdf')}" target="_blank"
+								styleClass="normativa-link">
+								<div class="normativa-itemData">
+									<h:graphicImage library="images" name="pdf-icon.png"
+										alt="RESOLUCIÓN SERCOP No. 023-2015" height="80" width="80"
+										styleClass="normativa-itemBadge" />
+								</div>
+								<div class="normativa-itemInfo">
+									<h3 class="normativa-itemTitle">Resolución No. 026-2015</h3>
+									<span class="normativa-itemLink">Expedir las disposiciones para la Monetarización del Sistema de preferencias 
+									en la adquisición de Bienes y Servicios</span>
+								</div>
+							</h:commandLink>
+						</li>
+						<li class="normativa-item u-clearfix">
+							<h:commandLink action="#{loguinIncopBean.descargarArchivo('resolucion_re_27_2015.pdf')}" target="_blank"
+								styleClass="normativa-link">
+								<div class="normativa-itemData">
+									<h:graphicImage library="images" name="pdf-icon.png"
+										alt="RESOLUCIÓN SERCOP No. 023-2015" height="80" width="80"
+										styleClass="normativa-itemBadge" />
+								</div>
+								<div class="normativa-itemInfo">
+									<h3 class="normativa-itemTitle">Resolución No. 027-2015</h3>
+									<span class="normativa-itemLink">Los proveedores del Estado que por algún motivo no 
+									pudieron actualizar sus datos conforme el cronograma señalado</span>
+								</div>
+							</h:commandLink>
+						</li>
+					</div>
+				</ul>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
 </html>
 

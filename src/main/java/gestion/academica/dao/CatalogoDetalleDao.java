@@ -56,5 +56,82 @@ public class CatalogoDetalleDao extends Generico<CatalogoDetalle> {
             return null;
         }
     }
+    
+    /**
+     * Obtener por cat det nemonico
+     * @param nemonico
+     * @return 
+     */
+    @SuppressWarnings("unchecked")
+    public List<CatalogoDetalle> obtenerPorCatDetNemonico(String nemonico) {
+        try {
+            String sql = "SELECT c FROM CatalogoDetalle c WHERE c.estado.idEstado = 1 "
+                    + "AND c.nemonico = :nemonico "
+                    + "ORDER BY c.idCatalogoDetalle";
+            Query query = getEntityManager().createQuery(sql);
+            query.setParameter("nemonico", nemonico);
+            List<CatalogoDetalle> catalogosDetalle = query.getResultList() != null && !query.getResultList().isEmpty() ? (List<CatalogoDetalle>) query.getResultList() : null;
+            return catalogosDetalle;
+        } catch (Exception e) {
+            Logger.getLogger(CatalogoDetalleDao.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
+    /**
+     * Obtener por nemonico del catalago y por id del padre
+     * @param nemonico
+     * @param idCatalogoDetallePadre
+     * @return 
+     */
+    @SuppressWarnings("unchecked")
+    public List<CatalogoDetalle> obtenerPorCatalogoNemonicoYPadre(String nemonico, Integer idCatalogoDetallePadre) {
+        try {
+            String sql = "SELECT c FROM CatalogoDetalle c WHERE c.estado.idEstado = 1 "
+                    + "AND c.catalogo.nemonico = :nemonico "
+                    + "AND c.idCatalogoDetallePadre.idCatalogoDetalle = :idCatalogoDetallePadre "
+                    + "ORDER BY c.idCatalogoDetalle";
+            Query query = getEntityManager().createQuery(sql);
+            query.setParameter("nemonico", nemonico);
+            query.setParameter("idCatalogoDetallePadre", idCatalogoDetallePadre);
+            List<CatalogoDetalle> catalogosDetalle = query.getResultList() != null && !query.getResultList().isEmpty() ? (List<CatalogoDetalle>) query.getResultList() : null;
+            return catalogosDetalle;
+        } catch (Exception e) {
+            Logger.getLogger(CatalogoDetalleDao.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
+    /**
+     * Obtener por id
+     * @param id
+     * @return 
+     */
+    public CatalogoDetalle obtenerPorId(Integer id) {
+        String sql = "SELECT c FROM CatalogoDetalle c WHERE c.estado.idEstado = 1 AND c.idCatalogoDetalle = :id";
+        return (CatalogoDetalle) this.getEntityManager().createQuery(sql).setParameter("id",id).getResultList().get(0);
+    }
+    
+    /**
+     * Obtener padres por catalogo nemonico
+     * @param nemonico
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<CatalogoDetalle> obtenerPadresPorCatalogoNemonico(String nemonico) {
+        try {
+            String sql = "SELECT c FROM CatalogoDetalle c WHERE c.estado.idEstado = 1 "
+                    + "AND c.catalogo.nemonico = :nemonico "
+                    + "AND c.idCatalogoDetallePadre IS NULL "
+                    + "ORDER BY c.idCatalogoDetalle";
+            Query query = getEntityManager().createQuery(sql);
+            query.setParameter("nemonico", nemonico);
+            List<CatalogoDetalle> catalogosDetalle = query.getResultList() != null && !query.getResultList().isEmpty() ? (List<CatalogoDetalle>) query.getResultList() : null;
+            return catalogosDetalle;
+        } catch (Exception e) {
+            Logger.getLogger(CatalogoDetalleDao.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
 
 }

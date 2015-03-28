@@ -1,0 +1,185 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="contenido">
+		<h:form id="formMasInfo">
+			<p:panel id="tab"
+				header="Curso: #{indexBean.cursoSeleccionado.informacionCurso.nombre}">
+				<p:outputPanel style="text-align: center" id="pnlImagen">
+					<h:graphicImage styleClass="Curso-image" id="imagen"
+						rendered="#{indexBean.cursoSeleccionado.informacionCurso.imagen.idImagen == 0}"
+						library="images" name="sel-imagen.png" />
+					<h:graphicImage id="image" styleClass="Curso-image"
+						rendered="#{indexBean.cursoSeleccionado.informacionCurso.imagen.idImagen > 0}"
+						url="/image?id=#{indexBean.cursoSeleccionado.informacionCurso.imagen.idImagen}" />
+				</p:outputPanel>
+				<br />
+				<br />
+				<p:outputPanel style="margin-left: 3em" id="pnlDescripcion">
+					<h:panelGrid columns="3">
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="Objetivo del curso:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="#{indexBean.cursoSeleccionado.informacionCurso.objetivo}" />
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="Fecha inicio:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="#{indexBean.cursoSeleccionado.fechaInicio}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+						</h:outputText>
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="Fecha fin:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="#{indexBean.cursoSeleccionado.fechaFin}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+						</h:outputText>
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="Horario:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="#{indexBean.cursoSeleccionado.horario.dias} (#{indexBean.cursoSeleccionado.horario.horas})" />
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="No. Horas:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="#{indexBean.cursoSeleccionado.informacionCurso.numeroHoras}" />
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="Costo:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="$ #{indexBean.cursoSeleccionado.informacionCurso.costo}" />
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="Cupo máximo:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="#{indexBean.cursoSeleccionado.cupo} personas" />
+					</h:panelGrid>
+					<br />
+					<br />
+					<h:panelGrid columns="3">
+						<p:panel header="Instructor">
+							<h:panelGrid columns="3">
+								<h:outputText style="font-size: 0.8em !important"
+									styleClass="label" value="Nombre:" />
+								<p:spacer width="10" height="30" />
+								<h:outputText style="font-size: 0.8em !important"
+									value="#{indexBean.cursoSeleccionado.instructor.nombres}" />
+								<h:outputText style="font-size: 0.8em !important"
+									styleClass="label" value="Teléfono:" />
+								<p:spacer width="10" height="30" />
+								<h:outputText style="font-size: 0.8em !important"
+									value="#{indexBean.cursoSeleccionado.instructor.telefono}" />
+								<h:outputText style="font-size: 0.8em !important"
+									styleClass="label" value="Email:" />
+								<p:spacer width="10" height="30" />
+								<h:outputText style="font-size: 0.8em !important"
+									value="#{indexBean.cursoSeleccionado.instructor.email}" />
+							</h:panelGrid>
+						</p:panel>
+						<p:spacer width="30" height="30" />
+						<p:panel header="Sitio">
+							<h:panelGrid columns="3">
+								<h:outputText style="font-size: 0.8em !important"
+									styleClass="label" value="Lugar:" />
+								<p:spacer width="10" height="30" />
+								<h:outputText style="font-size: 0.8em !important"
+									value="#{indexBean.cursoSeleccionado.sitioCurso.nombre}" />
+								<h:outputText style="font-size: 0.8em !important"
+									styleClass="label" value="Dirección:" />
+								<p:spacer width="10" height="30" />
+								<h:outputText style="font-size: 0.8em !important"
+									value="Ciudad: #{indexBean.cursoSeleccionado.sitioCurso.ciudad.nombre}, #{indexBean.cursoSeleccionado.sitioCurso.direccion}" />
+								<h:outputText style="font-size: 0.8em !important"
+									styleClass="label" value="Teléfono:" />
+								<p:spacer width="10" height="30" />
+								<h:outputText style="font-size: 0.8em !important"
+									value="#{indexBean.cursoSeleccionado.sitioCurso.telefono}" />
+							</h:panelGrid>
+						</p:panel>
+					</h:panelGrid>
+					<br />
+					<br />
+					<center>
+						<p:commandLink id="linkTemario" style="font-size: 0.8em"
+							action="#{temaCursoBean.llenarArbolPorCurso(indexBean.cursoSeleccionado.informacionCurso)}"
+							onclick="PF('dlgTema').show();"
+							styleClass="Profile-link" process="@this :formMasInfo"
+							update=":formTemario" value="Ver Temario" />
+						<p:commandLink id="linkPreinscripcion" style="font-size: 0.8em"
+							action="#{indexBean.confirmarPreinscripcion}"
+							onclick="PF('dlgPre').show();"
+							disabled="#{indexBean.usuario.username == null or indexBean.preinscripcion.idPreinscripcion != null or (indexBean.usuario.rol.nemonico ne 'RCLI' and indexBean.usuario.rol.nemonico ne 'RMAT')}"
+							styleClass="Profile-link" process="@this :formMasInfo"
+							update=":formPreinscripcion, :formMasInfo" value="Preinscripción" />
+						<br /> <br />
+						<h:outputText style="font-size: 0.8em !important; color: red"
+							rendered="#{indexBean.usuario.username == null or (indexBean.usuario.rol.nemonico ne 'RCLI' and indexBean.usuario.rol.nemonico ne 'RMAT')}"
+							value="Debes ser un usuario registrado y autenticarte en el sistema para preinscribirte en este curso" />
+						<h:outputText style="font-size: 0.8em !important; color: red"
+							rendered="#{indexBean.preinscripcion.idPreinscripcion != null}"
+							value="Ya estás preinscrit@ en este curso" />
+					</center>
+					<br />
+				</p:outputPanel>
+			</p:panel>
+		</h:form>
+
+		<p:dialog styleClass="Login-dialogo" id="dlgPreinscripcion"
+			widgetVar="dlgPre" header="Confirma tu preinscripción en el curso"
+			width="480" resizable="false" showEffect="clip" hideEffect="clip">
+			<h:form id="formPreinscripcion">
+				<p:growl id="messages" showDetail="false" life="5000"
+					autoUpdate="true" />
+				<center>
+					<h:panelGrid columns="3">
+						<h:outputText style="font-size: 1em !important" styleClass="label"
+							value="Curso:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 1em !important"
+							value="#{indexBean.cursoSeleccionado.informacionCurso.nombre}" />
+						<h:outputText style="font-size: 1em !important" styleClass="label"
+							value="Horario:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 1em !important"
+							value="#{indexBean.cursoSeleccionado.horario.dias} (#{indexBean.cursoSeleccionado.horario.horas})" />
+						<h:outputText style="font-size: 1em !important" styleClass="label"
+							value="No. Participantes:" />
+						<p:spacer width="10" height="30" />
+						<p:inputText
+							value="#{indexBean.preinscripcion.numeroParticipantes}" />
+						<p:commandButton action="#{indexBean.preinscribirCliente}"
+							value="Preinscribirse" styleClass="Footer-button"
+							oncomplete="PF('dlgPre').hide();"
+							update=":formPreinscripcion, :formMasInfo" />
+						<p:spacer width="10" height="30" />
+						<p:commandButton value="Cancelar" onclick="PF('dlgPre').hide();"
+							styleClass="Footer-button"
+							update=":formPreinscripcion, :formMasInfo" />
+					</h:panelGrid>
+				</center>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog header="Temario del Curso" widgetVar="dlgTema" style="font-size: 14px;"
+			modal="true" showEffect="puff" hideEffect="fold" resizable="false">
+			<h:form id="formTemario">
+				<p:panel>
+					<p:treeTable value="#{temaCursoBean.rootTemaCurso}" var="tema"
+						style="text-align: left; height: 300px;overflow: scroll;"						
+						rendered="#{temaCursoBean.rootTemaCurso.childCount > 0}">
+						<p:column styleClass="wrap" headerText="Tema">
+							<h:outputText value="#{tema.descripcion}" />
+						</p:column>
+					</p:treeTable>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

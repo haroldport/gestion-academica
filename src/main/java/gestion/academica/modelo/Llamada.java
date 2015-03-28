@@ -40,6 +40,10 @@ public class Llamada implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_estado")
 	private Estado estado;
+	
+	@ManyToOne
+	@JoinColumn(name="id_curso")
+	private Curso curso;
 
 	public Llamada() {
 	}
@@ -92,4 +96,11 @@ public class Llamada implements Serializable {
 		this.estado = estado;
 	}
 
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 }

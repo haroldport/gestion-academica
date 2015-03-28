@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="telefonos" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="50dfeea3-1cbd-4fe7-a526-78077dff17dd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="idTipoTelefono" class="java.lang.Object"/>
+	<field name="numeroTelefono" class="java.lang.String"/>
+	<field name="observaciones" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="128" height="20" forecolor="#006699" uuid="a726ea16-4691-46d7-bfeb-acb4ffee476c"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="0" width="144" height="20" forecolor="#006699" uuid="83bd0fe0-1853-4828-afed-d80ed920eea0"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="0" width="283" height="20" forecolor="#006699" uuid="88b8f922-c983-484c-b2bc-a22e4b1f48c8"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="128" height="20" uuid="8162398c-a0a1-4827-8bea-8e5651fdfede"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idTipoTelefono}.nombre]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="0" width="144" height="20" uuid="340a3c5b-1c39-4832-a4b8-f69f99ecedc0"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroTelefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="0" width="283" height="20" uuid="7186208a-96a9-450e-843d-8f2b1f6cb36b"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

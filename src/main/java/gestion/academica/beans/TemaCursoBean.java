@@ -76,13 +76,20 @@ public class TemaCursoBean extends Utilitario implements Serializable {
 		nuevoTemaCurso.setTemaCurso(new TemaCurso());
 		temaCursoPadre = new TemaCurso();
 		listaTemasCurso = temaCursoServicio.listarTemasCursoPadres();
-		llenarArbolTemas();
+		llenarArbolTemas(listaTemasCurso);
 	}
 	
-	public void llenarArbolTemas() {
+	public void llenarArbolPorCurso(InformacionCurso infoCurso){
+		List<TemaCurso> listaPorCurso = temaCursoServicio.listarTemasPadresPorCurso(infoCurso);
+		if(listaPorCurso != null){
+			llenarArbolTemas(listaPorCurso);
+		}
+	}
+	
+	public void llenarArbolTemas(List<TemaCurso> temas) {
         try {
             setRootTemaCurso(new DefaultTreeNode("root", null));
-            cargarArbolEstOrg(listaTemasCurso, getRootTemaCurso());
+            cargarArbolEstOrg(temas, getRootTemaCurso());
         } catch (Exception e) {
         	LOGGER.log(Level.SEVERE, null, e);
         }

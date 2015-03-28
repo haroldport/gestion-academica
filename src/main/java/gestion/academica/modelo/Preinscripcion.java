@@ -39,9 +39,21 @@ public class Preinscripcion implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_estado")
 	private Estado estado;
+	
+	private boolean matriculado;
 
 	public Preinscripcion() {
 	}
+
+	public Preinscripcion(String observacion, Cliente cliente, Curso curso,
+			Estado estado) {
+		this.observacion = observacion;
+		this.cliente = cliente;
+		this.curso = curso;
+		this.estado = estado;
+	}
+
+
 
 	public Integer getIdPreinscripcion() {
 		return this.idPreinscripcion;
@@ -89,6 +101,14 @@ public class Preinscripcion implements Serializable {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+
+	public boolean isMatriculado() {
+		return matriculado;
+	}
+
+	public void setMatriculado(boolean matriculado) {
+		this.matriculado = matriculado;
 	}
 
 }
