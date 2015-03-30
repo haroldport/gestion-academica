@@ -158,25 +158,32 @@ private static final long serialVersionUID = 1L;
 			Date fechaCreacion = new Date();
 			Curso curso = cursoServicio.buscarPorId(nuevaMatricula.getCurso().getIdCurso());
 			nuevaMatricula.setCurso(curso);
-			Matricula matricula = matriculaServicio.buscarPorEstudianteYCurso(nuevaMatricula.getEstudiante(), nuevaMatricula.getCurso());
-			if(matricula == null){
-				nuevaMatricula.setEstado(estadoActivo);
-				nuevaMatricula.setFechaMatricula(fechaCreacion);
-				nuevaMatricula.getEstudiante().setNombres(nuevaMatricula.getEstudiante().getNombres().toUpperCase());
-				if(nuevaMatricula.getEstudiante().getUsuario().getUsername() == null){
-					nuevaMatricula.getEstudiante().getUsuario().setUsername(nuevaMatricula.getEstudiante().getNumeroDocumento());
-					nuevaMatricula.getEstudiante().getUsuario().setClave(Crypt.encryptMD5(nuevaMatricula.getEstudiante().getNumeroDocumento()));
-					nuevaMatricula.getEstudiante().getUsuario().setEstado(estadoActivo);
+			if(curso.getCupoDisponible() > 0){
+				Matricula matricula = matriculaServicio.buscarPorEstudianteYCurso(nuevaMatricula.getEstudiante(), nuevaMatricula.getCurso());
+				if(matricula == null){
+					nuevaMatricula.setEstado(estadoActivo);
+					nuevaMatricula.setFechaMatricula(fechaCreacion);
+					nuevaMatricula.getEstudiante().setNombres(nuevaMatricula.getEstudiante().getNombres().toUpperCase());
+					if(nuevaMatricula.getEstudiante().getUsuario().getUsername() == null){
+						nuevaMatricula.getEstudiante().getUsuario().setUsername(nuevaMatricula.getEstudiante().getNumeroDocumento());
+						nuevaMatricula.getEstudiante().getUsuario().setClave(Crypt.encryptMD5(nuevaMatricula.getEstudiante().getNumeroDocumento()));
+						nuevaMatricula.getEstudiante().getUsuario().setEstado(estadoActivo);
+					}
+					matriculaServicio.crearEstudianteYMatricula(nuevaMatricula.getEstudiante(), nuevaMatricula, rolMatriculado);
+					curso.setCupoDisponible(curso.getCupoDisponible() - 1);
+					cursoServicio.editar(curso);
+					bitacora = new Bitacora(fechaCreacion, "Creación de Matricula: " + nuevaMatricula.getIdMatricula(), this.getUsuario());
+		            bitacoraServicio.crear(bitacora);
+					this.ponerMensajeInfo("La Matricula fue creada correctamente", "");
+					initValores();
+				}else{
+					ponerMensajeError("Error - El(la) estudiante: " + nuevaMatricula.getEstudiante().getNombres() + 
+							", ya está matriculad@ en el curso: " + nuevaMatricula.getCurso().getInformacionCurso().getNombre(), "");
 				}
-				matriculaServicio.crearEstudianteYMatricula(nuevaMatricula.getEstudiante(), nuevaMatricula, rolMatriculado);
-				bitacora = new Bitacora(fechaCreacion, "Creación de Matricula: " + nuevaMatricula.getIdMatricula(), this.getUsuario());
-	            bitacoraServicio.crear(bitacora);
-				this.ponerMensajeInfo("La Matricula fue creada correctamente", "");
-				initValores();
 			}else{
-				ponerMensajeError("Error - El(la) estudiante: " + nuevaMatricula.getEstudiante().getNombres() + 
-						", ya está matriculad@ en el curso: " + nuevaMatricula.getCurso().getInformacionCurso().getNombre(), "");
-			}			
+				ponerMensajeError("Ya no hay cupos disponibles en este Curso", "");
+			}
+						
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, null, e);
 		}
@@ -287,6 +294,9 @@ private static final long serialVersionUID = 1L;
 		if(cursoMasivo == null){
 			result = false;
 			registrarEstadistica(numeroRegistro, "Curso", "El curso no existe");
+		}else if(cursoMasivo.getCupoDisponible() == 0){
+			result = false;
+			registrarEstadistica(numeroRegistro, "Curso", "El curso ya no tiene cupos disponible, no se pudo matricular al estudiante");
 		}
 		return result;
 	}
@@ -341,6 +351,8 @@ private static final long serialVersionUID = 1L;
 		if(cursoMasivo != null && estudianteMasivo != null){
 			Matricula matricula = new Matricula(fechaMatricula, cursoMasivo, estadoActivo);
 			matriculaServicio.crearEstudianteYMatricula(estudianteMasivo, matricula, rolMatriculado);
+			cursoMasivo.setCupoDisponible(cursoMasivo.getCupoDisponible() - 1);
+			cursoServicio.editar(cursoMasivo);
 			bitacora = new Bitacora(fechaMatricula, "Creación de Matricula (proceso masivo): " + matricula.getIdMatricula(), this.getUsuario());
             bitacoraServicio.crear(bitacora);
             contadorRegistrosProcesados++;

@@ -226,7 +226,7 @@ public class IndexBean implements Serializable {
     public String masInfoCurso(Curso curso) {
     	cursoSeleccionado = new Curso();
     	preinscripcion = new Preinscripcion();
-    	setCursoSeleccionado(curso);
+    	setCursoSeleccionado(cursoServicio.buscarPorId(curso.getIdCurso()));
     	if(getUsuario().getIdUsuario() != null){
     		Cliente cliente = clienteBean.getClienteServicio().obtenerPorUsuario(getUsuario());
         	Preinscripcion preinscripcionTmp = preinscripcionServicio.obtenerPorClienteYCurso(cliente, cursoSeleccionado);
@@ -250,6 +250,7 @@ public class IndexBean implements Serializable {
     	if(preinscripcionTmp == null){
     		preinscripcion.setCliente(cliente);
     		preinscripcion.setCurso(cursoSeleccionado);
+    		preinscripcion.setFechaPreinscripcion(fechaCreacion);
     		preinscripcion.setEstado(clienteBean.getEstadoActivo());
     		preinscripcion.setObservacion("Preinscripción en el curso: " + cursoSeleccionado.getInformacionCurso().getNombre());
     		preinscripcionServicio.crear(preinscripcion);

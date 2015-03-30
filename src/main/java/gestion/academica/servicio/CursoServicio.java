@@ -39,11 +39,19 @@ public class CursoServicio {
 	}
 	
 	/**
-     * Listar todos los cursos activos
+     * Listar todos los cursos activos y que no hayan caducado
      * @return
      */
 	public List<Curso> listarCursos() {
     	return cursoDao.listarCursos();
+    }
+	
+	/**
+     * Listar todos los cursos activos
+     * @return
+     */
+    public List<Curso> listarTodos() {
+    	return cursoDao.listarTodos();
     }
 	
 	/**

@@ -26,7 +26,7 @@
 
 									<p:column styleClass="wrap" headerText="Curso">
 										<h:outputText
-											value="#{preinscripcion.curso.informacionCurso.nombre}" />
+											value="#{preinscripcion.curso.informacionCurso.nombre} - #{preinscripcion.curso.sitioCurso.ciudad.nombre}" />
 									</p:column>
 
 									<p:column styleClass="wrap" headerText="Cliente">
@@ -36,6 +36,12 @@
 
 									<p:column styleClass="wrap" headerText="No. participantes">
 										<h:outputText value="#{preinscripcion.numeroParticipantes}" />
+									</p:column>
+									
+									<p:column styleClass="wrap" headerText="Fecha preinscripción">
+										<h:outputText value="#{preinscripcion.fechaPreinscripcion}">
+											<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+										</h:outputText>
 									</p:column>
 
 									<p:column headerText="Gestión de llamadas"
@@ -54,12 +60,13 @@
 										styleClass="classBtn">
 										<center>
 											<p:commandButton id="cbMatricula" icon="ui-icon-person"
-												disabled="#{preinscripcion.matriculado or preinscripcion.numeroParticipantes > 1}"
+												disabled="#{preinscripcion.matriculado or preinscripcion.numeroParticipantes > 1 or preinscripcion.curso.cupoDisponible eq 0}"
 												update=":formPreinscripcion" process="@this"
 												oncomplete="dlgMatricular.show()"
 												action="#{preinscripcionBean.seleccionarPreinscripcion(preinscripcion)}" />
 											<p:tooltip for="cbMatricula" value="Matricular cliente en el curso"
 												showEffect="fade" hideEffect="fade" />
+											<h:outputText rendered="#{preinscripcion.curso.cupoDisponible eq 0}" style="color:red; font-size: 10px" value="No hay cupos!!" />
 										</center>
 									</p:column>
 								</p:dataTable>

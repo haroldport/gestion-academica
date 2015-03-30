@@ -22,8 +22,12 @@ public class Curso implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_curso")
 	private Integer idCurso;
-
-	private Integer cupo;
+	
+	@Column(name="cupo_maximo")
+	private Integer cupoMaximo;
+	
+	@Column(name="cupo_disponible")
+	private Integer cupoDisponible;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_fin")
@@ -80,12 +84,20 @@ public class Curso implements Serializable {
 		this.idCurso = idCurso;
 	}
 
-	public Integer getCupo() {
-		return this.cupo;
+	public Integer getCupoMaximo() {
+		return cupoMaximo;
 	}
 
-	public void setCupo(Integer cupo) {
-		this.cupo = cupo;
+	public void setCupoMaximo(Integer cupoMaximo) {
+		this.cupoMaximo = cupoMaximo;
+	}
+
+	public Integer getCupoDisponible() {
+		return cupoDisponible;
+	}
+
+	public void setCupoDisponible(Integer cupoDisponible) {
+		this.cupoDisponible = cupoDisponible;
 	}
 
 	public Date getFechaFin() {

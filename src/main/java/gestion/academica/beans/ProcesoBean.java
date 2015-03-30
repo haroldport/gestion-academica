@@ -49,7 +49,6 @@ public class ProcesoBean extends Utilitario implements Serializable {
 	private List<CatalogoDetalle> encargadosProceso;
 	private List<CatalogoDetalle> tiposProceso;
 	private Proceso nuevoProceso;
-	private Date fechaActual;
 	private ArchivoProceso nuevoArchivoProceso;
 	private List<ArchivoProceso> listaArchivosProceso;
 	private ArchivoProceso nuevoArchivoProcesoOpcional;
@@ -89,7 +88,6 @@ public class ProcesoBean extends Utilitario implements Serializable {
         }
         else {
         	if(event.getNewStep().equals("paso3")){
-        		setFechaActual(new Date());
         		nuevoProceso.setIdTipoCompra(catalogoDetalleServicio.obtenerPorId(nuevoProceso.getIdTipoCompra().getIdCatalogoDetalle()));
         		nuevoProceso.setIdTipoProceso(catalogoDetalleServicio.obtenerPorId(nuevoProceso.getIdTipoProceso().getIdCatalogoDetalle()));
         	}
@@ -303,9 +301,11 @@ public class ProcesoBean extends Utilitario implements Serializable {
 	
 	public boolean verificarTotal(){
 		boolean result = true;
-		if( totalLotes > nuevoProceso.getPresupuestoReferencial() || totalLotes < nuevoProceso.getPresupuestoReferencial()){
-			result = false;
-		}
+		if(nuevoProceso.getPresupuestoReferencial() != null){
+			if( totalLotes > nuevoProceso.getPresupuestoReferencial() || totalLotes < nuevoProceso.getPresupuestoReferencial()){
+				result = false;
+			}
+		}		
 		return result;
 	}
 	
@@ -377,14 +377,6 @@ public class ProcesoBean extends Utilitario implements Serializable {
 
 	public void setTiposProceso(List<CatalogoDetalle> tiposProceso) {
 		this.tiposProceso = tiposProceso;
-	}
-
-	public Date getFechaActual() {
-		return fechaActual;
-	}
-
-	public void setFechaActual(Date fechaActual) {
-		this.fechaActual = fechaActual;
 	}
 
 	public ArchivoProceso getNuevoArchivoProceso() {

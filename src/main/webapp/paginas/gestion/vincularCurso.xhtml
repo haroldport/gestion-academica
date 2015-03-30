@@ -93,7 +93,7 @@
 								<h:outputLabel class="label" value="Cupo " />
 								<p:outputPanel>
 									<p:inputText id="cupo" size="28"
-										value="#{cursoBean.nuevoCurso.cupo}" maxlength="4"
+										value="#{cursoBean.nuevoCurso.cupoMaximo}" maxlength="4"
 										required="true" onkeypress="return aceptarNumeros(event);"
 										requiredMessage="El campo Cupo es requerido!" />
 									<h:outputText value=" *" style="color: red" />
@@ -152,7 +152,7 @@
 									</p:column>
 									
 									<p:column styleClass="wrap" headerText="Cupo">
-										<h:outputText value="#{curso.cupo}" />
+										<h:outputText value="#{curso.cupoMaximo}" />
 									</p:column>
 
 									<p:column headerText="Editar" styleClass="classBtn">
