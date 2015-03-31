@@ -1,9 +1,9 @@
 package gestion.academica.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
-
 
 /**
  * The persistent class for the preinscripcion database table.
@@ -11,36 +11,40 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "preinscripcion", schema = "gestion")
-@NamedQuery(name="Preinscripcion.findAll", query="SELECT p FROM Preinscripcion p")
+@NamedQuery(name = "Preinscripcion.findAll", query = "SELECT p FROM Preinscripcion p")
 public class Preinscripcion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_preinscripcion")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_preinscripcion")
 	private Integer idPreinscripcion;
 
-	@Column(name="numero_participantes")
+	@Column(name = "numero_participantes")
 	private Integer numeroParticipantes;
 
 	private String observacion;
 
-	//bi-directional many-to-one association to Cliente
+	// bi-directional many-to-one association to Cliente
 	@ManyToOne
-	@JoinColumn(name="id_cliente")
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
-	//bi-directional many-to-one association to Curso
+	// bi-directional many-to-one association to Curso
 	@ManyToOne
-	@JoinColumn(name="id_curso")
+	@JoinColumn(name = "id_curso")
 	private Curso curso;
 
-	//bi-directional many-to-one association to Estado
+	// bi-directional many-to-one association to Estado
 	@ManyToOne
-	@JoinColumn(name="id_estado")
+	@JoinColumn(name = "id_estado")
 	private Estado estado;
-	
+
 	private boolean matriculado;
+
+	@Column(name = "fecha_preinscripcion")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaPreinscripcion;
 
 	public Preinscripcion() {
 	}
@@ -52,8 +56,6 @@ public class Preinscripcion implements Serializable {
 		this.curso = curso;
 		this.estado = estado;
 	}
-
-
 
 	public Integer getIdPreinscripcion() {
 		return this.idPreinscripcion;
@@ -110,5 +112,14 @@ public class Preinscripcion implements Serializable {
 	public void setMatriculado(boolean matriculado) {
 		this.matriculado = matriculado;
 	}
+
+	public Date getFechaPreinscripcion() {
+		return fechaPreinscripcion;
+	}
+
+	public void setFechaPreinscripcion(Date fechaPreinscripcion) {
+		this.fechaPreinscripcion = fechaPreinscripcion;
+	}
+	
 
 }

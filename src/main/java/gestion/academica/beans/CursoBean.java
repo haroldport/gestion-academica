@@ -85,7 +85,7 @@ public class CursoBean extends Utilitario implements Serializable {
 		nuevoCurso.setHorario(new Horario());
 		nuevoCurso.setInstructor(new Instructor());
 		nuevoCurso.setSitioCurso(new SitioCurso());
-		listaCursos = cursoServicio.listarCursos();
+		listaCursos = cursoServicio.listarTodos();
 	}
 	
 	public String seleccionarCurso(Curso curso) {
@@ -118,6 +118,7 @@ public class CursoBean extends Utilitario implements Serializable {
 		try {
 			Date fechaCreacion = new Date();
 			nuevoCurso.setEstado(estadoActivo);
+			nuevoCurso.setCupoDisponible(nuevoCurso.getCupoMaximo());
 			cursoServicio.crear(nuevoCurso);
 			bitacora = new Bitacora(fechaCreacion, "Creación de curso: " + nuevoCurso.getInformacionCurso().getNombre(), this.getUsuario());
             bitacoraServicio.crear(bitacora);

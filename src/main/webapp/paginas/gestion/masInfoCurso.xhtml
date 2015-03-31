@@ -58,7 +58,12 @@
 							styleClass="label" value="Cupo máximo:" />
 						<p:spacer width="10" height="30" />
 						<h:outputText style="font-size: 0.8em !important"
-							value="#{indexBean.cursoSeleccionado.cupo} personas" />
+							value="#{indexBean.cursoSeleccionado.cupoMaximo} personas" />
+						<h:outputText style="font-size: 0.8em !important"
+							styleClass="label" value="Cupo disponible:" />
+						<p:spacer width="10" height="30" />
+						<h:outputText style="font-size: 0.8em !important"
+							value="#{indexBean.cursoSeleccionado.cupoDisponible} personas" />
 					</h:panelGrid>
 					<br />
 					<br />
@@ -114,13 +119,21 @@
 						<p:commandLink id="linkPreinscripcion" style="font-size: 0.8em"
 							action="#{indexBean.confirmarPreinscripcion}"
 							onclick="PF('dlgPre').show();"
-							disabled="#{indexBean.usuario.username == null or indexBean.preinscripcion.idPreinscripcion != null or (indexBean.usuario.rol.nemonico ne 'RCLI' and indexBean.usuario.rol.nemonico ne 'RMAT')}"
+							disabled="#{indexBean.usuario.username == null or 
+										indexBean.preinscripcion.idPreinscripcion != null or 
+										(indexBean.usuario.rol.nemonico ne 'RCLI' and indexBean.usuario.rol.nemonico ne 'RMAT') or 
+										indexBean.cursoSeleccionado.cupoDisponible == 0}"
 							styleClass="Profile-link" process="@this :formMasInfo"
 							update=":formPreinscripcion, :formMasInfo" value="Preinscripción" />
 						<br /> <br />
 						<h:outputText style="font-size: 0.8em !important; color: red"
-							rendered="#{indexBean.usuario.username == null or (indexBean.usuario.rol.nemonico ne 'RCLI' and indexBean.usuario.rol.nemonico ne 'RMAT')}"
+							rendered="#{(indexBean.usuario.username == null or 
+										(indexBean.usuario.rol.nemonico ne 'RCLI' and indexBean.usuario.rol.nemonico ne 'RMAT')) and 
+										indexBean.cursoSeleccionado.cupoDisponible > 0}"
 							value="Debes ser un usuario registrado y autenticarte en el sistema para preinscribirte en este curso" />
+						<h:outputText style="font-size: 0.8em !important; color: red"
+							rendered="#{indexBean.cursoSeleccionado.cupoDisponible == 0}"
+							value="Ya no hay cupos disponibles para este Curso" />
 						<h:outputText style="font-size: 0.8em !important; color: red"
 							rendered="#{indexBean.preinscripcion.idPreinscripcion != null}"
 							value="Ya estás preinscrit@ en este curso" />

@@ -1,10 +1,11 @@
 package gestion.academica.dao;
 
+import gestion.academica.modelo.Curso;
+
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import gestion.academica.modelo.Curso;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,11 +28,22 @@ public class CursoDao extends Generico<Curso> {
     }
     
     /**
-     * Listar todos los cursos activos
+     * Listar todos los cursos activos y que no hayan caducado
      * @return
      */
     @SuppressWarnings("unchecked")
 	public List<Curso> listarCursos() {
+    	Date fechaActual = new Date();
+        String sql = "SELECT c FROM Curso c WHERE c.estado.idEstado = 1 AND c.fechaFin > :fechaActual ORDER BY c.idCurso";
+        return this.getEntityManager().createQuery(sql).setParameter("fechaActual", fechaActual).getResultList();
+    }
+    
+    /**
+     * Listar todos los cursos activos
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<Curso> listarTodos() {
         String sql = "SELECT c FROM Curso c WHERE c.estado.idEstado = 1 ORDER BY c.idCurso";
         return this.getEntityManager().createQuery(sql).getResultList();
     }

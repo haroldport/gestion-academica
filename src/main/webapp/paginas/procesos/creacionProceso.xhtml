@@ -332,7 +332,7 @@
 										requiredMessage="Este campo no puede estar vacío"
 										validatorMessage="El anticipo máximo es del 70%">
 										<f:validateLongRange minimum="0"
-											maximum="#{procesoBean.nuevoProceso.idTipoCompra.idCatalogoDetalle eq 243 ? '70' : '100'}" />
+											maximum="#{(procesoBean.nuevoProceso.idTipoCompra.idCatalogoDetalle eq 243 or procesoBean.nuevoProceso.idTipoCompra.idCatalogoDetalle eq 248) ? '70' : '100'}" />
 									</p:inputText>
 									<h:outputLabel value="%" style="font-size: 10px" />
 									<br />
@@ -788,11 +788,8 @@
 						<br />
 						<h:outputLabel value="Fecha Actual " styleClass="tituloAzul"
 							style="font-size: 12px; font-weight: bold" />
-						<p:inputText style="color: red" readonly="true"
-							value="#{procesoBean.fechaActual}">
-							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
-						</p:inputText>
-						<br />
+						<p:clock pattern="yyyy-MM-dd HH:mm:ss" />
+						<br /><br />
 						<center>
 							<h:panelGrid columns="3" styleClass="top-aligned-columns"
 								cellpadding="5" style="display:block" cellspacing="5">

@@ -55,7 +55,7 @@ public class PreinscripcionDao extends Generico<Preinscripcion> {
      */
     @SuppressWarnings("unchecked")
 	public List<Preinscripcion> listarPreinscripciones() {
-        String sql = "SELECT p FROM Preinscripcion p WHERE p.estado.idEstado = 1 ORDER BY p.idPreinscripcion";
+        String sql = "SELECT p FROM Preinscripcion p WHERE p.estado.idEstado = 1 ORDER BY p.idPreinscripcion DESC";
         return this.getEntityManager().createQuery(sql).getResultList();
     }
 
