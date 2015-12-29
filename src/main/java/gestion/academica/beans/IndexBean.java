@@ -1,16 +1,23 @@
 package gestion.academica.beans;
 
+import gestion.academica.enumerado.EstadoEnum;
 import gestion.academica.modelo.Acceso;
 import gestion.academica.modelo.AccesoRol;
 import gestion.academica.modelo.Bitacora;
+import gestion.academica.modelo.CatalogoDetalle;
 import gestion.academica.modelo.Cliente;
 import gestion.academica.modelo.Curso;
+import gestion.academica.modelo.Estado;
 import gestion.academica.modelo.Preinscripcion;
+import gestion.academica.modelo.Rol;
 import gestion.academica.modelo.Usuario;
 import gestion.academica.servicio.AccesoServicio;
 import gestion.academica.servicio.BitacoraServicio;
+import gestion.academica.servicio.ClienteServicio;
 import gestion.academica.servicio.CursoServicio;
+import gestion.academica.servicio.EstadoServicio;
 import gestion.academica.servicio.PreinscripcionServicio;
+import gestion.academica.servicio.RolServicio;
 import gestion.academica.servicio.UsuarioServicio;
 import gestion.academica.utilitario.Crypt;
 
@@ -62,6 +69,12 @@ public class IndexBean implements Serializable {
 	private CursoServicio cursoServicio;
 	@EJB
 	private PreinscripcionServicio preinscripcionServicio;
+	@EJB
+	private ClienteServicio clienteServicio;
+	@EJB
+	private EstadoServicio estadoServicio;
+	@EJB
+	private RolServicio rolServicio;
 	
 	private String username;
     private String password;
@@ -76,12 +89,18 @@ public class IndexBean implements Serializable {
 	private List<Curso> listaCursos;
 	private Curso cursoSeleccionado;
 	private Preinscripcion preinscripcion;
+	private Cliente nuevoCliente;
+	private Estado estadoActivo;
+	private Rol rolCliente;
 	
 	@ManagedProperty(value = "#{clienteBean}")
     private ClienteBean clienteBean;
     
     @PostConstruct
     public void init() throws Exception {
+    	initValores();
+    	estadoActivo = estadoServicio.buscarPorNemonico(EstadoEnum.ACTIVO.getNemonico());
+		rolCliente = rolServicio.obtenerPorNemonico("RCLI");
         usuario = new Usuario();
         usuarioRegistro = usuarioServicio.obtenerUsuarioPorUsername("usuario_registro");
         listaAccesoRol = new ArrayList<>();
@@ -197,19 +216,54 @@ public class IndexBean implements Serializable {
     	boolean registro = false;
     	Date fechaCreacion = new Date();
     	try{
-    		String nombreCliente = clienteBean.getNuevoCliente().getNombres();
-    		clienteBean.guardar();
-        	bitacora = new Bitacora(fechaCreacion, "Creación de cliente: " + nombreCliente, usuarioRegistro);
-            bitacoraServicio.crear(bitacora);
-            registro = true;
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-    				"Confirmación!! Registro realizado con éxito", "");
+    		String nombreCliente = nuevoCliente.getNombres();
+    		String result = guardar();
+    		if(result == null){
+    			bitacora = new Bitacora(fechaCreacion, "Creación de cliente: " + nombreCliente, usuarioRegistro);
+                bitacoraServicio.crear(bitacora);
+                registro = true;
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+            				"Confirmación!! Registro realizado con éxito", "");
+                initValores();
+    		}else{
+    			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+    					result, "");
+    		}
+    		
     	}catch(Exception e){
     		e.printStackTrace();
     	}
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     	context.addCallbackParam("registro", registro);
     }
+    
+    
+    private void initValores() {
+		nuevoCliente = new Cliente();
+		nuevoCliente.setUsuario(new Usuario());
+		nuevoCliente.setCatalogoDetalle(new CatalogoDetalle());
+		nuevoCliente.setTipoPersona(new CatalogoDetalle());
+		nuevoCliente.setCiudad(new CatalogoDetalle());
+	}
+
+	public String guardar() {
+		String result = null;
+		if (nuevoCliente.getUsuario().getUsername() == null) {
+			nuevoCliente.getUsuario().setUsername(
+					nuevoCliente.getNombres().split(" ")[0].toLowerCase());
+			nuevoCliente.getUsuario().setClave(
+					nuevoCliente.getUsuario().getUsername());
+		}
+		nuevoCliente.setEstado(estadoActivo);
+		nuevoCliente.setNombres(nuevoCliente.getNombres().toUpperCase());
+		nuevoCliente.setDireccion(nuevoCliente.getDireccion().toUpperCase());
+		nuevoCliente.getUsuario().setClave(
+				Crypt.encryptMD5(nuevoCliente.getUsuario().getClave()));
+		nuevoCliente.getUsuario().setRol(rolCliente);
+		nuevoCliente.getUsuario().setEstado(estadoActivo);
+		result = clienteServicio.crear(nuevoCliente);
+		return result;
+	}
     
     public boolean dentroDeRango(Date fechaFin) {
         Date fechaActual = new Date();
@@ -375,5 +429,15 @@ public class IndexBean implements Serializable {
 	public void setPreinscripcion(Preinscripcion preinscripcion) {
 		this.preinscripcion = preinscripcion;
 	}
+
+	public Cliente getNuevoCliente() {
+		return nuevoCliente;
+	}
+
+	public void setNuevoCliente(Cliente nuevoCliente) {
+		this.nuevoCliente = nuevoCliente;
+	}
+	
+	
 	
 }

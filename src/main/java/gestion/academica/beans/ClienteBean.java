@@ -28,9 +28,9 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class ClienteBean implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private ClienteServicio clienteServicio;
 	@EJB
@@ -41,7 +41,7 @@ public class ClienteBean implements Serializable {
 	private CatalogoDetalleServicio catalogoDetalleServicio;
 	@EJB
 	private RolServicio rolServicio;
-	
+
 	private Cliente nuevoCliente;
 	private Estado estadoActivo;
 	private Estado estadoInactivo;
@@ -49,28 +49,38 @@ public class ClienteBean implements Serializable {
 	private List<CatalogoDetalle> tiposDocumento;
 	private List<CatalogoDetalle> tiposPersona;
 	private List<CatalogoDetalle> ciudades;
-	private static final Logger LOGGER = Logger.getLogger(ClienteBean.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ClienteBean.class
+			.getName());
 	private Rol rolCliente;
 	private List<Cliente> listadoClientes;
 	private boolean editarCliente;
 	private Cliente eliminarCliente;
-	
+
 	@PostConstruct
 	public void iniciar() {
-		try {		
+		try {
+			setEditarCliente(Boolean.FALSE);
 			initValores();
 			rolCliente = rolServicio.obtenerPorNemonico("RCLI");
-			tiposDocumento = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_DOCUMENTO.getNemonico());
-			tiposPersona = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_PERSONA.getNemonico());
-			ciudades = catalogoDetalleServicio.obtenerPorCatalogoNemonico(CatalogoEnum.CIUDAD.getNemonico());
-			estadoActivo = estadoServicio.buscarPorNemonico(EstadoEnum.ACTIVO.getNemonico());
-			estadoInactivo = estadoServicio.buscarPorNemonico(EstadoEnum.INACTIVO.getNemonico());
+			tiposDocumento = catalogoDetalleServicio
+					.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_DOCUMENTO
+							.getNemonico());
+			tiposPersona = catalogoDetalleServicio
+					.obtenerPorCatalogoNemonico(CatalogoEnum.TIPO_PERSONA
+							.getNemonico());
+			ciudades = catalogoDetalleServicio
+					.obtenerPorCatalogoNemonico(CatalogoEnum.CIUDAD
+							.getNemonico());
+			estadoActivo = estadoServicio.buscarPorNemonico(EstadoEnum.ACTIVO
+					.getNemonico());
+			estadoInactivo = estadoServicio
+					.buscarPorNemonico(EstadoEnum.INACTIVO.getNemonico());
 		} catch (Exception ex) {
 			LOGGER.log(Level.SEVERE, null, ex);
 		}
 	}
-	
-	private void initValores(){
+
+	private void initValores() {
 		nuevoCliente = new Cliente();
 		nuevoCliente.setUsuario(new Usuario());
 		nuevoCliente.setCatalogoDetalle(new CatalogoDetalle());
@@ -78,26 +88,25 @@ public class ClienteBean implements Serializable {
 		nuevoCliente.setCiudad(new CatalogoDetalle());
 		listadoClientes = clienteServicio.obtenerClientes();
 	}
-	
+
 	public void guardar() {
-		try {
-			if(nuevoCliente.getUsuario().getUsername() == null){
-				nuevoCliente.getUsuario().setUsername(nuevoCliente.getNombres().split(" ")[0].toLowerCase());
-				nuevoCliente.getUsuario().setClave(nuevoCliente.getUsuario().getUsername());
-			}
-			nuevoCliente.setEstado(estadoActivo);
-			nuevoCliente.setNombres(nuevoCliente.getNombres().toUpperCase());
-			nuevoCliente.setDireccion(nuevoCliente.getDireccion().toUpperCase());
-			nuevoCliente.getUsuario().setClave(Crypt.encryptMD5(nuevoCliente.getUsuario().getClave()));
-			nuevoCliente.getUsuario().setRol(rolCliente);
-			nuevoCliente.getUsuario().setEstado(estadoActivo);
-			clienteServicio.crear(nuevoCliente);
-			initValores();
-		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, null, e);
+		if (nuevoCliente.getUsuario().getUsername() == null) {
+			nuevoCliente.getUsuario().setUsername(
+					nuevoCliente.getNombres().split(" ")[0].toLowerCase());
+			nuevoCliente.getUsuario().setClave(
+					nuevoCliente.getUsuario().getUsername());
 		}
+		nuevoCliente.setEstado(estadoActivo);
+		nuevoCliente.setNombres(nuevoCliente.getNombres().toUpperCase());
+		nuevoCliente.setDireccion(nuevoCliente.getDireccion().toUpperCase());
+		nuevoCliente.getUsuario().setClave(
+				Crypt.encryptMD5(nuevoCliente.getUsuario().getClave()));
+		nuevoCliente.getUsuario().setRol(rolCliente);
+		nuevoCliente.getUsuario().setEstado(estadoActivo);
+		clienteServicio.crear(nuevoCliente);
+		initValores();
 	}
-	
+
 	public String seleccionarCliente(Cliente cliente) {
 		setEliminarCliente(cliente);
 		return "";
@@ -107,7 +116,8 @@ public class ClienteBean implements Serializable {
 		try {
 			setEditarCliente(false);
 			nuevoCliente.setNombres(nuevoCliente.getNombres().toUpperCase());
-			nuevoCliente.setDireccion(nuevoCliente.getDireccion().toUpperCase());
+			nuevoCliente
+					.setDireccion(nuevoCliente.getDireccion().toUpperCase());
 			clienteServicio.editar(nuevoCliente);
 			initValores();
 		} catch (Exception e) {
@@ -121,7 +131,7 @@ public class ClienteBean implements Serializable {
 		setNuevoCliente(cliente);
 		return "";
 	}
-	
+
 	public void eliminar() {
 		try {
 			eliminarCliente.setEstado(estadoInactivo);
@@ -228,5 +238,5 @@ public class ClienteBean implements Serializable {
 	public void setEliminarCliente(Cliente eliminarCliente) {
 		this.eliminarCliente = eliminarCliente;
 	}
-	
+
 }
