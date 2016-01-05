@@ -148,7 +148,7 @@
 					<h:outputLabel value="Tipo de persona:" />
 					<p:outputPanel>
 						<p:selectOneMenu id="tipoPersona" style="width: 220px;"
-							value="#{indexBean.clienteBean.nuevoCliente.tipoPersona.idCatalogoDetalle}"
+							value="#{indexBean.nuevoCliente.tipoPersona.idCatalogoDetalle}"
 							required="true"
 							requiredMessage="El campo Tipo de persona es requerido!">
 							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
@@ -161,7 +161,7 @@
 					<h:outputLabel value="Tipo de documento:" />
 					<p:outputPanel>
 						<p:selectOneMenu id="tipo" style="width: 220px;"
-							value="#{indexBean.clienteBean.nuevoCliente.catalogoDetalle.idCatalogoDetalle}"
+							value="#{indexBean.nuevoCliente.catalogoDetalle.idCatalogoDetalle}"
 							required="true"
 							requiredMessage="El campo Tipo de documento es requerido!">
 							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
@@ -174,7 +174,7 @@
 					<h:outputLabel value="No. Documento: " />
 					<p:outputPanel>
 						<p:inputText id="num" styleClass="Login-input" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.numeroDocumento}"
+							value="#{indexBean.nuevoCliente.numeroDocumento}"
 							required="true"
 							requiredMessage="El campo No. Documento es requerido!"
 							onkeypress="return aceptarNumeros(event);" maxlength="15" />
@@ -183,7 +183,7 @@
 					<h:outputLabel value="Nombres: " />
 					<p:outputPanel>
 						<p:inputText id="nombre" styleClass="Login-input" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.nombres}"
+							value="#{indexBean.nuevoCliente.nombres}"
 							required="true" requiredMessage="El campo Nombres es requerido!"
 							style="text-transform: uppercase" onchange="toUpperCase(this)" />
 						<h:outputText value=" *" style="color: red" />
@@ -191,7 +191,7 @@
 					<h:outputLabel value="Ciudad:" />
 					<p:outputPanel>
 						<p:selectOneMenu id="ciudad" style="width: 220px;"
-							value="#{indexBean.clienteBean.nuevoCliente.ciudad.idCatalogoDetalle}"
+							value="#{indexBean.nuevoCliente.ciudad.idCatalogoDetalle}"
 							required="true" requiredMessage="El campo Ciudad es requerido!">
 							<f:selectItem itemValue="" itemLabel="-- Seleccione --" />
 							<f:selectItems value="#{indexBean.clienteBean.ciudades}"
@@ -203,13 +203,13 @@
 					<h:outputLabel value="Dirección: " />
 					<p:outputPanel>
 						<p:inputText id="direccion" styleClass="Login-input" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.direccion}"
+							value="#{indexBean.nuevoCliente.direccion}"
 							style="text-transform: uppercase" onchange="toUpperCase(this)" />
 					</p:outputPanel>
 					<h:outputLabel value="Email: " />
 					<p:outputPanel>
 						<p:inputText id="email" styleClass="Login-input" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.email}"
+							value="#{indexBean.nuevoCliente.email}"
 							required="true" validatorMessage="Ingrese un correo válido"
 							requiredMessage="El campo Email es requerido!">
 							<f:validateRegex
@@ -220,27 +220,27 @@
 					<h:outputLabel value="Teléfono: " />
 					<p:outputPanel>
 						<p:inputText id="telefono" styleClass="Login-input" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.telefono}"
+							value="#{indexBean.nuevoCliente.telefono}"
 							required="true" requiredMessage="El campo Teléfono es requerido!" />
 						<h:outputText value=" *" style="color: red" />
 					</p:outputPanel>
 					<h:outputLabel value="Celular: " />
 					<p:outputPanel>
 						<p:inputText id="celular" styleClass="Login-input" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.celular}"
+							value="#{indexBean.nuevoCliente.celular}"
 							onkeypress="return aceptarNumeros(event);" maxlength="10" />
 					</p:outputPanel>
 					<h:outputLabel value="Username: " />
 					<p:outputPanel>
 						<p:inputText id="username" styleClass="Login-input" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.usuario.username}"
+							value="#{indexBean.nuevoCliente.usuario.username}"
 							required="true" requiredMessage="El campo Username es requerido!" />
 						<h:outputText value=" *" style="color: red" />
 					</p:outputPanel>
 					<h:outputLabel value="Password:" />
 					<p:outputPanel>
 						<p:password styleClass="Login-input" feedback="true" size="24"
-							value="#{indexBean.clienteBean.nuevoCliente.usuario.clave}"
+							value="#{indexBean.nuevoCliente.usuario.clave}"
 							promptLabel="Ingrese su clave" required="true"
 							requiredMessage="La clave es requerida!"
 							weakLabel="Seguridad baja" goodLabel="Seguridad buena"

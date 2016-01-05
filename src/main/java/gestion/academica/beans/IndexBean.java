@@ -197,9 +197,9 @@ public class IndexBean implements Serializable {
 				this.usuario.setClave(Crypt.encryptMD5(claveActual));
 				usuarioServicio.actualizar(this.usuario);
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Confirmación!! La clave fue cambiada éxitosamente", "");
+						"Confirmacion!! La clave fue cambiada exitosamente", "");
 			}else{
-				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!! La nueva clave y la confirmación no coinciden",
+				msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!! La nueva clave y la confirmacion no coinciden",
 						"");
 			}			
 		} else {
@@ -219,11 +219,11 @@ public class IndexBean implements Serializable {
     		String nombreCliente = nuevoCliente.getNombres();
     		String result = guardar();
     		if(result == null){
-    			bitacora = new Bitacora(fechaCreacion, "Creación de cliente: " + nombreCliente, usuarioRegistro);
+    			bitacora = new Bitacora(fechaCreacion, "Creacion de cliente: " + nombreCliente, usuarioRegistro);
                 bitacoraServicio.crear(bitacora);
                 registro = true;
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-            				"Confirmación!! Registro realizado con éxito", "");
+            				"Confirmacion!! Registro realizado con exito", "");
                 initValores();
     		}else{
     			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -306,14 +306,14 @@ public class IndexBean implements Serializable {
     		preinscripcion.setCurso(cursoSeleccionado);
     		preinscripcion.setFechaPreinscripcion(fechaCreacion);
     		preinscripcion.setEstado(clienteBean.getEstadoActivo());
-    		preinscripcion.setObservacion("Preinscripción en el curso: " + cursoSeleccionado.getInformacionCurso().getNombre());
+    		preinscripcion.setObservacion("Preinscripciï¿½n en el curso: " + cursoSeleccionado.getInformacionCurso().getNombre());
     		preinscripcionServicio.crear(preinscripcion);
-    		bitacora = new Bitacora(fechaCreacion, "Preinscripción a curso: " + cursoSeleccionado.getInformacionCurso().getNombre()
+    		bitacora = new Bitacora(fechaCreacion, "Preinscripciï¿½n a curso: " + cursoSeleccionado.getInformacionCurso().getNombre()
     				 + " - Cliente: " + cliente.getNombres(), getUsuario());
             bitacoraServicio.crear(bitacora);
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Te preinscribiste correctamente en el curso!!!","");
     	}else{
-    		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ya estás preinscrito en este curso","");
+    		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ya estï¿½s preinscrito en este curso","");
     	}
     	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
