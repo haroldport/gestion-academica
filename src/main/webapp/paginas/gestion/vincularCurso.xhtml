@@ -122,6 +122,10 @@
 									paginatorPosition="bottom" rows="5" paginator="true"
 									rowsPerPageTemplate="5,10,15,20,25,30"
 									tableStyle="table-layout:auto;width:100%;">
+									
+									<p:column styleClass="wrap" headerText="Id. Curso">
+										<h:outputText value="#{curso.idCurso}" />
+									</p:column>
 
 									<p:column styleClass="wrap" headerText="Nombre">
 										<h:outputText value="#{curso.informacionCurso.nombre}" />
